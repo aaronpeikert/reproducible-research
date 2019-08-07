@@ -17,7 +17,7 @@ Reproducible Research has become the gold standard for scientific work in recent
 
 Literate Programming
 : Interwoven text and computer code that together form a human readable document.
-: Example: Including text that descibes a statistical test, code that is uesed to exucte it and the results from it in the same document.
+: Example: One document that includes text that descibes a statistical test, code that is used to execute the statistical and the output of the code in the same document.
 
 Version Control
 : The management of change of documents/code.
@@ -31,7 +31,13 @@ Containerization
 : A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
 : Example: A statistical analysis depends on the statistical software that is used and they are bundled together.
 
-Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed can be learned with a little practice.
+Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed to enusre reproducibility can be learned with a little practice.
+
+The authors believe that for sufficient chances of reproducibility, good documentation is crucial, since it anwers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code and the most productive computer code is code that runs automaticly without human interaction. These principles are what guides the the use of `rmarkdown`, `git`, `make`, `docker` and there interaction.
+
+The first step towards reproducibility is to have a R script, that can be executed on the own computer without error, after everything within R and the files that are the output of the script deleted. We assume that the reader is familar with R and has the ability to archive that for a simple analysis. A next step is to make sure that all files relevant, can be moved to another computer. To archive that it is important that all files are within one folder (and subfolders within it) and all paths are relative to that folder. A nice solution to that problem are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and/or the `here` package.
+
+Reproducibility at a basic level assumes that results are the same, if neither script nor data has changed. It is often not trivial to find out wether anything has changed and if so to "go back in time". `git` enables you to do both. A good mental model for `git` is that it takes a sequenze of snapshot of all files it is supposed to track. These snapshots are reffered to as "commits". Each commit has a unique identifier (a hash) and each commits represents a complete copy of the state of the files at the point when they where added to a commit.
 
 
 ### Random Number Generation with R
