@@ -1,0 +1,57 @@
+---
+title: "Reproducible Research with Docker"
+author: "Andreas Brandmaier & Aaron Peikert"
+date: "8/6/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+if(!require("pacman"))install.packages("pacman")
+pacman::p_load("here", "tidyverse")
+```
+
+In this tutorial, we describe a principled workflow to ensure reproducible research in R-based environments. The workflow relies on the interplay of various open-source software tools including git, docker, R, Rmarkdown, knitr, and papaja whose interplay ensures a seamless integration of version management, (APA-conformable) dynamic report generation and full cross-platform computational reproducibility. The workflow ensures the primary goals that 1) the reporting of analysis results is perfectly consistent with the actual analysis results (dynamic report generation), the analysis exactly reproduces at later time even if the computing and software platform is updated or changed (computational reproducibility), and 3) intermediate or post-publication changes are tracked, marked, and documented while earlier versions of both data and code remain accessible. While dynamic document generation is increasingly recognized as tool for reproducible analyses, we demonstrate with practical examples that dynamic documents are not sufficient to ensure computational reproducibility.
+
+Reproducible Research has become the gold standard for scientific work in recent years. The following tutorial aims to outline a workflow that does not only garanties a sane standard of reproducibility but also decreases the burden of maintaining software for the researcher and his colleages. The authors beflief that integrating tools from software engineering in the process of scientific reporting to enhance repdoducibility is crucial and give guidelines for the practitioner to use them. These tools include software for literate programming, version control, dependency tracking and containerization.
+
+Literate Programming
+: Interwoven text and computer code that together form a human readable document.
+: Example: Including text that descibes a statistical test, code that is uesed to exucte it and the results from it in the same document.
+
+Version Control
+: The management of change of documents/code.
+: Example: Changes from the manuscript text upon request by the reviewer are clearly identifiable. 
+
+Dependency Tracking
+: How different parts of a manuscript/analysis do relate to each other and how these dependences are resolved.
+: Example: The manuscript depends on the statistical analysis which depends on the data.
+
+Containerization
+: A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
+: Example: A statistical analysis depends on the statistical software that is used and they are bundled together.
+
+Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed can be learned with a little practice.
+
+
+### Random Number Generation with R
+
+```{bash}
+docker run --rm rocker/r-ver:3.3.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
+```
+
+```{bash}
+docker run --rm rocker/r-ver:3.4.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
+```
+
+```{bash}
+docker run --rm rocker/r-ver:3.5.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
+```
+
+```{bash}
+docker run --rm rocker/r-ver:3.6.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
+```
+
+```{bash}
+docker run --rm rocker/r-ver:latest Rscript -e "set.seed(1234);sample(1:10, 5)"
+```
