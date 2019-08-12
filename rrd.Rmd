@@ -11,7 +11,7 @@ if(!require("pacman"))install.packages("pacman")
 pacman::p_load("here", "tidyverse")
 ```
 
-In this tutorial, we describe a principled workflow to ensure reproducible research in R-based environments. The workflow relies on the interplay of various open-source software tools including git, docker, R, Rmarkdown, knitr, and papaja whose interplay ensures a seamless integration of version management, (APA-conformable) dynamic report generation and full cross-platform computational reproducibility. The workflow ensures the primary goals that 1) the reporting of analysis results is perfectly consistent with the actual analysis results (dynamic report generation), the analysis exactly reproduces at later time even if the computing and software platform is updated or changed (computational reproducibility), and 3) intermediate or post-publication changes are tracked, marked, and documented while earlier versions of both data and code remain accessible. While dynamic document generation is increasingly recognized as tool for reproducible analyses, we demonstrate with practical examples that dynamic documents are not sufficient to ensure computational reproducibility.
+In this tutorial, we describe a principled workflow to ensure reproducible research in R-based environments. The workflow relies on the interplay of various open-source software tools including Rmarkdown, git, make and docker whose interplay ensures a seamless integration of version management, (APA-conformable) dynamic report generation and full cross-platform computational reproducibility. The workflow ensures the primary goals that 1) the reporting of analysis results is perfectly consistent with the actual analysis results (dynamic report generation), the analysis exactly reproduces at later time even if the computing and software platform is updated or changed (computational reproducibility), and 3) intermediate or post-publication changes are tracked, marked, and documented while earlier versions of both data and code remain accessible. While dynamic document generation is increasingly recognized as tool for reproducible analyses, we demonstrate with practical examples that dynamic documents are not sufficient to ensure computational reproducibility.
 
 Reproducible Research has become the gold standard for scientific work in recent years. The following tutorial aims to outline a workflow that does not only garanties a sane standard of reproducibility but also decreases the burden of maintaining software for the researcher and his colleages. The authors beflief that integrating tools from software engineering in the process of scientific reporting to enhance repdoducibility is crucial and give guidelines for the practitioner to use them. These tools include software for literate programming, version control, dependency tracking and containerization.
 
@@ -31,13 +31,61 @@ Containerization
 : A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
 : Example: A statistical analysis depends on the statistical software that is used and they are bundled together.
 
-Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed to enusre reproducibility can be learned with a little practice.
+Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed to ensure reproducibility can be learned with little practice.
 
 The authors believe that for sufficient chances of reproducibility, good documentation is crucial, since it anwers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code and the most productive computer code is code that runs automaticly without human interaction. These principles are what guides the the use of `rmarkdown`, `git`, `make`, `docker` and there interaction.
 
 The first step towards reproducibility is to have a R script, that can be executed on the own computer without error, after everything within R and the files that are the output of the script deleted. We assume that the reader is familar with R and has the ability to archive that for a simple analysis. A next step is to make sure that all files relevant, can be moved to another computer. To archive that it is important that all files are within one folder (and subfolders within it) and all paths are relative to that folder. A nice solution to that problem are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and/or the `here` package.
 
-Reproducibility at a basic level assumes that results are the same, if neither script nor data has changed. It is often not trivial to find out wether anything has changed and if so to "go back in time". `git` enables you to do both. A good mental model for `git` is that it takes a sequenze of snapshot of all files it is supposed to track. These snapshots are reffered to as "commits". Each commit has a unique identifier (a hash) and each commits represents a complete copy of the state of the files at the point when they where added to a commit.
+```{r, eval=FALSE}
+# BAD
+iris <- read.csv("/home/aaron/Documents/reproducible-research/data/iris.csv")
+# GOOD
+iris <- read.csv("data/iris.csv")
+# GOOD
+iris <- read.csv(here("data", "iris.csv"))
+```
+
+This folder, where everything resides that you need for an analysis, will be refered to as a Projekt. Working with Projects is especially easy with RStudio an integrated development environment (IDE) for R.
+
+Reproducibility at a basic level assumes that results are the same, if neither script nor data has changed. It is often not trivial to find out wether anything has changed and if so to "go back in time". `git` enables you to do both. A good mental model for `git` is that it takes a sequenze of snapshot of all files it is supposed to track. These snapshots are reffered to as "commits". Each commit has a unique identifier (a hash) and each commits represents a complete copy of the state of the files at the point when they where added to a commit. Going back to one state is as easy has finding out the hash of the commit. This can be made even easier by tagging specific commits e.g. as "submission", "preprint", "publication". This collection of commits is called "repository", which is almost the same as your Project.
+
+A typicall workflow looks like that:
+
+```{bash, eval=FALSE}
+git init # to initialize git
+git add /data/iris.csv /R/analysis.R # track specific files/changes
+git commit -m "add data & analysis" # take snapshot
+# new data comes in
+git commit -a -m "complete data colections" # add (-a) and comit all changes
+```
+
+So to just keep track of all changes you only need to use `git add` & `git commit` or `git commit -a` to conviently do both. These commands need to be executed in the `terminal`, which you can access from within Rstudio (`Shift + Alt + R`), but if you use Git with Rstudio, you also get a graphical user interface.
+
+![Git Pane in RStudio](Images/git-pane.png)
+
+Now you can check everything that has happend (`git log`) and look at the exact state by suppling the hash or the first few digits of it to `git checkout`:
+
+```{bash, eval = FALSE}
+git log
+git checkout 77db06f78e
+```
+
+Git also makes it especially easy to share and collaborate on a project with another researcher. A popular service for sharing via git is [Github](https://github.com). Just sharing Git repositories with the public is allways free, privat repositories (only visible to persons you invite) are [free for researcher](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, you can create a new repository where Github advises you how to upload you repository from the terminal:
+
+```{bash, eval=FALSE}
+git remote add origin git@github.com:aaronpeikert/reproducible-research.git
+git push -u origin master
+```
+
+Each update can then be uploaded with `git push` or the green up arrow in the git pane. To download this git repo to another computer just type:
+
+```{bash, eval=FALSE}
+git clone git@github.com:aaronpeikert/reproducible-research.git
+```
+
+Git & Github can do even more to help you to collaborate with your fellow researcher, but this is beyond the already broad scope of this tutorial.
+
 
 
 ### Random Number Generation with R
