@@ -43,7 +43,7 @@ The first step towards reproducibility is to have a R script, that can be execut
 iris <- read.csv("/home/aaron/Documents/reproducible-research/data/iris.csv")
 # GOOD
 iris <- read.csv("data/iris.csv")
-# GOOD
+# BETTER
 iris <- read.csv(here("data", "iris.csv"))
 ```
 
@@ -61,11 +61,11 @@ git commit -m "add data & analysis" # take snapshot
 git commit -a -m "complete data colections" # add (-a) and comit all changes
 ```
 
-So to just keep track of all changes you only need to use `git add` & `git commit` or `git commit -a` to conviently do both. These commands need to be executed in the `terminal`, which you can access from within Rstudio (`Shift + Alt + R`), but if you use Git with Rstudio, you also get a graphical user interface.
+So to just keep track of all changes you only need to use `git add` & `git commit` or `git commit -a` to conviently do both. These commands need to be executed in the `terminal`, which you can access from within Rstudio (`Shift + Alt + R`), but if you use Git with Rstudio, you also get a graphical user interface and quite likly you won't need the terminal more then once per project.
 
 ![Git Pane in RStudio](Images/git-pane.png)
 
-Now you can check everything that has happend (`git log`) and look at the exact state by suppling the hash or the first few digits of it to `git checkout`:
+Now you can check everything that has happend (`git log`) and look at the exact state by suppling the id of the commit or the first few digits of it to `git checkout`:
 
 ```{bash, eval = FALSE}
 git log
@@ -85,17 +85,46 @@ Each update can then be uploaded with `git push` or the green up arrow in the gi
 git clone git@github.com:aaronpeikert/reproducible-research.git
 ```
 
-Git & Github can do even more to help you to collaborate with your fellow researcher, but this is beyond the already broad scope of this tutorial.
+Git & Github can do even more to help you to collaborate with your fellow researcher, but this is beyond the already broad scope of this tutorial. Another benefit of using Git & Github is that experimentation is highly encoured, since you can go back to any state easily and everything is backed up on the Github servers.
+
+Even when you have obtained a version of the projekt and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets really easy with `make`, since it allows you to create (computational) recipes to (re-)create files.
+
+A `Makefile` obayes the following scheme:
+
+```
+target: dependency1 dependency2
+  command-to-create-target
+```
+
+A typical `Makefile` might look like:
+
+```
+analysis.pdf: data/clean.csv
+  Rscript -e 'rmarkdown::render("analysis.Rmd")'
+
+data/clean.csv: R/clean.R data/iris.csv
+  Rscript -e 'source("R/clean.R")'
+```
+
+The first line reads: to create `analysis.pdf` the `analysis.Rmd` needs to be rendered, which depends on `data/clean.csv`. This dependency is itself a target. To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf` `make` will first check wether the dependencys do exist and if not weather or it knows how to create them. So if `data/clean.csv` does not exist, `make` will creates it. The same thing happens if one of the dependencies of a target is newer then the target itself, then make updates everything that directly or indirectly depends on it. So if `data\iris.csv` is newer then `data\clean.csv`, make atempts to recreate `data\clean.csv` and `analysis.pdf`. If there is a dependency which is missing, and there is no recipe to make it, `make` stops with an error. It is a convention to have a target `all` which depends on everything and make it the first target in a `Makefile`, then the command `make` without any argument will automaticly create everything. This can also be trigered from within RStudio via `Build All`.
+
+```
+all: analysis.pdf
+```
+
+![Build Pane in RStudio](Images/build-pane.png)
+
+If you have followed the above workflow a fellow researcher two commands away from fully reproducing your analysis:
+
+```{bash, eval=FALSE}
+git clone https://github.com/sirfisher/iris.git
+make all
+```
+
+But this relies on the important assumption that your computational environments are sufficiently compatible e.g. everything needed is installed (R + Packages) at a compatible version of the software.
 
 ### Random Number Generation with R
 
-```{bash}
-docker run --rm rocker/r-ver:3.3.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
-```
-
-```{bash}
-docker run --rm rocker/r-ver:3.4.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
-```
 
 ```{bash}
 docker run --rm rocker/r-ver:3.5.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
@@ -103,8 +132,4 @@ docker run --rm rocker/r-ver:3.5.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
 
 ```{bash}
 docker run --rm rocker/r-ver:3.6.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
-```
-
-```{bash}
-docker run --rm rocker/r-ver:latest Rscript -e "set.seed(1234);sample(1:10, 5)"
 ```
