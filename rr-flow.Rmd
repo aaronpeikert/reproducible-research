@@ -1,5 +1,6 @@
 ---
-title: "Reproducible Research with Docker"
+title: "A Reproducible Workflow with RMarkdown, Git, Make & Docker"
+shorttitle: "Reproducible Workflow"
 author: "Andreas Brandmaier & Aaron Peikert"
 date: "8/6/2019"
 output: html_document
@@ -85,8 +86,6 @@ git clone git@github.com:aaronpeikert/reproducible-research.git
 ```
 
 Git & Github can do even more to help you to collaborate with your fellow researcher, but this is beyond the already broad scope of this tutorial.
-
-
 
 ### Random Number Generation with R
 
