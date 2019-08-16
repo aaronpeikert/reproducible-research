@@ -3,6 +3,7 @@ title: "A Reproducible Workflow with RMarkdown, Git, Make & Docker"
 shorttitle: "Reproducible Workflow"
 author: "Andreas Brandmaier & Aaron Peikert"
 date: "8/6/2019"
+bibliography: Reproducible-Research.bib
 output: html_document
 ---
 
@@ -14,7 +15,7 @@ pacman::p_load("here", "tidyverse")
 
 In this tutorial, we describe a principled workflow to ensure reproducible research in R-based environments. The workflow relies on the interplay of various open-source software tools including Rmarkdown, git, make and docker whose interplay ensures a seamless integration of version management, (APA-conformable) dynamic report generation and full cross-platform computational reproducibility. The workflow ensures the primary goals that 1) the reporting of analysis results is perfectly consistent with the actual analysis results (dynamic report generation), the analysis exactly reproduces at later time even if the computing and software platform is updated or changed (computational reproducibility), and 3) intermediate or post-publication changes are tracked, marked, and documented while earlier versions of both data and code remain accessible. While dynamic document generation is increasingly recognized as tool for reproducible analyses, we demonstrate with practical examples that dynamic documents are not sufficient to ensure computational reproducibility.
 
-Reproducible Research has become the gold standard for scientific work in recent years. The following tutorial aims to outline a workflow that does guarantees not only a reasonable standard of reproducibility but also decreases the burden of maintaining software for the researcher and his colleagues. The authors' believe that integrating tools from software engineering in the process of scientific reporting to enhance reproducibility is crucial and give guidelines for the practitioner to use them. These tools include software for literate programming, version control, dependency tracking, and containerization.
+Reproducible Research has become the gold standard for scientific work in recent years. The following tutorial aims to outline a workflow that guarantees not only a reasonable standard of reproducibility but also decreases the burden of maintaining software for the researcher and her colleagues. The authors' believe that integrating tools from software engineering in the process of scientific reporting to enhance reproducibility is crucial and give guidelines for the practitioner to use them. These tools include software for literate programming, version control, dependency tracking, and containerization. If implemented, such workflow enables the researcher to transparently create, dynamicly render and puplicly share reports, which she and her colleages can trust to reproduce later, regardless of operating system or software version.
 
 Literate Programming
 : Interwoven text and computer code that together forms a human-readable document.
@@ -31,11 +32,11 @@ Containerization
 : A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
 : Example: A statistical analysis depends on the used statistical software and a virtual machine bundles them together.
 
-Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed to ensure reproducibility can be learned with little practice.
+Within the community of users of the R Programming Language for each purpose a specific software solutions is clearly the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the producitivity of the researcher. Each of these software solutions are extremly mighty, so in order to master them fully often years of practice are required. Luckily the minimal valuable subset needed to ensure reproducibility can be learned with little practice. However even if only a part of this workflow is implemented, the 
 
-The authors believe that for sufficient chances of reproducibility, good documentation is crucial, since it anwers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code and the most productive computer code is code that runs automaticly without human interaction. These principles are what guides the the use of `rmarkdown`, `git`, `make`, `docker` and there interaction.
+The authors believe that for sufficient chances of reproducibility, good documentation is crucial, since it anwers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code and the most productive computer code is code that runs automaticly without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker` and there interaction.
 
-The first step towards reproducibility is to have a R script, that can be executed on the own computer without error, after everything within R and the files that are the output of the script deleted. We assume that the reader is familar with R and has the ability to archive that for a simple analysis. A next step is to make sure that all files relevant, can be moved to another computer. To archive that it is important that all files are within one folder (and subfolders within it) and all paths are relative to that folder. A nice solution to that problem are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and/or the `here` package.
+The first step towards reproducibility is to have a R script or R markdown, that can be executed on the own computer without error. We assume that the reader is familar with R and has the ability to archive that for a simple analysis. A next step is to make sure that all files relevant, can be moved to another computer. To archive that it is important that all files are within one folder (and subfolders within it) and all paths are relative to that folder. A nice solution to that problem are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and/or the `here` package.
 
 ```{r, eval=FALSE}
 # BAD
@@ -64,7 +65,7 @@ So to keep track of all changes, you only need to use `git add` & `git commit` o
 
 ![Git Pane in RStudio](Images/git-pane.png)
 
-Now you can check everything that has happened (`git log`) and look at the exact state by supplying the id of the commit or the first few digits of it to `git checkout`:
+Now one can check everything that has happened (`git log`) and look at the exact state by supplying the id of the commit or the first few digits of it to `git checkout`:
 
 ```{bash, eval = FALSE}
 git log
@@ -86,7 +87,7 @@ git clone git@github.com:aaronpeikert/reproducible-research.git
 
 Git & Github can do even more to help you to collaborate with your fellow researcher, but this is beyond the already broad scope of this tutorial. Another benefit of using Git & Github is that experimentation is highly encouraged since you can go back to any state quickly and even when you lose access to the file on your computer, everything is backed up on the Github servers.
 
-Even when you have obtained a version of the project, and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets comfortable with `make`, since it allows you to create (computational) recipes too (re-)create files.
+Even when you have obtained a version of the project, and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets comfortable with `make`, since it allows you to create (computational) recipes too (re-)create files. A downside of `make` is, that the installation on Windows is not straigtfowrward. However if `docker` (see later sections) is availible this is not an issue, since `make` ships with (almost) every `docker` image.
 
 A `Makefile` obeys the following scheme:
 
@@ -105,7 +106,7 @@ data/clean.csv: R/clean.R data/iris.csv
   Rscript -e 'source("R/clean.R")'
 ```
 
-The first line reads: to create `analysis.pdf` the `analysis.Rmd` needs to be rendered, which depends on `data/clean.csv`. This dependency is itself a target. To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf` `make` first checks whether the dependencies do exist and if not whether or it knows how to create them. So if `data/clean.csv` does not exist, `make` creates it. The same thing happens if one of the dependencies of a target is newer then the target itself, then updates everything that directly or indirectly depends on it. So if `data\iris.csv` is newer then `data\clean.csv`, make attempts to recreate `data\clean.csv` and `analysis.pdf`. If there is a dependency which is missing, and there is no recipe to make it, `make` stops with an error. It is a convention to have a target `all` which depends on everything and make it the first target in a `Makefile`, then the command `make` without any argument automatically creates everything. `Build All` from within RStudio also triggers this process.
+The first line reads: to create `analysis.pdf` the `analysis.Rmd` needs to be rendered, which depends on `data/clean.csv`. This dependency is itself a target. To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf` `make` first checks whether the dependencies do exist and if not whether or it knows how to create them. So if `data/clean.csv` does not exist, `make` creates it. The same thing happens if one of the dependencies of a target is newer then the target itself, then updates everything that directly or indirectly depends on it. So if `data\iris.csv` is newer then `data\clean.csv`, make attempts to recreate `data\clean.csv` and `analysis.pdf`. If there is a dependency which is missing, and there is no recipe to make it, `make` stops with an error. It is a convention to have a target `all` which depends on everything and make it the first target in a `Makefile`, then the command `make` without any argument automatically creates everything. The button `Build All` from within RStudio also triggers this process.
 
 ```
 all: analysis.pdf
@@ -123,13 +124,107 @@ make all
 
 However, this relies on the crucial assumption that your computational environments are sufficiently compatible e.g., everything needed is installed (R + Packages) at a compatible version of the software.
 
-### Random Number Generation with R
+`docker` is a tool that allows to precisely state what computational environment an analysis relies on, in a way that can automatically be recreated on most operating systems (Windows, OS X & Linux). It does that, by creating a virtual computer on which a series of commands (e.g., installing software) is executed. The resulting state of the virtual computer is saved in what is called an "image." This image can be started and execute commands, e.g., running an R-script or `make`. A running instance of an image is called a container. An image can be transferred and executed on any machine that has docker installed. Regardless of the machine the container is executed on, from the perspective of a programm running inside a container, it always looks identical. There are essential differences to a traditional virtual machine, but thinking about a docker container as a computer running inside your computer is still a plausible mental model. The most important advantage over traditional virtual machines is that container are lightweight, meaning they start fast and don't need much storage. Docker achieves that by reusing large parts of the hosts operating system (how much is varying widely between Linux, OS X & Windows).
 
+The following example show why researcher might wan't to invest time into docker. While the R programming language is considered largely stable and much effort is put into backwarts comptibility, sometimes even basic functions like `sample()` change their behavior from one version to another.
 
-```{bash}
+Consider the following R-code:
+
+```{r,eval=FALSE}
+set.seed(1234)
+sample(1:10, 5)
+```
+
+The usual expectation is that this code will deliver the same pseudo random five numbers regardless of operating system or R-Version (due to `set.seed()`). Using docker we can start an image which contains the R-Version 3.5.0 and execute the code there.
+
+```{bash, eval=FALSE}
 docker run --rm rocker/r-ver:3.5.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
 ```
 
-```{bash}
+However in an image with a more recent version of R (3.6.0) this results in another sample.
+
+```{bash, eval=FALSE}
 docker run --rm rocker/r-ver:3.6.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
 ```
+
+Note that this is intended behavior und the result of a [bugfix](https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494) implemented beginning of R 3.6.0.
+
+Such change will prevent many analysis from beeing replicated, if they contain e.g., multiple imputation, bootstrapping, simulations studies, graphics with random jitter, bayesian estimations, or similar technics which involve random sampling. However seldom does a analysis depend only on R, often a considerable number of packages is required, and they will most likly more often introduce breaking changes with updates. The whole endouver of reproducibility is therefore at stake, everytime a update is rolled out. In order to prevent that `docker` replicates the  computational environment of an analysis exactly. However we do not intend to advocate that software should not be updated, it should just be documented and easily replicated which version was used. Quite to the contrary with solutions like docker it gets easier then ever to savely update to new versions, by just bumping the R Version number of the docker image the analysis is relying on.
+
+This convinience is possible to the efforts of the [rocker project](https://github.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a] which provides docker images preconfigured with an R-installation of a fixed R-version. These rely on MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a mirror of CRAN, the repository from which R-packages are installed from, which is fixed to the last date the R-version of the image was the most recent R-version. Building upon these rocker-images researcher can build there own docker-images with the required R-packages. The rocker project provides also images which do include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the `rmarkdown` package with Latex (`rocker/verse`). Since the describes workflow relies on `rmarkdown` we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
+
+To extent the rocker images e.g. with other packages a Dockerfile (a File actually named `Dockerfile`) is needed, the docker image for this article is based on the following Dockerfile:
+
+```
+FROM rocker/verse:3.6.1
+RUN install2.r --error --skipinstalled\
+  pacman here pander
+WORKDIR /home/rstudio
+```
+
+The `FROM` statement specifies which docker image to use, in this case, the `rocker/verse` image which is tagged with 3.6.1 (referring to the R version 3.6.1). The `RUN` statement describes a command to execute, in this case, to run an R-script `install2.r` which is available on all rocker images, to install the packages `pacman`,  `here` & `pander`. A Dockerfile allows more than one `RUN` statement, executing any available command. Those `RUN` statements can install dependencies that are not an R package e.g., other programming languages like python or Matlab. The `WORKDIR` statement is not strictly necessary, but saves writing the working directory out every time a command is issued to docker. The command `docker build -t image-name` creates an image named `image-name` from the Dockerfile in the project. Following there are two principle ways to share a docker image, either by sharing the Dockerfile which created the image or by sharing the image itself e.g. through [dockerhub](https://hub.docker.com). While both ways garuantee a replicable computational environment, sharing the Dockerfile is more transparent and changes to it are tracked by git.
+
+There are two ways to use a rocker image. Either one starts with the `docker run` command. The first way is to run a command inside the container. These commands take the form:
+
+```{bash, eval=FALSE}
+docker run --rm -it <IMAGENAME> <COMMAND>
+```
+
+The `--rm` flag means to not save the state of the docker after the command finishes in an image. The `-it` flag means to accept inputs and return outputs to the terminal. This is especially usefull when using `R` as a command, because then you have acces to the standard R-terminal.
+
+```{bash, eval=FALSE}
+docker run --rm -it reproducible-research R
+```
+
+![R-terminal running inside docker](Images/docker-r-terminal.png)
+
+The second way is to supply no commands and to interact with the container via the webbrowser and the rstudio server instance that runs in it. For that you need to supply a password to log into rstudio server (`-e PASSWORD=<YOUR_PASS>`) and open a port (`-p 8787:8787`).
+
+```{bash, eval=FALSE}
+docker run -e PASSWORD=<YOUR_PASS> -p 8787:8787 image-name
+```
+
+The adress to connect to the rstudio server is your ip adress (or on linux also `localhost`) in this scheme: `<IPADRESS>:8787`. There is a fully functioning RStudio instance availible, that can be used exactly like one installed locally on the maschine.
+
+None of the above containers can access files on your computer, instead a folder needs to be linked explizitly:
+
+```{bash, eval=FALSE}
+docker run -v /folder/on/your/computer:/folder/in/docker 
+```
+
+The main directory for RStudio inside docker is `/home/rstudio` so an apropriate command is:
+
+```{bash, eval=FALSE}
+docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v /path/to/project:/home/rstudio reproducible-research
+```
+
+![RStudio running inside Docker](Images/docker-rstudio.png)
+
+Since `docker`'s commands grow long and are tedius to type, we advocate to use some automatic way to generate them. Unfortunatly is the most comfortable way only availible on linux, which uses `make DOCKER=TRUE` together with a Makefile like the one used for that article.
+
+```
+projekt := $(shell basename `git rev-parse --show-toplevel`)
+current_dir := $(shell pwd)
+uid = $(shell id -u)
+
+ifeq ($(DOCKER),TRUE)
+	run:=docker run --rm --user $(uid) -v $(current_dir):/home/rstudio $(projekt)
+	current_dir=/home/rstudio
+endif
+
+all: rr-flow.html
+
+build: Dockerfile
+	sudo docker build -t $(projekt) .
+
+clean:
+	Ruby/clean.rb
+	rm -rf kitematic
+.PHONY: clean
+
+rr-flow.html: rr-flow.Rmd
+	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
+```
+
+
+# References
