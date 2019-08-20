@@ -48,7 +48,7 @@ iris <- read.csv("data/iris.csv")
 iris <- read.csv(here("data", "iris.csv"))
 ```
 
-This folder, where everything resides that you need for analysis, is referred to as a Projekt. Working with Projects is exceptionally comfortable with RStudio an integrated development environment (IDE) for R.
+This folder, where everything resides that you need for analysis (code & data), is referred to as a Projekt. Working with Projects is exceptionally comfortable with RStudio an integrated development environment (IDE) for R. It is usefull to organize this Project in way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 @marwickPackagingDataAnalytical2018].
 
 Reproducibility at a basic level assumes that results are the same if neither script nor data have changed. It is often not trivial to find out whether anything has changed and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the files when added to a commit. Each commit has a unique identifier (a hash). Going back to one state is as easy as finding the hash of the commit. Finding a specific hash can be made even easier by tagging specific commits, e.g., as "submission," "preprint," "publication." This collection of commits is called "repository," which is almost the same as your Project.
 
