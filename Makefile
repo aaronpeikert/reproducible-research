@@ -10,7 +10,7 @@ endif
 all: rr-flow.html README.md
 
 build: Dockerfile
-	sudo docker build -t $(projekt) .
+	docker build -t $(projekt) .
 
 clean:
 	Ruby/clean.rb
