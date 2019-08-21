@@ -3,4 +3,5 @@ RUN install2.r --error --skipinstalled\
   pacman here pander
 RUN installGithub.r\
   crsh/papaja benmarwick/wordcountaddin
+RUN Rscript -e 'tinytex::tlmgr_install(c("apa6", "threeparttable", "fancyhdr", "endfloat", "csquotes", "was", "multirow", "threeparttablex", "environ", "trimspaces", "tocloft"))'
 WORKDIR /home/rstudio
