@@ -1,13 +1,17 @@
+The repo is maintained by [Aaron Peikert ![ORCID
+iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0001-7813-818X)
+and [Andreas Brandmaier ![ORCID
+iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982)
 [![licensebuttons
 by](https://licensebuttons.net/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/4.0)
 
-The repo is maintained by Aaron Peikert[![ORCID
+This is the accompanying GitHub repository to a work in progress paperby
+Aaron Peikert[![ORCID
 iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0001-7813-818X)
 and Andreas Brandmaier [![ORCID
-iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982)
+iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982).
 
-This is the accompanying GitHub repository to a work in progress paper,
-its abstract reads:
+# Abstract
 
 In this tutorial, we describe a principled workflow to ensure long-term
 reproducibility of R-based data analyses. The workflow utilizes
@@ -66,13 +70,13 @@ sessioninfo::session_info()
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
     ##  version  R version 3.6.1 (2019-07-05)
-    ##  os       Solus 4.0 Fortitude         
+    ##  os       Debian GNU/Linux 9 (stretch)
     ##  system   x86_64, linux-gnu           
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
-    ##  tz       Europe/Berlin               
+    ##  tz       Etc/UTC                     
     ##  date     2019-08-23                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
@@ -97,5 +101,5 @@ sessioninfo::session_info()
     ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
     ## 
-    ## [1] /home/aaron/R/x86_64-solus-linux-gnu-library/3.6
-    ## [2] /usr/lib64/R/library
+    ## [1] /usr/local/lib/R/site-library
+    ## [2] /usr/local/lib/R/library
