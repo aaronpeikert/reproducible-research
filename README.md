@@ -65,13 +65,13 @@ sessioninfo::session_info()
     ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
     ##  version  R version 3.6.1 (2019-07-05)
-    ##  os       Debian GNU/Linux 9 (stretch)
+    ##  os       Solus 4.0 Fortitude         
     ##  system   x86_64, linux-gnu           
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
-    ##  tz       Etc/UTC                     
+    ##  tz       Europe/Berlin               
     ##  date     2019-08-23                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
@@ -96,5 +96,5 @@ sessioninfo::session_info()
     ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
     ## 
-    ## [1] /usr/local/lib/R/site-library
-    ## [2] /usr/local/lib/R/library
+    ## [1] /home/aaron/R/x86_64-solus-linux-gnu-library/3.6
+    ## [2] /usr/lib64/R/library

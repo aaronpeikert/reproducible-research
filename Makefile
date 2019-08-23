@@ -20,7 +20,7 @@ clean:
 README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
-rr-flow.pdf: rr-flow.Rmd random
+rr-flow.pdf: rr-flow.Rmd random reproducible-research.bib
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
 random: R/random35.md R/random36.md
