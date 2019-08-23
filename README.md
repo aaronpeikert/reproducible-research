@@ -1,3 +1,6 @@
+[![licensebuttons
+by](https://licensebuttons.net/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/4.0)
+
 This is the accompanying GitHub repository to a work in progress paper,
 its abstract reads:
 
