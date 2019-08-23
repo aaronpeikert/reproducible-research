@@ -16,8 +16,8 @@ affiliation:
     institution   : "Center for Lifespan Psychology, Max Planck Institute for Human Development, Berlin, Germany"
   - id            : "2"
     institution   : "Humboldt-Universität zu Berlin"
-  - id			  : "3"
-  	institution   : "Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany & London, U.K." 
+  - id            : "3"
+    institution   : "Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany & London, U.K." 
 
 authornote: |
 
