@@ -17,7 +17,7 @@ clean:
 	rm -rf kitematic
 .PHONY: clean
 
-README.md: README.Rmd
+README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
 rr-flow.html: rr-flow.Rmd
