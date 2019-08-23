@@ -45,6 +45,8 @@ output            : papaja::apa6_pdf
 knitr::opts_chunk$set(echo = TRUE)
 if(!require("pacman"))install.packages("pacman")
 pacman::p_load("here", "tidyverse")
+
+knitr::read_chunk(here("R", "random.R"))
 ```
 
 ! TODO - Unterschied zwischen computational, empirical, and statistical reproducibility (cf. Stodden et al., 2014)
@@ -178,14 +180,18 @@ sample(1:10, 5)
 
 The usual expectation is that this code delivers the same pseudo-random five numbers regardless of the operating system or R-Version (due to `set.seed()`). Using docker, we can start an image which contains the R-Version 3.5.0, and execute the code there.
 
-```{bash, eval=FALSE}
-docker run --rm rocker/r-ver:3.5.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
+```{r random, eval=FALSE}
+```
+
+```{r, child="R/random35.md"}
 ```
 
 Surprisingly in an image with a more recent version of R (3.6.0), this results in another sample:
 
-```{bash, eval=FALSE}
-docker run --rm rocker/r-ver:3.6.0 Rscript -e "set.seed(1234);sample(1:10, 5)"
+```{r random, eval=FALSE}
+```
+
+```{r, child="R/random36.md"}
 ```
 
 Note that this is the intended behavior and the result of a [bugfix](https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494) in the random number generator implemented from R 3.6.0 upwards.

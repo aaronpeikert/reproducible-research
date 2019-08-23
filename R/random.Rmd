@@ -1,0 +1,11 @@
+---
+output:
+  md_document
+---
+
+```{r setup, include=FALSE}
+knitr::read_chunk("random.R")
+```
+
+```{r random, echo=FALSE, hold=TRUE}
+```
