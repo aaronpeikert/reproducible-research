@@ -3,6 +3,8 @@ Aaron Peikert[![ORCID
 iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0001-7813-818X)
 and Andreas Brandmaier [![ORCID
 iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982).
+[![licensebuttons
+by](https://licensebuttons.net/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/4.0)
 
 # Abstract
 
