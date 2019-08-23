@@ -1,40 +1,32 @@
-This is the acompanion github repository to a work in progress paper,
-its abstacts reads:
+This is the accompanying GitHub repository to a work in progress paper,
+its abstract reads:
 
-In this tutorial, we describe a principled workflow to ensure
-reproducible research in R-based environments. The workflow relies on
-the interplay of various open-source software tools including Rmarkdown,
+In this tutorial, we describe a principled workflow to ensure long-term
+reproducibility of R-based data analyses. The workflow utilizes
+established tools and practices from software engineering. It combines
+the benefits of various open-source software tools including Rmarkdown,
 git, make and docker whose interplay ensures seamless integration of
 version management, (APA-conformable) dynamic report generation and full
-cross-platform computational reproducibility. The workflow ensures the
-primary goals that 1) the reporting of analysis results is perfectly
-consistent with the actual analysis results (dynamic report generation),
-the analysis exactly reproduces at a later time even if the computing
-and software platform is updated or changed (computational
-reproducibility), and 3) intermediate or post-publication changes are
-tracked, marked, and documented while earlier versions of both data and
-code remain accessible. While dynamic document generation is
-increasingly recognized as a tool for reproducible analyses, we
-demonstrate with practical examples that dynamic documents are not
-sufficient to ensure computational reproducibility.
-
-Reproducible Research has become the minimal standard for scientific
-work \[@hardwicketome.DataAvailabilityReusability\] in recent years. The
-following tutorial aims to outline a workflow that guarantees not only a
-reasonable standard of reproducibility but also decreases the burden of
-maintaining software and code for the researcher and her colleagues. The
-authors’ believe that integrating tools from software engineering in the
-process of scientific reporting to enhance reproducibility is crucial
-and give guidelines for the practitioner to use them. These tools
-include software for literate programming, version control, dependency
-tracking, and containerization. If implemented, such workflow enables
-the researcher to transparently create, dynamically render, and publicly
-share reports, which she and her colleagues can trust to reproduce
-later, regardless of operating system or software version.
+cross-platform and long-term computational reproducibility. The workflow
+ensures meeting the primary goals that 1) the reporting of analysis
+results is perfectly consistent with the actual analysis results
+(dynamic report generation), the analysis exactly reproduces at a later
+time even if the computing and software platform is updated or changed
+(computational reproducibility), and 3) changes at any time (during
+development and post-publication) are tracked, tagged, and documented
+while earlier versions of both data and code remain accessible. This
+workflow not only ensures computational reproducibility but increases
+productivity by facilitating reuse by the individual researcher and the
+community. While the research community recognizes dynamic document
+generation as a tool to ensure reproducibility, we demonstrate with
+practical examples that dynamic documents alone are not sufficient to
+ensure long-term computational reproducibility.
 
 # Compile
 
 ## Usual Way
+
+Requires: `Git`, `RStudio`, `pandoc`, `pandoc-citeproc` & `rmarkdown`.
 
 Open RStudio -\> File -\> New Project -\> Version Control -\> Git
 
@@ -73,7 +65,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Europe/Berlin               
-    ##  date     2019-08-20                  
+    ##  date     2019-08-23                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -85,7 +77,7 @@ sessioninfo::session_info()
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.1)
     ##  here        * 0.1     2017-05-28 [1] CRAN (R 3.6.1)
     ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.1)
-    ##  knitr         1.23    2019-05-18 [1] CRAN (R 3.6.1)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.1)
     ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.1)
