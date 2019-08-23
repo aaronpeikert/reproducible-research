@@ -7,7 +7,7 @@ ifeq ($(DOCKER),TRUE)
 	current_dir=/home/rstudio
 endif
 
-all: rr-flow.html README.md
+all: rr-flow.pdf README.md
 
 build: Dockerfile
 	sudo docker build -t $(projekt) .
@@ -20,5 +20,5 @@ clean:
 README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
-rr-flow.html: rr-flow.Rmd
+rr-flow.pdf: rr-flow.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
