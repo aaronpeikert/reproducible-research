@@ -29,7 +29,7 @@ wordcount         : "X"
 bibliography      : ["Reproducible-Research.bib"]
 
 floatsintext      : yes
-figurelist        : yes
+figurelist        : no
 tablelist         : no
 footnotelist      : no
 linenumbers       : no
