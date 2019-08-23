@@ -1,0 +1,43 @@
+---
+title: "CFCS-Reproducible-Analysis-Example"
+author: "Peikert and Brandmaier"
+date: "8/23/2019"
+output: pdf_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## Loading packages
+
+```{r}
+library(lavaan)
+library(digest)
+```
+
+## Loading data
+
+```{r}
+precomputed.digest <- "98c7e634dd7bb2ddf9d8f3972fff303365c55ac6"
+temp <- tempfile()
+download.file("http://openpsychometrics.org/_rawdata/CFCS.zip",destfile = temp)
+dat <- read.table(unz(temp, "CFCS/data.csv"), header=TRUE)
+unlink(temp)
+
+if (precomputed.digest != digest::sha1(dat)) {
+  error("Mismatch between original and current data file!")
+}
+```
+
+## Fitting the model
+
+```{r}
+model <- paste0(" G =~ ", paste(paste0("Q",1:5),collapse="+"))
+
+model.fit <- cfa(model, data=dat)
+
+fitMeasures(model.fit)[c("cfi","rmsea")]
+
+knitr::kable(lavaan::parameterEstimates(model.fit))
+```
