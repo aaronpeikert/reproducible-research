@@ -3,19 +3,21 @@ title             : "A Reproducible Data Analysis Workflow with RMarkdown, Git, 
 shorttitle        : "Reproducible Data Analysis Workflow"
 
 author: 
+  - name          : "Aaron Peikert"
+    affiliation   : "1,2"
   - name          : "Andreas Brandmaier"
-    affiliation   : "1"
+    affiliation   : "1,3"
     corresponding : yes    # Define only one corresponding author
     address       : "Max Planck Institute for Human Development, Lentzeallee 94, 14195 Berlin, Germany"
     email         : "brandmaier@mpib-berlin.mpg.de"
-  - name          : "Aaron Peikert"
-    affiliation   : "1,2"
 
 affiliation:
   - id            : "1"
     institution   : "Center for Lifespan Psychology, Max Planck Institute for Human Development, Berlin, Germany"
   - id            : "2"
     institution   : "Humboldt-Universität zu Berlin"
+  - id			  : "3"
+  	institution   : "Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany & London, U.K." 
 
 authornote: |
 
@@ -66,9 +68,9 @@ Containerization
 
 The scientific community widely recognizes that these tools enhance reproducibility, and provides guidelines for their use (Literate Programming: @ruleTenSimpleRules2019; Version Control: @barbaHardRoadReproducibility2016; Dependency Management: @askrenUsingMakeReproducible2016; Containerization: @clyburne-sherinComputationalReproducibilityContainers2018). However, only a workflow using them in unison allows confidence in reproducing a scientific report. Within the community of users of the R Programming Language for each purpose, a specific software solution is the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the productivity of the researcher. Each of these software solutions is highly flexible and powerful, so to master them thoroughly often years of practice are required. Luckily the researcher can learn the minimal valuable subset needed to ensure reproducibility with little practice.
 
-We believe that for sufficient chances of reproducibility, proper documentation is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker` and their interaction.
+We believe that for sufficient chances of reproducibility, proper documentation is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker`.
 
-The first step towards reproducibility is to have an R-script or R-markdown, that runs on the own computer without error. A process, we assume, that is familiar to the reader. A next step is to make sure that all files relevant for the analysis can be moved to another computer. To archive that it is essential that all files are within one folder (and subfolders within it) and all paths are relative to that folder. A friendly solution to that problem are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package.
+The first step towards long-term reproducibility is to have an R-script or R-markdown, that runs on a local computer without error. A process, we assume, that is familiar to the reader. A next step is to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is essential that all files are within one folder (or, subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package.
 
 ```{r, eval=FALSE}
 # BAD
@@ -79,11 +81,14 @@ iris <- read.csv("data/iris.csv")
 iris <- read.csv(here("data", "iris.csv"))
 ```
 
-Sometimes external requirements mean that the data cannot be stored and shared with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If this way of dividing data and scripts into different databases is unavoidable, we recommend that you crosscheck using checksums before loading data. To do this, a checksum must be created and filed at the time of the original analysis, and at the time of reproduction the current checksum must be compared with the filed checksum.
-
-! TODO - Beispiel einbauen?
-
 This folder, where everything resides that you need for analysis (code and data), is referred to as a Project. Working with Projects is exceptionally comfortable with RStudio an integrated development environment (IDE) for R. It is usefull to organize this Project in way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 @marwickPackagingDataAnalytical2018].
+
+Sometimes external requirements mean that the data cannot be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If this way of dividing data and scripts into different databases is unavoidable, we recommend that you crosscheck using checksums before loading data. To do this, a checksum must be created and filed at the time of the original analysis, and at the time of reproduction the current checksum must be compared with the stored checksum (also called a "hash", e.g., using the functions provided in package `digest`).
+
+```{r}
+x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
+digest::sha1(x)
+```
 
 Reproducibility at a basic level assumes that results are the same if neither script nor data have changed. It is often not trivial to find out whether anything has changed and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the files when added to a commit. Each commit has a unique identifier (a hash). Going back to one state is as easy as finding the hash of the commit. Finding a specific hash can be made even easier by tagging specific commits, e.g., as "submission," "preprint," "publication." This collection of commits is called "repository," which is almost the same as your Project.
 
