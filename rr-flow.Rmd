@@ -275,6 +275,20 @@ rr-flow.html: rr-flow.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 ```
 
+# Set up Workflow
+
+This workflow directly relies on three software packages: `git`, `make` and `docker`. Of course it depends also indirectly on R, RStudio & RMarkdown, but they do not need to be installed. The installation process depends on the operating system, e.g. on OS X, make is allways availible or on Linux git & make are often allready installed. In the following section we share what have experienced as the easiest options.
+
+## Windows
+
+Windows has the bigest hurdle to install what is needed. However there is a great package manager for Windows called chocolately which you can install from: [https://chocolatey.org](https://chocolatey.org).
+After having installed chocolately, all dependencies can be installed in an **admin terminal** via:
+
+```{bash, eval=FALSE}
+choc install git make docker-desktop
+```
+
+
 # Summary
 
 The overarching goal of this paper was to provide an easy to use workflow, that allows confidence in reproducibility. This workflow can be almost unfailingly trusted to be replicable with the following commands:
