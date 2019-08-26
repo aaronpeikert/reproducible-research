@@ -24,7 +24,7 @@ authornote: |
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
 keywords          : "keywords"
-wordcount         : "`r wordcountaddin::word_count(here::here('rr-flow.Rmd'))`"
+wordcount         : "`r tryCatch(wordcountaddin::word_count(here::here('rr-flow.Rmd')), error=function(err) 'NA')`"
 
 bibliography      : ["reproducible-research.bib"]
 
@@ -287,7 +287,6 @@ After having installed chocolately (and restarted the computer), all dependencie
 ```{bash, eval=FALSE}
 choco install git make docker-desktop
 ```
-
 
 # Summary
 
