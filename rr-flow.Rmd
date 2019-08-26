@@ -24,7 +24,7 @@ authornote: |
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
 keywords          : "keywords"
-wordcount         : "X"
+wordcount         : "`r wordcountaddin::word_count(here::here('rr-flow.Rmd'))`"
 
 bibliography      : ["reproducible-research.bib"]
 
