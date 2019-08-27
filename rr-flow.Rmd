@@ -24,7 +24,7 @@ authornote: |
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
 keywords          : "keywords"
-wordcount         : "`r wordcountaddin::word_count(here::here('rr-flow.Rmd'))`"
+wordcount         : "`r tryCatch(wordcountaddin::word_count(here::here('rr-flow.Rmd')), error=function(err) 'NA')`"
 
 bibliography      : ["reproducible-research.bib"]
 
@@ -282,12 +282,11 @@ This workflow directly relies on three software packages: `git`, `make` and `doc
 ## Windows
 
 Windows has the bigest hurdle to install what is needed. However there is a great package manager for Windows called chocolately which you can install from: [https://chocolatey.org](https://chocolatey.org).
-After having installed chocolately, all dependencies can be installed in an **admin terminal** via:
+After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** via:
 
 ```{bash, eval=FALSE}
-choc install git make docker-desktop
+choco install git make docker-desktop
 ```
-
 
 # Summary
 
