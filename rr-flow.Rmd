@@ -47,6 +47,7 @@ if(!require("pacman"))install.packages("pacman")
 pacman::p_load("here", "tidyverse")
 
 knitr::read_chunk(here("R", "random.R"))
+knitr::read_chunk(here("R", "bootstrap.R"))
 ```
 
 ! TODO - Unterschied zwischen computational, empirical, and statistical reproducibility (cf. Stodden et al., 2014)
@@ -196,7 +197,21 @@ Surprisingly in an image with a more recent version of R (3.6.0), this results i
 
 Note that this is the intended behavior and the result of a [bugfix](https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494) in the random number generator implemented from R 3.6.0 upwards.
 
-Such change prevents many reports from beeing replicated, if they contain, e.g., multiple imputations, bootstrapping, simulations studies, graphics with random jitter, Bayesian estimations using sampling algorithms (such as Markov Chain Monte Carlo), or similar technics which involve random sampling. However only rarelydoes an analysis depend only on base R, often a considerable number of packages is required, and they will most likely more often introduce breaking changes with updates. The whole endeavor of reproducibility is therefore at stake, every time an update is rolled out. To ensure long-term reproducibility, `docker` replicates the original computational environment of an analysis exactly. However, we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; but full computational reproducibility is only achieved if the originally used software version(s) are documented. Among other things, this allows to trace back recent updates as to what change in what software caused a non-replication of the original results. Quite to the contrary with solutions like docker, it gets more comfortable than ever to safely update to new versions, by just bumping the R Version number of the docker image.
+Such change prevents many reports from beeing replicated, if they contain, e.g., multiple imputations, bootstrapping, simulations studies, graphics with random jitter, Bayesian estimations using sampling algorithms (such as Markov Chain Monte Carlo), or similar technics which involve random sampling. A result may be that a in one version the result of a bootstrap-test is significant and in another version is not anymore:
+
+```{r bootstrap, echo=TRUE, eval=FALSE}
+```
+
+```{r, child="R/bootstrap35.md"}
+```
+
+```{r bootstrap, echo=TRUE, eval=FALSE}
+```
+
+```{r, child="R/bootstrap36.md"}
+```
+
+However only rarelydoes an analysis depend only on base R, often a considerable number of packages is required, and they will most likely more often introduce breaking changes with updates. The whole endeavor of reproducibility is therefore at stake, every time an update is rolled out. To ensure long-term reproducibility, `docker` replicates the original computational environment of an analysis exactly. However, we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; but full computational reproducibility is only achieved if the originally used software version(s) are documented. Among other things, this allows to trace back recent updates as to what change in what software caused a non-replication of the original results. Quite to the contrary with solutions like docker, it gets more comfortable than ever to safely update to new versions, by just bumping the R Version number of the docker image.
 
 This convenience is possible to the efforts of the [rocker project](https://github.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a] which provides docker images preconfigured with an R-installation of a fixed R-version. These rely on MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R-Packages, which is fixed to the last date the R-version of the image was the most recent. Building upon these rocker-images researchers can build there own docker-images with the required R-packages. The rocker project also provides images which do include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the `rmarkdown` package with Latex (`rocker/verse`). Since the describes workflow relies on `rmarkdown` we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
 

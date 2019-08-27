@@ -1,0 +1,23 @@
+---
+output:
+  md_document
+---
+
+```{r setup, include=FALSE}
+knitr::read_chunk("bootstrap.R")
+```
+
+```{r boot-library, include=FALSE}
+```
+
+```{r load-data, include=FALSE}
+```
+
+```{r define-function, include=FALSE}
+```
+
+```{r find-seed, include=FALSE}
+```
+
+```{r bootstrap, echo=FALSE, hold=TRUE}
+```
