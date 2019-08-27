@@ -33,3 +33,18 @@ R/random35.md: R/random.R R/random.Rmd
 R/random36.md: R/random.R R/random.Rmd
 	sudo docker run --rm -v $(home_dir):/home/rstudio rocker/verse:3.6.1 \
 	Rscript -e 'rmarkdown::render("/home/rstudio/R/random.Rmd", output_file = "/home/rstudio/$@")'
+
+gbootstrap35:
+	sudo docker run --rm -v $(home_dir):/home/rstudio rocker/verse:3.5.0 \
+	Rscript -e 'source("/home/rstudio/R/bootstrap-02-case-generator.R");'
+
+
+
+bootstrap35:
+	sudo docker run --rm -v $(home_dir):/home/rstudio rocker/verse:3.5.0 \
+	Rscript -e 'source("/home/rstudio/R/bootstrap-03-fit.R");'
+
+
+bootstrap36:
+	sudo docker run --rm -v $(home_dir):/home/rstudio rocker/verse:3.6.1 \
+	Rscript -e 'source("/home/rstudio/R/bootstrap-03-fit.R");'
