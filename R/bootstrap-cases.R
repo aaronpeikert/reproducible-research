@@ -3,7 +3,7 @@
 library("boot")
 
 # load data
-simdata <- read.csv("/home/rstudio/data/pathological-example2.csv")
+simdata <- read.csv("data/pathological-example2.csv")
 
 # function to obtain regression weights 
 bs <- function(formula, data, indices) {
@@ -12,7 +12,7 @@ bs <- function(formula, data, indices) {
   return(coef(fit)) 
 } 
 
-bcis <- c()
+bcis <- c() # initialise empty vector for loop
 seeds <- c(1:10)
 
 for (seed in seeds) {
@@ -26,5 +26,10 @@ for (seed in seeds) {
   
   bcis <- rbind(bcis,bci$bca)
 }
-
+bcis <- data.frame(conf = bcis[,1],
+                   seed = seeds,
+                   lower = bcis[,4],
+                   upper = bcis[,5])
+write.csv(bcis,
+          paste0("data/bcis-", R.version$major, ".", R.version$minor, ".csv"))
 #save(bci,file = paste0("results",".Rda"))
