@@ -292,16 +292,40 @@ rr-flow.html: rr-flow.Rmd
 
 # Set up Workflow
 
-This workflow directly relies on three software packages: `git`, `make` and `docker`. Of course it depends also indirectly on R, RStudio & RMarkdown, but they do not need to be installed. The installation process depends on the operating system, e.g. on OS X, make is allways availible or on Linux git & make are often allready installed. In the following section we share what have experienced as the easiest options.
+This workflow directly relies on three software packages: `git`, `make` and `docker`. Of course it depends also indirectly on R, RStudio & RMarkdown, but they do not need to be installed. The installation process depends on the operating system, e.g. on OS X, make is allways availible or on Linux git & make are often allready installed. In the following section we share what have experienced as the easiest options, however in the past how docker should be installed has changed several times, so when in doubt search the internet with: `how to install docker on [your os]`.
 
 ## Windows
 
-Windows has the bigest hurdle to install what is needed. However there is a great package manager for Windows called chocolately which you can install from: [https://chocolatey.org](https://chocolatey.org).
-After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** via:
+Windows has the biggest hurdle to install what is needed. An essential requirement is that you have Windows Pro, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. However, having met this requirement, there is a great package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install).
+After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows-Key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
 choco install git make docker-desktop
 ```
+
+To use `docker` you need to start Docker Desktop.
+
+## OS X
+
+As make already ships with OS X, you only need `git` and `docker-desktop`. We suggest using the package manager `homebrew`, which you can install from [https://docs.brew.sh/Installation](https://docs.brew.sh/Installation), to install `docker` (git will be installed during the installation of `homebrew`):
+
+```{bash, eval=FALSE}
+brew cask docker
+```
+
+To use `docker` you need to start Docker Desktop.
+
+## Linux
+
+There is a pletora of linux distribuation and almost as many package managers. However to our knowledge there is no (recent) Linux where `git`, `make` and `docker` are not availible. Example for Ubuntu:
+
+```{bash, eval=FALSE}
+apt install git make docker 
+```
+
+Replace `apt` with your package manager. Possiblie you need elevated rights in this case add `sudo` before that.
+
+An alternative to `docker` on Linux is `singularity`. Just replace any docker calls with `singularity docker`, because singularity fully supports docker-images. A possible advantage is that singularity works well in  HPC environments and on old Linux versions, the downside is that `singularity` is only availibe on Linux.
 
 # Summary
 
@@ -314,7 +338,7 @@ make build
 make all DOCKER=TRUE
 ```
 
-That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software for years or in most cases, decades. On the way, it makes transparent how statistical results relate to the software that created them and enables, through that transparency, reuse by other researchers. 
+That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. On the way, it makes transparent how statistical results relate to the software that created them and enables, through that transparency, reuse by other researchers. 
 
 Each tool reduces the number of ways things can go wrong. Dynamic reporting with `RMarkdown` fixes the relation between statistical report and statistical results; Version control with `git` fixes the version of the used files; Dependency management with `make` fixes relation of files and their processing; Containerization with `docker` fixes the software environment. This tightening of loose ends, we believe, does not restrict the researcher but enables her to operate on a solid basis to deliver sound research.
 
