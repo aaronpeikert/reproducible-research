@@ -365,9 +365,9 @@ make build
 make all DOCKER=TRUE
 ```
 
-That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. On the way, it makes transparent how statistical results relate to the software that created them and enables, through that transparency, reuse by other researchers. 
+That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. On the way, it makes transparent how statistical results depend upon the software that created them and enables, through that transparency, reuse by other researchers. 
 
-Each tool reduces the number of ways things can go wrong. Dynamic reporting with `RMarkdown` fixes the relation between statistical report and statistical results; Version control with `git` fixes the version of the used files; Dependency management with `make` fixes relation of files and their processing; Containerization with `docker` fixes the software environment. This tightening of loose ends, we believe, does not restrict the researcher but enables her to operate on a solid basis to deliver sound research.
+Each tool reduces the number of ways things can go wrong. Dynamic reporting with `RMarkdown` guarantuees consistency between computational results and their reporting; Version control with `git` guarantuees permanence and consistency across multiple versions of data and code; Dependency management with `make` guarantuees defined entry-points and dependency resolition; Containerization with `docker` guarantuees reproducibility of the full computational environment. This tightening of loose ends, we believe, does not restrict researchers but enables them to operate on a solid basis to deliver sound research.
 
 ## Related approaches
 
