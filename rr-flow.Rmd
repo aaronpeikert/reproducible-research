@@ -50,6 +50,8 @@ knitr::read_chunk(here("R", "random.R"))
 knitr::read_chunk(here("R", "bootstrap.R"))
 ```
 
+# Introduction
+
 In this tutorial, we describe a principled workflow to ensure long-term reproducibility of
 R-based data analyses. In this context, reproducibility means to us that scientific results together with their computational scientific workflows are reported fully, transparently and sustainably available, such that the workflow can be re-run by a different person and/or later in time and the results will be identical to the ones intially reported. Here, we combine four tools from the computer sciences, whose interplay can guarantuee full and sustainable computational reproducibility of data analyses. The major four elements are:
 
@@ -71,67 +73,75 @@ Containerization
 
 The scientific community widely recognizes that these tools enhance reproducibility, and provides guidelines for their use (Literate Programming: @ruleTenSimpleRules2019; Version Control: @barbaHardRoadReproducibility2016; Dependency Management: @askrenUsingMakeReproducible2016; Containerization: @clyburne-sherinComputationalReproducibilityContainers2018). However, only a workflow using them in unison allows confidence in reproducing a scientific report. Within the community of users of the R Programming Language for each purpose, a specific software solution is the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the productivity of the researcher. Each of these software solutions is highly flexible and powerful, so to master them thoroughly often years of practice are required. Luckily the researcher can learn the minimal valuable subset needed to ensure reproducibility with little practice.
 
-We believe that for sufficient chances of reproducibility, proper documentation is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker`.
+We believe that for sufficient chances of long-term reproducibility, proper documentation is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker`.
 
-The first step towards long-term reproducibility is to have an R-script or R-markdown, that runs on a local computer without error. A process, we assume, that is familiar to the reader. A next step is to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is essential that all files are within one folder (or, subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package.
+# Project organization
+
+The first step towards reproducibility is to have an R-script or R-markdown as primary entry point for the analysis, that runs on a local computer without error. A process, we assume, that is familiar to the reader. A next step is to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is essential that all files are within one folder (or, subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package.
 
 ```{r, eval=FALSE}
 # BAD
-iris <- read.csv("/home/aaron/Documents/reproducible-research/data/iris.csv")
+iris <- read.csv("/home/aaron/reproducible-research/data/iris.csv")
 # GOOD
 iris <- read.csv("data/iris.csv")
 # BETTER
 iris <- read.csv(here("data", "iris.csv"))
 ```
 
-This folder, where everything resides that you need for analysis (code and data), is referred to as a Project. Working with Projects is exceptionally comfortable with RStudio an integrated development environment (IDE) for R. It is usefull to organize this Project in way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 @marwickPackagingDataAnalytical2018].
+This folder, where everything resides that you need for analysis (code and data), is referred to as a 'project'. Working with projects is exceptionally comfortable with RStudio, an integrated development environment (IDE) for R. It is useful to organize a data-analysis project in way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 @marwickPackagingDataAnalytical2018]; there are also tools that automatize the standardized creation of folder structures such as `workflowr` [@workflowr].
 
-Sometimes external requirements mean that the data cannot be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If this way of dividing data and scripts into different databases is unavoidable, we recommend that you crosscheck using checksums before loading data. To do this, a checksum must be created and filed at the time of the original analysis, and at the time of reproduction the current checksum must be compared with the stored checksum (also called a "hash", e.g., using the functions provided in package `digest`).
+Sometimes external requirements make it impossible that the data cannot be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If this way of dividing data and scripts into different databases is unavoidable, we recommend that you crosscheck using checksums before loading data. To do this, a checksum must be created and filed at the time of the original analysis, and at the time of reproduction the current checksum must be compared with the stored checksum (also called a "hash", e.g., using the functions provided in package `digest`).
 
 ```{r}
 x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
-digest::sha1(x)
+checksum <- digest::sha1(x)
+if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1") 
+	error("Wrong data file loaded or data has been tempered with!")
 ```
 
-Reproducibility at a basic level assumes that results are the same if neither script nor data have changed. It is often not trivial to find out whether anything has changed and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the files when added to a commit. Each commit has a unique identifier (a hash). Going back to one state is as easy as finding the hash of the commit. Finding a specific hash can be made even easier by tagging specific commits, e.g., as "submission," "preprint," "publication." This collection of commits is called "repository," which is almost the same as your Project.
+# Version Management
 
-A typical git workflow looks like that:
+Reproducibility at a basic level assumes that results remain identical if neither script nor data have changed. It is often not trivial to find out whether anything has changed over time and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the tracked files. Each commit has a unique identifier (a hash) and a human-readable description. Going back to one state is as easy as traversing the history of all commits; it is possible to visually track changes between different versions. Finding a specific version can be made even easier by tagging snapshots, e.g., as "submission," "preprint," or "publishged." This collection of snapshots is called a "repository," which ideally tracks your entire R project.
+
+A typical git workflow in the terminal looks like that:
 
 ```{bash, eval=FALSE}
-git init # to initialize git
-git add /data/iris.csv /R/analysis.R # track specific files/changes
-git commit -m "add data & analysis" # take snapshot
-# new data comes in
-git commit -a -m "complete data colections" # add (-a) and comit all changes
+git init # to initialize git in the current directory
+git add ./data/iris.csv ./R/analysis.R # track specific files/changes
+git commit -m "add data & analysis" # take snapshot with comment
+# once script or data were changed, take a new snapshot
+git commit -a -m "complete data colections" # add (-a) and commit all changes
 ```
 
-So to keep track of all changes, you only need to use `git add` & `git commit` or `git commit -a` to do both. These commands need to be executed in the `terminal`, which you can access from within Rstudio (`Shift + Alt + R`).  Rstudio also offers a graphical user interface for Git and quite likely this suffice for almost every interaction with Git.
+So to keep track of all changes on your local computer, you only need to use `git add` & `git commit` or `git commit -a` to do both. These commands need to be executed in the `terminal`, which you can access from within Rstudio (`Shift + Alt + R`).  Rstudio also offers a graphical user interface for Git and, quite likely, this interface is sufficient for almost every interaction with Git.
 
 ![Git Pane in RStudio](Images/git-pane.png)
 
-Now one can check everything that has happened (`git log`) and look at the exact state by supplying the id of the commit or the first few digits of it to `git checkout`:
+Now one can check everything that has happened (`git log`) and look at the exact state by supplying the id of the commit or the first few digits of its hash to `git checkout`:
 
 ```{bash, eval = FALSE}
 git log
 git checkout 77db06f78e
 ```
 
-Git also makes it especially easy to share and collaborate on a project with another researcher. A popular service for sharing via git is [Github](https://github.com). Just sharing Git repositories with the public is always free, private repositories (only visible to persons you invite) are [free for researcher](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, you can create a new repository where Github advises you how to upload your repository from the terminal e.g., for this repository:
+Git also makes it especially easy to share and collaborate on a project with other researchers. A popular service for sharing via git is [Github](https://github.com). Just sharing Git repositories with the public is always free, private repositories (only visible to persons you invite) are [free for researcher](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, you can create a new repository where Github advises you how to upload your repository from the terminal e.g., for this repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
 
 ```{bash, eval=FALSE}
 git remote add origin git@github.com:aaronpeikert/reproducible-research.git
 git push -u origin master
 ```
 
-`git push` or the green up arrow in the git pane uploads local updates. To download this git repo to another computer type into the terminal:
+`git push` or the green up-arrow in the git pane uploads local updates. To download this git repo to another computer type into the terminal:
 
 ```{bash, eval=FALSE}
 git clone git@github.com:aaronpeikert/reproducible-research.git
 ```
 
-Git and Github can do even more to help you to collaborate with your fellow researcher, such as formal means to track issues and their status (open/closed/resolved) and further means to managing and merging multiple, parallel versions of code (such as branches, pull requests, merges) but this is beyond the already broad scope of this tutorial. Another benefit of using Git and Github is that experimentation is highly encouraged since you can go back to any state quickly and even when you lose access to the file on your computer, everything is backed up on the Github servers.
+Git and Github can do even more to help you to collaborate with your fellow researchers, such as formal means to track issues and their status (open/closed/resolved) and further means to managing and merging multiple, parallel versions of code (such as branches, pull requests, merges) but this is beyond the already broad scope of this tutorial. Another benefit of using Git and Github is that experimentation is highly encouraged since you can go back to any state quickly and even when you lose access to the file on your computer, everything is backed up on the Github servers.
 
-Even when you have obtained a version of the Project, and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets comfortable with `make`, since it allows you to create (computational) recipes too (re-)create files. A downside of `make` is, that the installation on Windows is not straightforward. However, if `docker` (see later sections) is available this is not an issue, since `make` ships with (almost) every `docker` image.
+# Dependency Tracking and Management
+
+Even when you have obtained a version of the project, and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets comfortable with `make`, since it allows you to create (computational) recipes too (re-)create files. A downside of `make` is, that the installation on Windows is not straightforward. However, if `docker` (see later sections) is available this is not an issue, since `make` ships with (almost) every `docker` image.
 
 A `Makefile` obeys the following scheme:
 
@@ -166,11 +176,13 @@ cd iris
 make all
 ```
 
-However, this relies on the crucial assumption that your computational environments are sufficiently compatible, e.g., everything needed is installed (R + Packages) at a compatible version of the software.
+However, this relies on the crucial assumption that your computational environments are identically or sufficiently compatible, e.g., all software dependencies are installed (R and all additional R Packages) and no updates or other changes to the computational environment break or alter your analysis. As we will see shortly, this is ensuring full computational reproducibility is necessary at a deeper level than just providing the workflow itself.
+
+# Containerization
 
 `docker` is a tool that allows to precisely state what computational environment an analysis relies on and recreates this environment automatically on most operating systems (Windows, OS X & Linux). `docker` does that, by setting up a virtual computer on which it executes a series of commands (e.g., installing software). It then saves the resulting state of the virtual computer in what is called an "image." This image can be started and execute commands, e.g., running an R-script or `make`. A running instance of an image is called a container. An image can be transferred and executed on any machine that has docker installed. Unregarding the machine executing the container, from the perspective of a program running inside the container, it always looks identical. There are essential differences to a traditional virtual machine, but thinking about a docker container as a computer running inside your computer is still a plausible mental model. The most important advantage over traditional virtual machines is that container are lightweight, meaning they start fast and don't need much storage. Docker achieves that by reusing large parts of the hosts operating system (how much is varying widely between Linux, OS X & Windows).
 
-While the R programming language is considered stable and much effort is put into backward compatibility, sometimes even basic functions like `sample()` change their behavior from one version to another.
+While the R programming language is considered stable and much effort is put into backward compatibility, sometimes even basic functions like `sample()`, to randomly sample from a set, change their behavior from one version to another. To ensure reproducibility in analyses based on a computers pseudo random number generator (PRNG), it is good practice to rely on fixed PRNG seeds, which are numeric values that set the PRNG into a deterministic state, i.e., the sequence of random numbers reproduces exactly.
 
 Consider the following R-code:
 
@@ -187,7 +199,7 @@ The usual expectation is that this code delivers the same pseudo-random five num
 ```{r, child="R/random35.md"}
 ```
 
-Surprisingly in an image with a more recent version of R (3.6.0), this results in another sample:
+Surprisingly in an image with a more recent version of R (3.6.0), this results in another sample despite the identical seed:
 
 ```{r random, eval=FALSE}
 ```
@@ -197,7 +209,7 @@ Surprisingly in an image with a more recent version of R (3.6.0), this results i
 
 Note that this is the intended behavior and the result of a [bugfix](https://bugs.r-project.org/bugzilla/show_bug.cgi?id=17494) in the random number generator implemented from R 3.6.0 upwards.
 
-Such change prevents many reports from beeing replicated, if they contain, e.g., multiple imputations, bootstrapping, simulations studies, graphics with random jitter, Bayesian estimations using sampling algorithms (such as Markov Chain Monte Carlo), or similar technics which involve random sampling. A result may be that a in one version the result of a bootstrap-test is significant and in another version is not anymore:
+Such change may render analyses run on previous R versions strictly not reproducible if they contain, e.g., multiple imputations, bootstrapping, simulations studies, graphics with random jitter, Bayesian estimations using sampling algorithms (such as Markov Chain Monte Carlo), or similar techniques that involve random sampling. We would like to illustrate this with a more concrete example (the full R code to reproduce this non-reproducibility is provided in the github repository of this manuscript). Using a simulated dataset with two variables ´x´ and ´y´, we ran a linear regression model with R's ´lm()´ function regressing ´x´ on ´y´. Using the ´boot´ package [@boot], we bootstrapped the 95% confidence intervals around the regression estimate with 1000 bootstrap samples to evaluate whether zero was inside the confindence interval. To make the analysis reproducible, we set a random seed before we bootstrapped. We ran this once in R 3.5.0:
 
 ```{r bootstrap, echo=TRUE, eval=FALSE}
 ```
@@ -205,13 +217,17 @@ Such change prevents many reports from beeing replicated, if they contain, e.g.,
 ```{r, child="R/bootstrap35.md"}
 ```
 
+And then, we ran the identical script with identical seed in R 3.6.1:
+
 ```{r bootstrap, echo=TRUE, eval=FALSE}
 ```
 
 ```{r, child="R/bootstrap36.md"}
 ```
 
-However only rarelydoes an analysis depend only on base R, often a considerable number of packages is required, and they will most likely more often introduce breaking changes with updates. The whole endeavor of reproducibility is therefore at stake, every time an update is rolled out. To ensure long-term reproducibility, `docker` replicates the original computational environment of an analysis exactly. However, we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; but full computational reproducibility is only achieved if the originally used software version(s) are documented. Among other things, this allows to trace back recent updates as to what change in what software caused a non-replication of the original results. Quite to the contrary with solutions like docker, it gets more comfortable than ever to safely update to new versions, by just bumping the R Version number of the docker image.
+As we see from these R outputs, the confidence intervals once include zero and once do not include zero. Please note that one could discuss deeper issues about null hypothesis significance testing here but we would simply like to stress the point that computational reproducibility in the strict sense needs to capture the full computational environment. 
+
+However only rarely does an analysis depend only on base R, often a considerable number of packages is required, and they will most likely more often introduce breaking changes with updates. The whole endeavor of reproducibility is therefore at stake, every time an update is rolled out. To ensure long-term reproducibility, `docker` replicates the original computational environment of an analysis exactly. However, we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; but full computational reproducibility is only achieved if the originally used software version(s) are documented. Among other things, this allows to trace back recent updates as to what change in what software caused a non-replication of the original results. Quite to the contrary with solutions like docker, it gets more comfortable than ever to safely update to new versions, by just bumping the R Version number of the docker image.
 
 This convenience is possible to the efforts of the [rocker project](https://github.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a] which provides docker images preconfigured with an R-installation of a fixed R-version. These rely on MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R-Packages, which is fixed to the last date the R-version of the image was the most recent. Building upon these rocker-images researchers can build there own docker-images with the required R-packages. The rocker project also provides images which do include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the `rmarkdown` package with Latex (`rocker/verse`). Since the describes workflow relies on `rmarkdown` we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
 
@@ -290,7 +306,7 @@ rr-flow.html: rr-flow.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 ```
 
-# Set up Workflow
+# Setting Up the Workflow
 
 This workflow directly relies on three software packages: `git`, `make` and `docker`. Of course it depends also indirectly on R, RStudio & RMarkdown, but they do not need to be installed. The installation process depends on the operating system, e.g. on OS X, make is allways availible or on Linux git & make are often allready installed. In the following section we share what have experienced as the easiest options, however in the past how docker should be installed has changed several times, so when in doubt search the internet with: `how to install docker on [your os]`.
 
@@ -357,6 +373,10 @@ In our own experience, it is often not possible to convince all co-authors to sw
 ## Sharing reproducible workflows
 
 How to best share a reproducible workflow? We believe that, ideally, a service provider should be found that guarantuees permanent and reliable hosting of the reproducible workflow, such as the Open Science Framework [@fosterOpenScienceFramework2017] or PsychData (citation needed), that is independ of Gihub, Docker Hub & MRAN. Second, to ensure that other users are legally able to benefit from the shared materials, authors must choose an appropriate license format. Typically, there is currently no single license that works for code, data, and media (such as text or figures). We encourage authors to choose appropriate license forms that do not hinder others from freely downloading, using, and moifying the shared workflows and materials while, at the same time, ensuring recognition for the time and effort invested in creating the workflow in the first place. In our experience, the Creative Commons license (CC-BY) is often appropriate for sharing texts, rmarkdown files, generated figures, and other media whereas scripts and any other computer code is often best shared according to the MIT license. Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work. These licenses are also in line with the recommendations by the Reproducibile Research Standard (see @stoddenEnhancingReproducibilityComputational2016).
+
+## Outlook
+
+The presented workflow leverages various existing tools that are partly integrated into Rstudio already. Parts of the proposed workflow have been integrated into stand-alone packages (such as @workflowr or @holepunch) but they are either incomplete or rely on propietary service providers. We hope that with increasing awareness of the problems associated with computational reproducibility, the increased demand for unified and open solutions, will lead to an even better integration of existing tools to allow reproducible workflows to become a standard in the psychological research.
 
 \newpage
 
