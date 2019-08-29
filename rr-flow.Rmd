@@ -99,6 +99,10 @@ if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1")
 	error("Wrong data file loaded or data has been tempered with!")
 ```
 
+# Literate Programming
+
+Typically, the translation of the human-readable summary of ones computational results, be it an internal report, a presentation, or a journal manuscript, is time-consuming and error-prone. To not only create fully reproducible results but also fully reproducible reports, one needs to resort to the Literate Programming paradigm [@knuth1984literate], in which human-readable language and computer-code are interspersed to create dynamic documents whose order follow the logic of thought rather then the order of the computer. R-Markdown is a simple markup language to create dynamic documents with embedded chunks of R code that can be exported to standard formats such as documents (docx, rtf, epub), presentations (ppt, html) or websites (html).  
+
 # Version Management
 
 Reproducibility at a basic level assumes that results remain identical if neither script nor data have changed. It is often not trivial to find out whether anything has changed over time and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the tracked files. Each commit has a unique identifier (a hash) and a human-readable description. Going back to one state is as easy as traversing the history of all commits; it is possible to visually track changes between different versions. Finding a specific version can be made even easier by tagging snapshots, e.g., as "submission," "preprint," or "publishged." This collection of snapshots is called a "repository," which ideally tracks your entire R project.
