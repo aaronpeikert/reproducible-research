@@ -347,7 +347,7 @@ An alternative to `docker` on Linux is `singularity`. Just replace any docker ca
 
 We provide a reproducible analysis as working example via github as a testbed for users. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a succesful implementation of our workflow including downloading external data, comparing their state using a checksum, and running a confirmatory factor analysis on the first few items using lavaan [@lavaan2012]. Once all mentioned tools are installed on a computer, the following few steps are necessary to reproduce our analysis:
 
-```{bash}
+```{bash, eval=FALSE}
 git clone https://github.com/aaronpeikert/workflow-showcase.git
 cd reproducible-research
 make build
