@@ -345,17 +345,19 @@ An alternative to `docker` on Linux is `singularity`. Just replace any docker ca
 
 ## Reproducing an Analysis
 
+The overarching goal of this paper was to provide an easy to use workflow, that allows confidence in reproducibility. T
 We provide a reproducible analysis as working example via github as a testbed for users. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a succesful implementation of our workflow including downloading external data, comparing their state using a checksum, and running a confirmatory factor analysis on the first few items using lavaan [@lavaan2012]. Once all mentioned tools are installed on a computer, the following few steps are necessary to reproduce our analysis:
 
-```{bash}
+```{bash, eval=FALSE}
 
 TODO: Aaron
-
+git clone https://github.com/aaronpeikert/reproducible-research-example.git
+cd reproducible-research-example
+make build
+make all DOCKER=TRUE
 ```
 
-# Summary
-
-The overarching goal of this paper was to provide an easy to use workflow, that allows confidence in reproducibility. This workflow can be almost unfailingly trusted to be replicable with the following commands:
+Similarly, this manuscript and the differing results across R versions were created using the proposed workflow and can be reproduced directly from out github repository:
 
 ```{bash, eval=FALSE}
 git clone https://github.com/aaronpeikert/reproducible-research.git
@@ -363,6 +365,10 @@ cd reproducible-research
 make build
 make all DOCKER=TRUE
 ```
+
+# Summary
+
+
 
 That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. On the way, it makes transparent how statistical results relate to the software that created them and enables, through that transparency, reuse by other researchers. 
 
