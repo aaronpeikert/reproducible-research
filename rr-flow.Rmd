@@ -19,7 +19,7 @@ affiliation:
   - id            : "3"
     institution   : "Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany & London, U.K." 
 
-authornote: |
+authornote: This paper is fully reproducible using the workflow described in this paper. All materials can be found on the accompaniying Github repository:  To comment on our paper, please add an issue to the Github repository of our paper: <https://github.com/aaronpeikert/reproducible-research/>.  To provide feedback or any other type of comment or questions regarding our workflow, please add an issue to the Github repository of our paper: <https://github.com/aaronpeikert/reproducible-research/issues>.
 
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
@@ -137,7 +137,10 @@ git push -u origin master
 git clone git@github.com:aaronpeikert/reproducible-research.git
 ```
 
-Git and Github can do even more to help you to collaborate with your fellow researchers, such as formal means to track issues and their status (open/closed/resolved) and further means to managing and merging multiple, parallel versions of code (such as branches, pull requests, merges) but this is beyond the already broad scope of this tutorial. Another benefit of using Git and Github is that experimentation is highly encouraged since you can go back to any state quickly and even when you lose access to the file on your computer, everything is backed up on the Github servers.
+Git and Github can do even more to help you to collaborate with your fellow researchers, such as formal means to track issues and their status (open/closed/resolved) and further means to managing and merging multiple, parallel versions of code (such as branches, pull requests, merges) but this is beyond the already broad scope of this tutorial. In particular, github's issue management can be leveraged as post-publication platform to discuss manuscripts and their results [^1].
+Another benefit of using Git and Github is that experimentation is highly encouraged since you can go back to any state quickly and even when you lose access to the file on your computer, everything is backed up on the Github servers.
+
+[^1]: To comment on our paper, please add an issue to the Github repository of our paper: <https://github.com/aaronpeikert/reproducible-research/issues>.
 
 # Dependency Tracking and Management
 
