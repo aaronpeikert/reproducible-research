@@ -103,7 +103,9 @@ if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1")
 
 # Literate Programming
 
-Typically, the translation of the human-readable summary of ones computational results, be it an internal report, a presentation, or a journal manuscript, is time-consuming and error-prone. To not only create fully reproducible results but also fully reproducible reports, one needs to resort to the Literate Programming paradigm [@knuth1984literate], in which human-readable language and computer-code are interspersed to create dynamic documents whose order follow the logic of thought rather then the order of the computer. R-Markdown is a simple markup language to create dynamic documents with embedded chunks of R code that can be exported to standard formats such as documents (docx, rtf, epub), presentations (ppt, html) or websites (html).  
+Typically, the translation of the human-readable summary of ones computational results, be it an internal report, a presentation, or a journal manuscript, is time-consuming and error-prone. To not only create fully reproducible results but also fully reproducible reports, one needs to resort to the Literate Programming paradigm [@knuth1984literate], in which human-readable language and computer-code are interspersed to create dynamic documents whose order follow the logic of thought rather then the order of the computer. R-Markdown is a simple markup language to create dynamic documents with embedded chunks of R code that can be exported to standard formats such as documents (docx, rtf, epub), presentations (ppt, html) or websites (html) using the knitr package [@xie2015, xie2019]. Figure XXX illustrates RMarkdown syntax and the resulting output. Several packages extend the scope of knitr. Of particular note are the papaja package [@papaja2018], which additional functions to enable APA-conformable document formatting, including a journal-style final typeset format, and the stargazer package [@stargazer2018], which provides journal-ready tables and reports of statistical models.   
+
+<FIGURE 1 HERE> 
 
 # Version Management
 
