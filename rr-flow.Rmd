@@ -1,5 +1,5 @@
 ---
-title             : "A Reproducible Data Analysis Workflow with RMarkdown, Git, Make & Docker"
+title             : "A Reproducible Data Analysis Workflow with RMarkdown, Git, Make, & Docker"
 shorttitle        : "Reproducible Data Analysis Workflow"
 
 author: 
@@ -53,19 +53,21 @@ knitr::read_chunk(here("R", "bootstrap.R"))
 # Introduction
 
 In this tutorial, we describe a principled workflow to ensure long-term reproducibility of
-R-based data analyses. In this context, reproducibility means to us that scientific results together with their computational scientific workflows are reported fully, transparently and sustainably available, such that the workflow can be re-run by a different person and/or later in time and the results will be identical to the ones intially reported [@herouxCompatibleReproducibilityTaxonomy2018; @claerboutElectronicDocumentsGive1992]. Here, we combine four tools from the computer sciences, whose interplay can guarantuee full and sustainable computational reproducibility of data analyses. The major four elements are:
+R-based data analyses. In this context, reproducibility means to us that scientific results together with their computational scientific workflows are reported fully, transparently and remain sustainably available, such that the workflow can be re-run by a different person and/or later in time and the results will be identical to the ones intially reported [@herouxCompatibleReproducibilityTaxonomy2018; @claerboutElectronicDocumentsGive1992]. The need to ensure reproducibility directly follows from commonly accepted rules of good scientific practice (such as the guidelines of the German Research Foundation; @dfg2019) and ensuring reproducibility is a prerequisite for replicability and a means to increase trustworthiness of empirical results [@epskamp2019rep].
+
+Here, we combine four sofrware tools, whose interplay can guarantuee full and sustainable computational reproducibility of data analyses and their reporting. The major four elements are:
 
 Literate Programming
-: Interwoven text and computer code that together forms a human-readable document.
+: Interwoven text and computer code that together forms a dynamically generated, human-readable document.
 : Example: One document that includes text that describes a statistical test, code that is used to execute the statistical and the output of the code in the same document.
 
 Version Control
 : The management of change of documents/code.
-: Example: Changes from the manuscript text upon request by the reviewer are identifiable. 
+: Example: Changes of the analysis code or even single parameters are documented both at development and post-publication.
 
 Dependency Tracking
 : How different parts of a manuscript/analysis relate and how these dependencies resolve via execution of code.
-: Example: The manuscript depends on the statistical analysis, which depends on the data.
+: Example: The manuscript depends on the statistical analysis, which depends on a preprocessing pipeline, which depends on a certain subset of the data.
 
 Containerization
 : A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
@@ -380,13 +382,13 @@ Each tool reduces the number of ways things can go wrong. Dynamic reporting with
 
 While this approach here was designed to scale well with the complexity of a computing-intense Project, we realise that this flexibility comes with a steep learning curve. A few packages are easing this burden for different parts of the workflow when this flexibility is not needed. The use of `rmarkdown` within a project, tracked with `git` can be simplified with the [workflowr-package](https://github.com/jdblischak/workflowr) [@workflowr]. The [drake-package](https://github.com/ropensci/drake) [@drake] is directly inspired by `make` and does only require knowledge in R, but can only handle dependencies within R. The [holepunch-package](https://karthik.github.io/holepunch/) [@holepunch] automizes the use of docker and uses [binder](https://mybinder.org) to move the analysis to the cloud so that no local installation of docker is required. It is well suited for simple analysis with low computational demands, because of memory and computing time limitations of binder. There are several alternatives to docker which fix the dependancies on R-packages. [packrat](https://rstudio.github.io/packrat/) [@packrat] is a way to fix package version via installing locally in the project, however it does not garuantees more then a fixed set of packages (Not R-version or system dependencies). Similar approaches are taken by [jetpack](https://github.com/ankane/jetpack) [@jetpack], [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/vignettes/miniCRAN-introduction.html) [@miniCRAN] and [checkpoint](https://cran.r-project.org/web/packages/checkpoint/vignettes/checkpoint.html) [@checkpoint]. Notable is also the package [`reprex`](https://github.com/tidyverse/reprex) [**repr**oducible **ex**ample, @reprex], but its scope is limited to small examples.
 
-Another way to increase the chance of reproducibility is to develop an R-package for each analysis. The reasoning is that by abiding the strict rules of package development and specifieng all dependencies a high degree of stability can be archieved. This is approach is extensivly developed by @marwickPackagingDataAnalytical2018.
+Another way to increase the chance of reproducibility is to develop an R-package, which is a self-contained set of files with well-defined meta data, for each analysis. The reasoning is that by abiding the strict rules of package development and specifieng all dependencies a high degree of stability can be archieved (e.g., @marwickPackagingDataAnalytical2018).
 
-However, beside these tools that ease the process of creating a workflow on the researchers side, we see increased interest in changing how research is published and used[@perkelToolkitDataTransparency2018], with *life code* [@perkelPioneeringLivecodeArticle2019] and *continues integration* [@beaulieu-jonesReproducibilityComputationalWorkflows2017, @yenniDevelopingModernData2018]. For such further technical advancements reproducibility is key and researcher using this workflow should be well prepared for such era of interactive publication.
+However, beside these tools that ease the process of creating a workflow on the researchers side, we see increased interest in changing how research is published and used[@perkelToolkitDataTransparency2018], with *life code* [@perkelPioneeringLivecodeArticle2019] and *continuous integration* [@beaulieu-jonesReproducibilityComputationalWorkflows2017, @yenniDevelopingModernData2018]. These techniques give us a glimpse of a paradigm shift from static to dynamic, interactive and living publications.
 
 ## Limitations
 
-We are aware that implementing this workflow is not straightforward and the difficulty of its implementation may vary by platform. For example, already the installation of all tools is easier on POSIX-compatible platforms such as Unix, Linux, or macOS (but not Windows). However, once such a workflow is established as a default, it can be used with minimal changes to the familiar use of the R environment. It is even possible to move the entire development process to a docker environment.
+We are aware that implementing the proposed workflow is not straightforward and the difficulty of its implementation may vary by platform. For example, already the installation of all tools is easier on POSIX-compatible platforms such as Unix, Linux, or macOS (but not Windows). However, once such a workflow is established as a default, it can be used with minimal changes to the familiar use of the R environment. It is even possible to move the entire development process to a docker environment.
 
 In our own experience, it is often not possible to convince all co-authors to switch to a different document processing environment, such as RMarkdown. That is, we have experienced that after writing up the first draft in Rmarkdown, one must eventually switch to a dynamically generated Word-file that is from then on used as static file that is used as basis for multiple iterations among the co-authors. This means, that ideally, one would have to manually merge the final Word file back to the RMarkdown souce, which generally is only possible manually. But we believe that even if this final step does not happen that - as long as dynamically generated elements are not manipulated - ensuring the reproducibility of the analysis and the initial draft is a big step forward. Making such static Word-file more dynamic is is possible with the officer package [@gohel2019officer], which allows the manipulation of  Word (.docx) and PowerPoint (.pptx) documents. That is, given a formatted static template file, one can dynamically paste images, tables and text into documents from R. We consider such static file with dynamic content, less elegant but potentially more practical, when not all authors can adhere to the described process. 
 
