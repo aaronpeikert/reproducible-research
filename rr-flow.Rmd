@@ -289,7 +289,8 @@ docker run -v /folder/on/your/computer:/folder/in/docker
 The main directory for RStudio inside docker is `/home/rstudio` so an apropriate command is:
 
 ```{bash, eval=FALSE}
-docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v /path/to/project:/home/rstudio reproducible-research
+docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
+/path/to/project:/home/rstudio reproducible-research
 ```
 
 ![RStudio running inside Docker](Images/docker-rstudio.png)
