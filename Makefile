@@ -19,6 +19,12 @@ README.md: README.Rmd abstract.Rmd
 rr-flow.pdf: rr-flow.Rmd random bootstrap reproducible-research.bib rmarkdown
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
+rr-flow-jou.pdf: rr-flow-jou.Rmd rr-flow.pdf
+	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<", )'
+
+rr-flow-jou.Rmd: R/gen_jou_version.R
+	$(run) Rscript -e 'source("$<")'
+
 rmarkdown: R/rmarkdown.pdf
 
 R/rmarkdown.pdf: R/rmarkdown.Rmd
