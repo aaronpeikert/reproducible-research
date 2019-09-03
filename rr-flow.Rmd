@@ -155,7 +155,7 @@ Another benefit of using Git and Github is that experimentation is highly encour
 
 # Dependency Tracking and Management
 
-Even when you have obtained a version of the project, and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets comfortable with `make`, since it allows you to create (computational) recipes too (re-)create files. A downside of `make` is, that the installation on Windows is not straightforward. However, if `docker` (see later sections) is available this is not an issue, since `make` ships with (almost) every `docker` image.
+Even when you have obtained a version of the project, and you can ensure that this version is unchanged, you may not know how to reproduce the results, because it is unclear what has to be run in which order. This job gets comfortable with `make`, since it allows you to create (computational) recipes too (re-)create files.
 
 A `Makefile` obeys the following scheme:
 
