@@ -52,7 +52,7 @@ knitr::read_chunk(here("R", "bootstrap.R"))
 
 # Introduction
 
-In this tutorial, we describe a principled workflow to ensure long-term reproducibility of
+In this tutorial, we describe a principled workflow to ensure long-term and cross-platform reproducibility of
 R-based data analyses. In this context, reproducibility means to us that scientific results together with their computational scientific workflows are reported fully, transparently and remain sustainably available, such that the workflow can be re-run by a different person and/or later in time and the results will be identical to the ones intially reported [@herouxCompatibleReproducibilityTaxonomy2018; @claerboutElectronicDocumentsGive1992]. The need to ensure reproducibility directly follows from commonly accepted rules of good scientific practice (such as the guidelines of the German Research Foundation; @dfg2019) and ensuring reproducibility is a prerequisite for replicability and a means to increase trustworthiness of empirical results [@epskamp2019rep].
 
 Here, we combine four software tools, whose interplay can guarantuee full and sustainable computational reproducibility of data analyses and their reporting. The major four elements are:
