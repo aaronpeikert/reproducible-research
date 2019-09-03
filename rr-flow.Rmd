@@ -295,7 +295,7 @@ docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
 
 ![RStudio running inside Docker](Images/docker-rstudio.png)
 
-Since `docker`'s commands grow long and are tedius to type, we advocate to use some automatic way to generate them. Unfortunatly is the most comfortable way only availible on linux, which uses `make DOCKER=TRUE` together with a Makefile like the one used for that article.
+Since `docker`'s commands grow long and are tedius to type, we advocate to use some automatic way to generate them. Fortunatly one can use `make` to automaticly generate the `docker` commands, e.g. the (simplified) Makefile for this paper allows command after `$(run)` to be condtionally passed through docker if one calls `make DOCKER=TRUE`:
 
 ```
 projekt := $(shell basename `git rev-parse --show-toplevel`)
@@ -310,12 +310,7 @@ endif
 all: rr-flow.html
 
 build: Dockerfile
-	sudo docker build -t $(projekt) .
-
-clean:
-	Ruby/clean.rb
-	rm -rf kitematic
-.PHONY: clean
+	docker build -t $(projekt) .
 
 rr-flow.html: rr-flow.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
