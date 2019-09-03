@@ -6,7 +6,9 @@ output: pdf_document
 papersize: "a6"
 geometry:
   - "landscape"
-  - margin=0.1cm
+  - margin=0.5cm
+header-includes:
+   - \usepackage[center,dvips,frame]{crop}
 ---
 
 ```{r setup}
