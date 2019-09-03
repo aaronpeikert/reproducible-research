@@ -92,13 +92,14 @@ iris <- read.csv(here("data", "iris.csv"))
 
 This folder, where everything resides that you need for analysis (code and data), is referred to as a 'project'. Working with projects is exceptionally comfortable with RStudio, an integrated development environment (IDE) for R. It is useful to organize a data-analysis project in way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 @marwickPackagingDataAnalytical2018]; there are also tools that automatize the standardized creation of folder structures such as `workflowr` [@workflowr].
 
-Sometimes external requirements make it impossible that the data cannot be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If this way of dividing data and scripts into different databases is unavoidable, we recommend that you crosscheck using checksums before loading data. To do this, a checksum must be created and filed at the time of the original analysis, and at the time of reproduction the current checksum must be compared with the stored checksum (also called a "hash", e.g., using the functions provided in package `digest`).
+Sometimes external requirements make it impossible that the data can be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If this way of dividing data and scripts into different databases is unavoidable, we recommend that you crosscheck using checksums before loading data. To do this, a checksum must be created and filed at the time of the original analysis, and at the time of reproduction the current checksum must be compared with the stored checksum (also called a "hash", e.g., using the functions provided in package `digest`).
 
 ```{r}
 x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
 checksum <- digest::sha1(x)
-if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1") 
-	error("Wrong data file loaded or data has been tempered with!")
+if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1"){
+  error("Wrong data file loaded or data has been tempered with!")
+}
 ```
 
 # Literate Programming
