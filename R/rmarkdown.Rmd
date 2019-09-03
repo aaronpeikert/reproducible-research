@@ -1,0 +1,31 @@
+---
+title: "An Example"
+author: "Aaron Peikert & Andreas Brandmaier"
+date: "9/3/2019"
+output: pdf_document
+papersize: "a6"
+geometry:
+  - "landscape"
+  - margin=0.1cm
+---
+
+```{r setup}
+library("knitr")
+library("papaja")
+```
+
+# Silly Heading
+
+```{r t-test}
+data("sleep")
+result <- t.test(extra ~ group, data = sleep)
+```
+
+The data was never before anylized in this way. Except in `help(t.test)`.
+
+`r apa_print.htest(result)$full_result`
+
+I can now assert that what I *believe* to be true
+--- that there is a difference in mean between the groups ---
+is `r ifelse(result$p.value > .025, "**not**", "")` supported by data.
+
