@@ -343,7 +343,7 @@ To use `docker` you need to start Docker Desktop.
 
 ## Linux
 
-There is a pletora of linux distribuation and almost as many package managers. However to our knowledge there is no (recent) Linux where `git`, `make` and `docker` are not availible. Example for Ubuntu:
+There is a pletora of linux distributions and almost as many package managers. However to our knowledge there is no (recent) Linux where `git`, `make` and `docker` are not availible. Example for Ubuntu:
 
 ```{bash, eval=FALSE}
 apt install git make docker 
@@ -355,7 +355,7 @@ An alternative to `docker` on Linux is `singularity` [@kurtzerSingularityScienti
 
 ## Reproducing an Analysis
 
-We provide a reproducible analysis as working example via github as a testbed for users. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a succesful implementation of our workflow including downloading external data, comparing their state using a checksum, and running a confirmatory factor analysis on the first few items using lavaan [@lavaan2012]. Once all mentioned tools are installed on a computer, the following few steps are necessary to reproduce our analysis:
+We provide a reproducible analysis as working example via [github](https://github.com/aaronpeikert/workflow-showcase) as a testbed for users. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a succesful implementation of our workflow including downloading external data, comparing their state using a checksum, and running a confirmatory factor analysis on the first few items using lavaan [@lavaan2012]. Once all mentioned tools are installed on a computer, the following few steps are necessary to reproduce our analysis:
 
 ```{bash, eval=FALSE}
 git clone https://github.com/aaronpeikert/workflow-showcase.git
