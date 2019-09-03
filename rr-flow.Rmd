@@ -350,7 +350,7 @@ There is a pletora of linux distribuation and almost as many package managers. H
 apt install git make docker 
 ```
 
-Replace `apt` with your package manager. Possiblie you need elevated rights in this case add `sudo` before that.
+Replace `apt` with your package manager. Possiblie you need elevated rights; in this case add `sudo` before that.
 
 An alternative to `docker` on Linux is `singularity` [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker-images. A possible advantage is that singularity works well in  HPC environments and on old Linux versions, the downside is that `singularity` is only availibe on Linux.
 
