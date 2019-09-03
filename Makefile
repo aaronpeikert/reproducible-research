@@ -16,7 +16,12 @@ build: Dockerfile
 README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
-rr-flow.pdf: rr-flow.Rmd random bootstrap reproducible-research.bib
+rr-flow.pdf: rr-flow.Rmd random bootstrap reproducible-research.bib rmarkdown
+	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
+
+rmarkdown: R/rmarkdown.pdf
+
+R/rmarkdown.pdf: R/rmarkdown.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
 random: R/random35.md R/random36.md
