@@ -43,11 +43,15 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(linewidth = Inf) # see wrap_code.R
+
 if(!require("pacman"))install.packages("pacman")
 pacman::p_load("here", "tidyverse")
 
 knitr::read_chunk(here("R", "random.R"))
 knitr::read_chunk(here("R", "bootstrap.R"))
+
+source(here("R", "wrap_code.R"))
 ```
 
 # Introduction
