@@ -330,7 +330,7 @@ Windows has the biggest hurdle to install what is needed. An essential requireme
 After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows-Key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
-choco install git make docker-desktop
+choco install -y git make docker-desktop
 ```
 
 To use `docker` you need to start Docker Desktop.
