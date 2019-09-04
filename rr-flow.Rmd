@@ -326,7 +326,7 @@ This workflow directly relies on three software packages: `git`, `make` and `doc
 
 ## Windows
 
-Windows has the biggest hurdle to install what is needed. An essential requirement is that you have Windows Pro, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. However, having met this requirement, there is a great package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install).
+Windows has the biggest hurdle to install what is needed. An essential requirement is that you have Windows Pro, Enterprise, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. However, having met this requirement, there is a great package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install).
 After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows-Key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
