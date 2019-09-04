@@ -23,7 +23,7 @@ rr-flow.pdf: rr-flow.Rmd reproducible-research.bib
 rr-flow-jou.pdf: rr-flow-jou.Rmd rr-flow.pdf
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<", )'
 
-rr-flow-jou.Rmd: R/gen_jou_version.R
+rr-flow-jou.Rmd: R/jou_version.R
 	$(run) Rscript -e 'source("$<")'
 
 rmarkdown: R/rmarkdown.pdf
