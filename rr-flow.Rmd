@@ -163,14 +163,14 @@ Even when you have obtained a version of the project, and you can ensure that th
 
 A `Makefile` obeys the following scheme:
 
-```
+```{bash, eval=FALSE}
 target: dependency1 dependency2
   command-to-create-target
 ```
 
 A typical `Makefile` might look like:
 
-```
+```{bash, eval=FALSE}
 analysis.pdf: data/clean.csv
   Rscript -e 'rmarkdown::render("analysis.Rmd")'
 
@@ -180,7 +180,7 @@ data/clean.csv: R/clean.R data/iris.csv
 
 The first line reads: to create `analysis.pdf` the `analysis.Rmd` needs to be rendered, which depends on `data/clean.csv`. This dependency is itself a target. To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf` `make` first checks whether the dependencies do exist and if not whether or it knows how to create them. So if `data/clean.csv` does not exist, `make` creates it. The same thing happens if one of the dependencies of a target is newer then the target itself, then updates everything that directly or indirectly depends on it. So if `data\iris.csv` is newer then `data\clean.csv`, make attempts to recreate `data\clean.csv` and `analysis.pdf`. If there is a dependency which is missing, and there is no recipe to make it, `make` stops with an error. It is a convention to have a target `all` which depends on everything and make it the first target in a `Makefile`, then the command `make` without any argument automatically creates everything. The button `Build All` from within RStudio also triggers this process.
 
-```
+```{bash, eval=FALSE}
 all: analysis.pdf
 ```
 
@@ -251,7 +251,7 @@ This convenience is possible to the efforts of the [rocker project](https://gith
 
 The basic rocker images are extendable by a Dockerfile, e.g., the basis for docker image for this article is the following Dockerfile:
 
-```
+```{bash, eval=FALSE}
 FROM rocker/verse:3.6.1
 RUN install2.r --error --skipinstalled\
   pacman here pander
@@ -301,7 +301,7 @@ docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
 
 Since `docker`'s commands grow long and are tedius to type, we advocate to use some automatic way to generate them. Fortunatly one can use `make` to automaticly generate the `docker` commands, e.g. the (simplified) Makefile for this paper allows command after `$(run)` to be condtionally passed through docker if one calls `make DOCKER=TRUE`:
 
-```
+```{bash, eval=FALSE}
 projekt := $(shell basename `git rev-parse --show-toplevel`)
 current_dir := $(shell pwd)
 uid = $(shell id -u)
