@@ -11,6 +11,17 @@ bs <- function(formula, data, indices) {
   fit <- lm(formula, data=d)
   return(coef(fit)) 
 }
+confint.boot <- function (object, parm, level = 0.95, type, ...) {
+  if (!requireNamespace("boot")) stop("boot package is missing")
+  if(length(parm) != 1)stop("Only one parameter")
+  bci <- boot::boot.ci(object, conf = level, type = type, index = parm, ...)
+  which <- 4:5 #lower and upper
+  int <- as.vector(t(bci[[type]][, which]))
+  lev <- (1 - .95)/2
+  levs <- c(lev, 1-lev)
+  names(int) <- paste0(round(100 * levs, 1), " %")
+  return(int)
+}
 
 #-----find-seed----
 bcis35 <- read.csv("../data/bcis-3.5.0.csv")
@@ -27,5 +38,4 @@ results <- boot(data=simdata, statistic=bs,
                   R=1000, formula=y~1+x)
   
 # get beta estimates' confidence intervals
-bci <- boot.ci(results,type="bca", index=2) # b estimate
-print(bci)
+round(confint(results, type = "bca", parm = 2), 4) # parm = 2 -> b
