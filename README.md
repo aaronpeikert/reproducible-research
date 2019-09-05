@@ -78,7 +78,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2019-09-04                  
+    ##  date     2019-09-05                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -93,13 +93,13 @@ sessioninfo::session_info()
     ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.1)
-    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.1)
+    ##  rmarkdown     1.15    2019-08-21 [1] CRAN (R 3.6.1)
     ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.1)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.1)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.1)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.1)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.1)
-    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.1)
+    ##  xfun          0.9     2019-08-21 [1] CRAN (R 3.6.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
     ## 
     ## [1] /usr/local/lib/R/site-library

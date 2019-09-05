@@ -40,7 +40,7 @@ R/random36.md: R/random.R R/random.Rmd
 	docker run --rm -v $(home_dir):/home/rstudio rocker/verse:3.6.1 \
 	Rscript -e 'rmarkdown::render("/home/rstudio/R/random.Rmd", output_file = "/home/rstudio/$@")'
 
-bootstrap: R/bootstrap35.md R/bootstrap36.md
+bootstrap: R/bootstrap35.md R/bootstrap36.md R/bootstrap.Rmd R/bootstrap.R
 
 data/bcis-3.5.0.csv: R/bootstrap-cases.R
 	docker run --rm -v $(home_dir):/home/rstudio rocker/verse:3.5.0 \
