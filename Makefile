@@ -1,6 +1,6 @@
-projekt := $(shell basename `git rev-parse --show-toplevel`)
-current_dir := $(shell pwd)
-home_dir := $(shell pwd)
+projekt := reproducible-research
+current_dir := $(shell git rev-parse --show-toplevel)
+home_dir := $(shell git rev-parse --show-toplevel)
 uid = $(shell id -u)
 
 ifeq ($(DOCKER),TRUE)
