@@ -5,3 +5,5 @@
 *.pdf
 *.tex
 *.html
+*.log
+rr-flow-jou.Rmd

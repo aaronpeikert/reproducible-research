@@ -1,12 +1,14 @@
 ---
 title: "An Example"
 author: "Aaron Peikert & Andreas Brandmaier"
-date: "9/3/2019"
+date: '`r format(Sys.time(), "%d %B, %Y")`'
 output: pdf_document
 papersize: "a6"
 geometry:
   - "landscape"
-  - margin=0.1cm
+  - margin=0.5cm
+header-includes:
+   - \usepackage[center,dvips,frame]{crop}
 ---
 
 ```{r setup}

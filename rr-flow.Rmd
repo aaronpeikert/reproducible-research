@@ -43,11 +43,15 @@ output            : papaja::apa6_pdf
 
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
+knitr::opts_chunk$set(linewidth = Inf) # see wrap_code.R
+
 if(!require("pacman"))install.packages("pacman")
 pacman::p_load("here", "tidyverse")
 
 knitr::read_chunk(here("R", "random.R"))
 knitr::read_chunk(here("R", "bootstrap.R"))
+
+source(here("R", "wrap_code.R"))
 ```
 
 # Introduction
@@ -104,7 +108,7 @@ if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1"){
 
 # Literate Programming
 
-Typically, the translation of the human-readable summary of ones computational results, be it an internal report, a presentation, or a journal manuscript, is time-consuming and error-prone. To not only create fully reproducible results but also fully reproducible reports, one needs to resort to the Literate Programming paradigm [@knuth1984literate], in which human-readable language and computer-code are interspersed to create dynamic documents whose order follow the logic of thought rather then the order of the computer. R-Markdown is a simple markup language to create dynamic documents with embedded chunks of R code that can be exported to standard formats such as documents (docx, rtf, epub), presentations (ppt, html) or websites (html) using the knitr package [@xie2015, xie2019]. Figure XXX illustrates RMarkdown syntax and the resulting output. Several packages extend the scope of knitr. Of particular note are the papaja package [@papaja2018], which additional functions to enable APA-conformable document formatting, including a journal-style final typeset format, and the stargazer package [@stargazer2018], which provides journal-ready tables and reports of statistical models.   
+Typically, the translation of the human-readable summary of ones computational results, be it an internal report, a presentation, or a journal manuscript, is time-consuming and error-prone. To not only create fully reproducible results but also fully reproducible reports, one needs to resort to the Literate Programming paradigm [@knuth1984literate], in which human-readable language and computer-code are interspersed to create dynamic documents whose order follow the logic of thought rather then the order of the computer. R-Markdown is a simple markup language to create dynamic documents with embedded chunks of R code that can be exported to standard formats such as documents (docx, rtf, epub), presentations (ppt, html) or websites (html) using the knitr package [@xie2015; @xie2019]. Figure 1 illustrates RMarkdown syntax and Figure 2 the resulting output. Several packages extend the scope of knitr. Of particular note are the papaja package [@papaja2018], which additional functions to enable APA-conformable document formatting, including a journal-style final typeset format, and the stargazer package [@stargazer2018], which provides journal-ready tables and reports of statistical models.   
 
 ![Source of an RMarkdown](Images/rmarkdown.png)
 
@@ -112,7 +116,7 @@ Typically, the translation of the human-readable summary of ones computational r
 
 # Version Management
 
-Reproducibility at a basic level assumes that results remain identical if neither script nor data have changed. It is often not trivial to find out whether anything has changed over time and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the tracked files. Each commit has a unique identifier (a hash) and a human-readable description. Going back to one state is as easy as traversing the history of all commits; it is possible to visually track changes between different versions. Finding a specific version can be made even easier by tagging snapshots, e.g., as "submission," "preprint," or "publishged." This collection of snapshots is called a "repository," which ideally tracks your entire R project.
+Reproducibility at a basic level assumes that results remain identical if neither script nor data have changed. It is often not trivial to find out whether anything has changed over time and if so to "go back in time." `git` enables you to do both. A good mental model for `git` is that it takes a sequence of snapshots of all files it is supposed to track. In the language of git, these snapshots are "commits".  A commit represents a complete copy of the state of the tracked files. Each commit has a unique identifier (a hash) and a human-readable description (commit message). Going back to one state is as easy as traversing the history of all commits; it is possible to visually track changes between different versions. Finding a specific version can be made even easier by tagging snapshots, e.g., as "submission," "preprint," or "published." This collection of snapshots is called a "repository," which ideally tracks your entire R project.
 
 A typical git workflow in the terminal looks like that:
 
@@ -159,14 +163,14 @@ Even when you have obtained a version of the project, and you can ensure that th
 
 A `Makefile` obeys the following scheme:
 
-```
+```{bash, eval=FALSE}
 target: dependency1 dependency2
   command-to-create-target
 ```
 
 A typical `Makefile` might look like:
 
-```
+```{bash, eval=FALSE}
 analysis.pdf: data/clean.csv
   Rscript -e 'rmarkdown::render("analysis.Rmd")'
 
@@ -176,7 +180,7 @@ data/clean.csv: R/clean.R data/iris.csv
 
 The first line reads: to create `analysis.pdf` the `analysis.Rmd` needs to be rendered, which depends on `data/clean.csv`. This dependency is itself a target. To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf` `make` first checks whether the dependencies do exist and if not whether or it knows how to create them. So if `data/clean.csv` does not exist, `make` creates it. The same thing happens if one of the dependencies of a target is newer then the target itself, then updates everything that directly or indirectly depends on it. So if `data\iris.csv` is newer then `data\clean.csv`, make attempts to recreate `data\clean.csv` and `analysis.pdf`. If there is a dependency which is missing, and there is no recipe to make it, `make` stops with an error. It is a convention to have a target `all` which depends on everything and make it the first target in a `Makefile`, then the command `make` without any argument automatically creates everything. The button `Build All` from within RStudio also triggers this process.
 
-```
+```{bash, eval=FALSE}
 all: analysis.pdf
 ```
 
@@ -245,9 +249,9 @@ However only rarely does an analysis depend only on base R, often a considerable
 
 This convenience is possible to the efforts of the [rocker project](https://github.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a] which provides docker images preconfigured with an R-installation of a fixed R-version. These rely on MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R-Packages, which is fixed to the last date the R-version of the image was the most recent. Building upon these rocker-images researchers can build there own docker-images with the required R-packages. The rocker project also provides images which do include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the `rmarkdown` package with Latex (`rocker/verse`). Since the describes workflow relies on `rmarkdown` we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
 
-The basic rocker images are extendable by a Dockerfile, e.g., the basis for docker image for this article is the following Dockerfile:
+The basic rocker images are extendable by a Dockerfile, e.g., the basis for this articles docker image is the following Dockerfile:
 
-```
+```{bash, eval=FALSE}
 FROM rocker/verse:3.6.1
 RUN install2.r --error --skipinstalled\
   pacman here pander
@@ -256,7 +260,9 @@ RUN installGithub.r\
 WORKDIR /home/rstudio
 ```
 
-The `FROM` statement specifies which docker image to use, in this case, the `rocker/verse` image with the tag 3.6.1 (referring to the R version 3.6.1). The `RUN` statement describes a command to execute, in this case, to run an R-script `install2.r` which is available on all rocker images, to install the packages `pacman`,  `here` & `pander`. A Dockerfile allows more than one `RUN` statement, executing any available command. Those `RUN` statements can install dependencies that are not an R package, e.g., other programming languages like python or Matlab. The `WORKDIR` statement is not strictly necessary but saves time spent writing the working directory. The command `docker build -t image-name` creates an image named `image-name` from the Dockerfile in the project. Following there are two principal ways to share a docker image, either by sharing the Dockerfile which created the image or by sharing the image itself e.g., through [dockerhub](https://hub.docker.com). While both ways guarantee a replicable computational environment, sharing the Dockerfile is more transparent, and git tracks changes to it.
+The `FROM` statement specifies which docker image to use, in this case, the `rocker/verse` image with the tag 3.6.1 (referring to the R version 3.6.1). The `RUN` statement describes a command to execute, in this case, to run an R-script `install2.r` which is available on all rocker images, to install the packages `pacman`,  `here` & `pander`. A Dockerfile allows more than one `RUN` statement, executing any available command. Those `RUN` statements can install dependencies that are not an R package, e.g., other programming languages like python or Matlab. The `WORKDIR` statement is not strictly necessary but saves time spent writing the working directory. The command `docker build -t image-name` creates an image named `image-name` from the Dockerfile in the project. A way to automatically find out the dependencies and genereate a docker image from them is provided in the [liftr-package](https://cran.r-project.org/web/packages/liftr/vignettes/liftr-intro.html) [@liftr].
+
+There are two principal ways to share a docker image, either by sharing the Dockerfile which created the image or by sharing the image itself e.g., through [dockerhub](https://hub.docker.com). While both ways guarantee a replicable computational environment, sharing the Dockerfile is more transparent, and git tracks changes to it.
 
 There are two ways to use a rocker image. Either one starts with the `docker run` command. The first way is to run a command inside the container. These commands take the form:
 
@@ -264,7 +270,7 @@ There are two ways to use a rocker image. Either one starts with the `docker run
 docker run --rm -it <IMAGENAME> <COMMAND>
 ```
 
-The `--rm` flag means to not save the state of the docker after the command finishes in an image. The `-it` flag means to accept inputs and return outputs to the terminal. Interacting with docker this way is especially useful when using `R` as a command because then you have access to the standard R-terminal.
+The `--rm` flag means to not save the state of the docker after the command finishes in an container. The `-it` flag means to accept inputs and return outputs to the terminal. Interacting with docker this way is especially useful when using `R` as a command because then you have access to the standard R-terminal.
 
 ```{bash, eval=FALSE}
 docker run --rm -it reproducible-research R
@@ -297,22 +303,23 @@ docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
 
 Since `docker`'s commands grow long and are tedius to type, we advocate to use some automatic way to generate them. Fortunatly one can use `make` to automaticly generate the `docker` commands, e.g. the (simplified) Makefile for this paper allows command after `$(run)` to be condtionally passed through docker if one calls `make DOCKER=TRUE`:
 
-```
-projekt := $(shell basename `git rev-parse --show-toplevel`)
-current_dir := $(shell pwd)
+```{bash, eval=FALSE}
+projekt := reproducible-research
+current_dir := $(shell git rev-parse --show-toplevel)
+home_dir := $(shell git rev-parse --show-toplevel)
 uid = $(shell id -u)
 
 ifeq ($(DOCKER),TRUE)
-	run:=docker run --rm --user $(uid) -v $(current_dir):/home/rstudio $(projekt)
+	run:=docker run --rm --user $(uid) -v $(home_dir):/home/rstudio $(projekt)
 	current_dir=/home/rstudio
 endif
 
-all: rr-flow.html
+all: rr-flow.pdf
 
 build: Dockerfile
 	docker build -t $(projekt) .
 
-rr-flow.html: rr-flow.Rmd
+rr-flow.pdf: rr-flow.Rmd reproducible-research.bib
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 ```
 
@@ -322,11 +329,11 @@ This workflow directly relies on three software packages: `git`, `make` and `doc
 
 ## Windows
 
-Windows has the biggest hurdle to install what is needed. An essential requirement is that you have Windows Pro, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. However, having met this requirement, there is a great package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install).
+Windows has the biggest hurdle to install what is needed. An essential requirement is that you have Windows Pro, Enterprise, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. However, having met this requirement, there is a great package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install).
 After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows-Key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
-choco install git make docker-desktop
+choco install -y git make docker-desktop
 ```
 
 To use `docker` you need to start Docker Desktop.
@@ -349,7 +356,7 @@ There is a pletora of linux distributions and almost as many package managers. H
 apt install git make docker 
 ```
 
-Replace `apt` with your package manager. Possiblie you need elevated rights; in this case add `sudo` before that.
+Replace `apt` with your package manager. Possiblie you need elevated rights; in this case add `sudo` before that. `docker` also needs elevated rights, we recomend therefore to add your user to the `docker` group, following the [documentation of docker](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
 An alternative to `docker` on Linux is `singularity` [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker-images. A possible advantage is that singularity works well in  HPC environments and on old Linux versions, the downside is that `singularity` is only availibe on Linux.
 
@@ -377,11 +384,11 @@ make all DOCKER=TRUE
 
 That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. On the way, it makes transparent how statistical results depend upon the software that created them and enables, through that transparency, reuse by other researchers. 
 
-Each tool reduces the number of ways things can go wrong. Dynamic reporting with `RMarkdown` guarantuees consistency between computational results and their reporting; Version control with `git` guarantuees permanence and consistency across multiple versions of data and code; Dependency management with `make` guarantuees defined entry-points and dependency resolition; Containerization with `docker` guarantuees reproducibility of the full computational environment. This tightening of loose ends, we believe, does not restrict researchers but enables them to operate on a solid basis to deliver sound research.
+Each tool reduces the number of ways things can go wrong. Dynamic reporting with `RMarkdown` guarantuees consistency between computational results and their reporting; Version control with `git` guarantuees permanence and consistency across multiple versions of data and code; Dependency management with `make` guarantuees defined entry-points and dependency resolution; containerization with `docker` guarantuees reproducibility of the full computational environment. This tightening of loose ends, we believe, does not restrict researchers but enables them to operate on a solid basis to deliver sound research.
 
 ## Related approaches
 
-While this approach here was designed to scale well with the complexity of a computing-intense Project, we realise that this flexibility comes with a steep learning curve. A few packages are easing this burden for different parts of the workflow when this flexibility is not needed. The use of `rmarkdown` within a project, tracked with `git` can be simplified with the [workflowr-package](https://github.com/jdblischak/workflowr) [@workflowr]. The [drake-package](https://github.com/ropensci/drake) [@drake] is directly inspired by `make` but does only require knowledge in R, but can only handle dependencies within R. The [holepunch-package](https://karthik.github.io/holepunch/) [@holepunch] automizes the use of docker and uses [binder](https://mybinder.org) to move the analysis to the cloud so that no local installation of docker is required. It is well suited for simple analysis with low computational demands, because of memory and computing time limitations of binder. There are several alternatives to docker which fix the dependencies on R-packages. [packrat](https://rstudio.github.io/packrat/) [@packrat] is a way to fix package version via local installations of packages in the project, however it does not garuantees more then a fixed set of packages (Not R-version or system dependencies). Similar approaches are taken by [jetpack](https://github.com/ankane/jetpack) [@jetpack], [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/vignettes/miniCRAN-introduction.html) [@miniCRAN] and [checkpoint](https://cran.r-project.org/web/packages/checkpoint/vignettes/checkpoint.html) [@checkpoint]. Notable is also the package [`reprex`](https://github.com/tidyverse/reprex) [**repr**oducible **ex**ample, @reprex], but its scope is limited to small examples.
+While this approach here was designed to scale well with the complexity of a computing-intense Project, we realise that this flexibility comes with a steep learning curve. A few packages are easing this burden for different parts of the workflow when this flexibility is not needed. The use of `rmarkdown` within a project, tracked with `git` can be simplified with the [workflowr-package](https://github.com/jdblischak/workflowr) [@workflowr]. The [drake-package](https://github.com/ropensci/drake) [@drake] is directly inspired by `make` but does only require knowledge in R, but can only handle dependencies within R. The [liftr-package](https://cran.r-project.org/web/packages/liftr/vignettes/liftr-intro.html) [@liftr] and the [holepunch-package](https://karthik.github.io/holepunch/) [@holepunch] automize the use of docker. The former is perfectly compatible with the described workflow and we recommend it to users uncomftable with docker. The later uses [binder](https://mybinder.org) to move the analysis to the cloud so that no local installation of docker is required. holepunch is well suited for simple analysis with low computational demands, because of memory and computing time limitations of binder. There are several alternatives to docker which fix the dependencies on R-packages. [packrat](https://rstudio.github.io/packrat/) [@packrat] is a way to fix package version via local installations of packages in the project, however it does not garuantees more then a fixed set of packages (Not R-version or system dependencies). Similar approaches are taken by [jetpack](https://github.com/ankane/jetpack) [@jetpack], [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/vignettes/miniCRAN-introduction.html) [@miniCRAN] and [checkpoint](https://cran.r-project.org/web/packages/checkpoint/vignettes/checkpoint.html) [@checkpoint]. Notable is also the package [`reprex`](https://github.com/tidyverse/reprex) [**repr**oducible **ex**ample, @reprex], but its scope is limited to small examples.
 
 Another way to increase the chance of reproducibility is to develop an R-package, which is a self-contained set of files with well-defined meta data, for each analysis. The reasoning is that by abiding the strict rules of package development and specifieng all dependencies a high degree of stability can be archieved (e.g., @marwickPackagingDataAnalytical2018).
 
@@ -395,7 +402,7 @@ In our own experience, it is often not possible to convince all co-authors to sw
 
 ## Sharing reproducible workflows
 
-How to best share a reproducible workflow? We believe that, ideally, a service provider should be found that guarantuees permanent and reliable hosting of the reproducible workflow, such as the Open Science Framework [@fosterOpenScienceFramework2017], that is independ of Github, Docker Hub & MRAN. Second, to ensure that other users are legally able to benefit from the shared materials, authors must choose an appropriate license format. Typically, there is currently no single license that works for code, data, and media (such as text or figures). We encourage authors to choose appropriate license forms that do not hinder others from freely downloading, using, and moifying the shared workflows and materials while, at the same time, ensuring recognition for the time and effort invested in creating the workflow in the first place. In our experience, the Creative Commons license (CC-BY) is often appropriate for sharing texts, rmarkdown files, generated figures, and other media whereas scripts and any other computer code is often best shared according to the MIT license. Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work. These licenses are also in line with the recommendations by the Reproducibile Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
+How to best share a reproducible workflow? We believe that, ideally, a service provider should be found that guarantuees permanent and reliable hosting of the reproducible workflow, such as the Open Science Framework [@fosterOpenScienceFramework2017], that is independ of Github, Docker Hub & MRAN. Second, to ensure that other users are legally able to benefit from the shared materials, authors must choose an appropriate license format. Typically, there is currently no single license that works for code, data, and media (such as text or figures). We encourage authors to choose appropriate license forms that do not hinder others from freely downloading, using, and modifying the shared workflows and materials while, at the same time, ensuring recognition for the time and effort invested in creating the workflow in the first place. In our experience, the Creative Commons license (CC-BY) is often appropriate for sharing texts, rmarkdown files, generated figures, and other media whereas scripts and any other computer code is often best shared according to the MIT license. Both licenses assure maximal freedom for future users while requiring the attribution of the original authors in derivative work. These licenses are also in line with the recommendations by the Reproducibile Research Standard [@stoddenEnhancingReproducibilityComputational2016; @stoddenEnablingReproducibleResearch2009].
 
 ## Outlook
 
