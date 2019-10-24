@@ -63,6 +63,10 @@ Here, we combine four software tools, whose interplay can guarantuee full and su
 
 We believe that for sufficient chances of long-term reproducibility, proper documentation is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker`.
 
+# Disclosures 
+
+This paper is fully reproducible using the workflow described in this paper. All materials, including the manuscript source and all R codes and files used to generate this manuscript, can be found on the accompanying GitHub repository <https://github.com/aaronpeikert/reproducible-research/>. 
+
 # Project organization
 
 The first step towards reproducibility is to have an R-script or R-markdown as primary entry point for the analysis, that runs on a local computer without error. A process, we assume, that is familiar to the reader. A next step is to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is essential that all files are within one folder (or, subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [Rstudio Projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package.
