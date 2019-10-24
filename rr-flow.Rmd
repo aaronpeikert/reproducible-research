@@ -19,7 +19,7 @@ affiliation:
   - id            : "3"
     institution   : "Max Planck UCL Centre for Computational Psychiatry and Ageing Research, Berlin, Germany & London, U.K." 
 
-authornote: This paper is fully reproducible using the workflow described in this paper. All materials can be found on the accompaniying Github repository <https://github.com/aaronpeikert/reproducible-research/>.  To provide feedback or any other type of comment or questions regarding our workflow, please add an issue to the Github repository of our paper [https://github.com/aaronpeikert/reproducible-research/issues](https://github.com/aaronpeikert/reproducible-research/issues).
+authornote: This paper is fully reproducible using the workflow described in this paper. All materials can be found on the accompanying GitHub repository <https://github.com/aaronpeikert/reproducible-research/>.  To provide feedback or any other type of comment or questions regarding our workflow, please add an issue to the Github repository of our paper [https://github.com/aaronpeikert/reproducible-research/issues](https://github.com/aaronpeikert/reproducible-research/issues).
 
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
@@ -57,27 +57,9 @@ source(here("R", "wrap_code.R"))
 # Introduction
 
 In this tutorial, we describe a principled workflow to ensure long-term and cross-platform reproducibility of
-R-based data analyses. In this context, reproducibility means to us that scientific results together with their computational scientific workflows are reported fully, transparently and remain sustainably available, such that the workflow can be re-run by a different person and/or later in time and the results will be identical to the ones intially reported [@herouxCompatibleReproducibilityTaxonomy2018; @claerboutElectronicDocumentsGive1992]. The need to ensure reproducibility directly follows from commonly accepted rules of good scientific practice (such as the guidelines of the German Research Foundation; @dfg2019) and ensuring reproducibility is a prerequisite for replicability and a means to increase trustworthiness of empirical results [@epskamp2019rep].
+R-based data analyses. Reproducibility means to us that scientific results together with their computational scientific workflows are reported fully, transparently and sustainably remain available, such that the workflow can be re-run by a different person and/or later in time and the results will be identical to the ones intially reported [@herouxCompatibleReproducibilityTaxonomy2018; @claerboutElectronicDocumentsGive1992]. The need to ensure reproducibility directly follows from commonly accepted rules of good scientific practice (such as the guidelines of the German Research Foundation; @dfg2019). Ensuring reproducibility is a prerequisite for replicability and a means to increase trustworthiness of empirical results [@epskamp2019rep].
 
-Here, we combine four software tools, whose interplay can guarantuee full and sustainable computational reproducibility of data analyses and their reporting. The major four elements are:
-
-Literate Programming
-: Interwoven text and computer code that together forms a dynamically generated, human-readable document.
-: Example: One document that includes text that describes a statistical test, code that is used to execute the statistical and the output of the code in the same document.
-
-Version Control
-: The management of change of documents/code.
-: Example: Changes of the analysis code or even single parameters are documented both at development and post-publication.
-
-Dependency Tracking
-: How different parts of a manuscript/analysis relate and how these dependencies resolve via execution of code.
-: Example: The manuscript depends on the statistical analysis, which depends on a preprocessing pipeline, which depends on a certain subset of the data.
-
-Containerization
-: A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
-: Example: A statistical analysis depends on the used statistical software and a virtual machine bundles them together.
-
-The scientific community widely recognizes that these tools enhance reproducibility [@piccoloToolsTechniquesComputational2016], and provides guidelines for their use (Literate Programming: @ruleTenSimpleRules2019; Version Control: @barbaHardRoadReproducibility2016; Dependency Management: @askrenUsingMakeReproducible2016; Containerization: @clyburne-sherinComputationalReproducibilityContainers2018). However, only a workflow using them in unison allows confidence in reproducing a scientific report. Within the community of users of the R Programming Language for each purpose, a specific software solution is the most popular. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the productivity of the researcher. Each of these software solutions is highly flexible and powerful, so to master them thoroughly often years of practice are required. Luckily the researcher can learn the minimal valuable subset needed to ensure reproducibility with little practice.
+Here, we combine four software tools, whose interplay can guarantuee full and sustainable computational reproducibility of data analyses and their reporting. There are various tools to enhance reproducibility [@piccoloToolsTechniquesComputational2016], of which we believe four of them are particularly important: literate programming: @ruleTenSimpleRules2019, version control @barbaHardRoadReproducibility2016, dependency management @askrenUsingMakeReproducible2016 and containerization @clyburne-sherinComputationalReproducibilityContainers2018. Importantly, only a workflow using all four in unison allows confidence in reproducing a scientific report. Even though there are various implementations of these concepts, we believe that for the R environment, the following four implementations are best suited. For literate programming, `rmarkdown`, for version control `git`, for dependency management `make` and for container `docker`. Each of them serves a meta-scientific valuable goal (reproducibility) and increases the productivity of the researcher. Each of these software solutions is highly flexible and powerful, so to master them thoroughly often years of practice are required. Luckily the researcher can learn the minimal valuable subset needed to ensure reproducibility with little practice.
 
 We believe that for sufficient chances of long-term reproducibility, proper documentation is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. These principles are what guides the use of `rmarkdown`, `git`, `make`, `docker`.
 

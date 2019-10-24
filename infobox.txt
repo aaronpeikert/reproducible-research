@@ -1,0 +1,16 @@
+
+Literate Programming
+: Interwoven text and computer code that together forms a dynamically generated, human-readable document.
+: Example: One document that includes text that describes a statistical test, code that is used to execute the statistical and the output of the code in the same document.
+
+Version Control
+: The management of change of documents/code.
+: Example: Changes of the analysis code or even single parameters are documented both at development and post-publication.
+
+Dependency Tracking
+: How different parts of a manuscript/analysis relate and how these dependencies resolve via execution of code.
+: Example: The manuscript depends on the statistical analysis, which depends on a preprocessing pipeline, which depends on a certain subset of the data.
+
+Containerization
+: A virtual computational environment that does encapsulate all needed software. More formally called operating-system-level virtualization.
+: Example: A statistical analysis depends on the used statistical software and a virtual machine bundles them together.
