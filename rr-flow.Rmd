@@ -396,6 +396,16 @@ The presented workflow leverages various existing tools that are partly integrat
 
 \newpage
 
+## Author Contributions
+
+Aaron Peikert and Andres Brandmaier jointly generated the idea for the manuscript. Aaron Peikert implemented the workflow. Aaron Peikert and Andreas Brandmaier jointly generated the R code examples. Aaron Peikert wrote the first draft of the manuscript, and both authors critically edited it. Both authors approved the final submitted version of the manuscript.
+
+## Conflicts of Interest
+
+The authors declare that there were no conflicts of interest with respect to the authorship or the publication of this article.
+
+\newpage
+
 # References
 
 \begingroup
