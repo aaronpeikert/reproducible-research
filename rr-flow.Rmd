@@ -226,9 +226,7 @@ Then, we ran the identical script with identical seed in R 3.6.1:
 
 As we see from these R outputs, the confidence intervals once include zero and once do not include zero. Please note that one could discuss deeper issues about null hypothesis significance testing here but we would simply like to stress the point that computational reproducibility in the strict sense requires capturing the full computational environment. 
 
-Only rarely does an analysis depend only on base R. Often, a considerable number of packages is required, and they will increase the likelihood of breaking reproducibiity with every update to any of the packages of base R. The whole endeavor of reproducibility is therefore at stake, every time an update is rolled out. To ensure long-term reproducibility, `docker` replicates the original computational environment of an analysis exactly. Note that we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; but full computational reproducibility is only achieved if the originally used software versions are documented. Among other things, this allows to trace back recent updates as to what change in what package caused a non-reproduction of the original results. Quite to the contrary, with solutions like docker, it gets more comfortable than ever to safely update to new versions, by just bumping the R Version number of the docker image.
-
-This convenience is possible to the efforts of the [rocker project](https://GitHub.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a] which provides docker images preconfigured with an R-installation of a fixed R-version. These rely on MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R-Packages, which is fixed to the last date the R-version of the image was the most recent. Building upon these rocker-images researchers can build there own docker-images with the required R-packages. The rocker project also provides images which do include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the `R Markdown` package with Latex (`rocker/verse`). Since the describes workflow relies on `R Markdown` we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
+Only rarely does an analysis depend only on base R. Often, a considerable number of packages is required, and they will increase the likelihood of breaking reproducibiity with every update to any of the packages of base R. The whole endeavor of reproducibility is therefore at stake, every time an update is rolled out. To ensure long-term reproducibility, `docker` replicates the original computational environment of an analysis exactly. Note that we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; but full computational reproducibility is only achieved if the originally used software versions are documented. Among other things, this allows to trace back recent updates as to what change in what package caused a non-reproduction of the original results. Quite to the contrary, with solutions like docker, it gets more comfortable than ever to safely update to new versions, by just bumping the R Version number of the docker image. This convenience is possible because of the efforts of the [rocker project](https://GitHub.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a], which provides docker images preconfigured with an R-installation of given R versions. These packages are taken from MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R packages fixed to the last date the R-version of the image was the most recent. Building upon these rocker-images, researchers can easily build there own Docker images with all required R packages. The rocker project also provides images that include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the R Markdown package with LaTeX (`rocker/verse`). Because our workflow relies on R Markdown, we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
 
 The basic rocker images are extendable by a Dockerfile, e.g., the basis for this articles docker image is the following Dockerfile:
 
@@ -241,17 +239,17 @@ RUN installGitHub.r\
 WORKDIR /home/rstudio
 ```
 
-The `FROM` statement specifies which docker image to use, in this case, the `rocker/verse` image with the tag 3.6.1 (referring to the R version 3.6.1). The `RUN` statement describes a command to execute, in this case, to run an R-script `install2.r` which is available on all rocker images, to install the packages `pacman`,  `here` & `pander`. A Dockerfile allows more than one `RUN` statement, executing any available command. Those `RUN` statements can install dependencies that are not an R package, e.g., other programming languages like python or Matlab. The `WORKDIR` statement is not strictly necessary but saves time spent writing the working directory. The command `docker build -t image-name` creates an image named `image-name` from the Dockerfile in the project. A way to automatically find out the dependencies and genereate a docker image from them is provided in the [liftr-package](https://cran.r-project.org/web/packages/liftr/vignettes/liftr-intro.html) [@liftr].
+The `FROM` statement specifies which docker image to use, in this case, the `rocker/verse` image with the tag 3.6.1 (referring to the R version 3.6.1). The `RUN` statement describes a command to execute, in this case, to run an R-script `install2.r` which is available on all rocker images, to install the specified packages (here, `pacman`,  `here` & `pander`). A Dockerfile allows more than one `RUN` statement, executing arbitrary system commands. Those `RUN` statements can install dependencies that are not an R package, e.g., other programming languages like python or Matlab. The `WORKDIR` statement is not strictly necessary but saves time spent writing the working directory. The command `docker build -t image-name` creates an image named `image-name` from the Dockerfile in the project. A way to automatically find out the dependencies and genereate a docker image from them is provided in the [liftR](https://cran.r-project.org/web/packages/liftr/vignettes/liftr-intro.html) package [@liftr].
 
-There are two principal ways to share a docker image, either by sharing the Dockerfile which created the image or by sharing the image itself e.g., through [dockerhub](https://hub.docker.com). While both ways guarantee a replicable computational environment, sharing the Dockerfile is more transparent, and git tracks changes to it.
+There are two principal ways to share a docker image, either by sharing the Dockerfile that creates the image, or by sharing the image itself, e.g., through a service like [dockerhub](https://hub.docker.com). While both ways guarantee a replicable computational environment, sharing the Dockerfile is more transparent; in our workflow, we can use Git to track changes in the Dockerfile (such as updates to dependencies). 
 
-There are two ways to use a rocker image. Either one starts with the `docker run` command. The first way is to run a command inside the container. These commands take the form:
+There are two ways to use a rocker image. Both are based on the `docker run` command. The first way is to run a command inside the container. The call takes the form:
 
 ```{bash, eval=FALSE}
 docker run --rm -it <IMAGENAME> <COMMAND>
 ```
 
-The `--rm` flag means to not save the state of the docker after the command finishes in an container. The `-it` flag means to accept inputs and return outputs to the terminal. Interacting with docker this way is especially useful when using `R` as a command because then you have access to the standard R-terminal.
+The `--rm` flag means to not save the state of the docker after the command finishes in an container. The `-it` flag tells Docker to accept inputs and return outputs to the terminal. Interacting with docker this way is especially useful when using `R` as a command because then you have access to the standard R terminal. This is the command to start an interactive R session inside a Docker image called `reproducible-research`:
 
 ```{bash, eval=FALSE}
 docker run --rm -it reproducible-research R
@@ -259,21 +257,21 @@ docker run --rm -it reproducible-research R
 
 ![R-terminal running inside docker](Images/docker-r-terminal.png)
 
-The second way is to supply no commands and to interact with the container via the webbrowser and the rstudio server instance that runs in it. For that you need to supply a password to log into rstudio server (`-e PASSWORD=<YOUR_PASS>`) and open a port (`-p 8787:8787`).
+The second way is to supply no commands and to interact with the container via the webbrowser and the rstudio server instance that runs in it. In order to do so, one needs to supply a password to log into Rstudio server (`-e PASSWORD=<YOUR_PASS>`) and open a port (`-p 8787:8787`).
 
 ```{bash, eval=FALSE}
 docker run -e PASSWORD=<YOUR_PASS> -p 8787:8787 image-name
 ```
 
-The adress to connect to the rstudio server is your ip adress (or on linux also `localhost`) in this scheme: `<IPADRESS>:8787`. There is a fully functioning RStudio instance availible, that can be used exactly like one installed locally on the maschine.
+The adress to connect to the Rstudio server is your ip adress (or, on Linux also `localhost`) in this scheme: `<IPADRESS>:8787`. This offers a fully functioning Rstudio instance that runs in the image but is accessible through a local web browser.
 
-None of the above containers can access files on your computer, instead a folder needs to be linked explizitly:
+By default, programs inside the container cannot access files on the local computer; to enable access, a local folder needs to be linked explicitly:
 
 ```{bash, eval=FALSE}
 docker run -v /folder/on/your/computer:/folder/in/docker 
 ```
 
-The main directory for RStudio inside docker is `/home/rstudio` so an apropriate command is:
+The main directory for RStudio inside docker is `/home/rstudio`, so the final call to start Rstudio inside a docker image may look like this:
 
 ```{bash, eval=FALSE}
 docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
@@ -282,7 +280,7 @@ docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
 
 ![RStudio running inside Docker](Images/docker-rstudio.png)
 
-Since `docker`'s commands grow long and are tedius to type, we advocate to use some automatic way to generate them. Fortunatly one can use `make` to automaticly generate the `docker` commands, e.g. the (simplified) Makefile for this paper allows command after `$(run)` to be condtionally passed through docker if one calls `make DOCKER=TRUE`:
+Since Docker commands grow long and are tedious to type manually, we advocate to use some automatic way to generate them. Fortunately, one can use `make` to automatically generate the `docker` commands, e.g. the (simplified) Makefile for this paper allows command after `$(run)` to be condtionally passed through docker if one calls `make DOCKER=TRUE` (otherwise, they are run locally):
 
 ```{bash, eval=FALSE}
 projekt := reproducible-research
@@ -304,13 +302,13 @@ rr-flow.pdf: rr-flow.Rmd reproducible-research.bib
 	$(run) Rscript -e 'R Markdown::render("$(current_dir)/$<")'
 ```
 
-# Setting Up the Workflow
+# Installing and Setting Up the Workflow
 
-This workflow directly relies on three software packages: `git`, `make` and `docker`. Of course it depends also indirectly on R, RStudio & R Markdown, but they do not need to be installed. The installation process depends on the operating system, e.g. on macOS, make is allways availible or on Linux git & make are often allready installed. In the following section we share what have experienced as the easiest options, however in the past how docker should be installed has changed several times, so when in doubt search the internet with: `how to install docker on [your os]`.
+Other than on R, RStudio, and R Markdown, our workflow relies on three software external pieces of software: `git`, `make`, and `docker`. The installation process of these software packages depends on the operating system, e.g., on macOS, Make is allways availible, or on Linux, Git and Make are often allready installed. In the following section, we share what have experienced as the easiest way to install those packages. However, installation processes may be subject to change and we advise readers to also consult the documentations of the packages.
 
 ## Windows
 
-Windows has the biggest hurdle to install what is needed. An essential requirement is that you have Windows Pro, Enterprise, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. However, having met this requirement, there is a great package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install).
+Windows systems typically require the biggest efforts to install all necessary software. Note that you have to have Windows Pro, Enterprise, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. There is a package manager for Windows called chocolately, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install), providing all dependencies.
 After having installed chocolately (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows-Key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
@@ -331,15 +329,15 @@ To use `docker` you need to start Docker Desktop.
 
 ## Linux
 
-There is a pletora of linux distributions and almost as many package managers. However to our knowledge there is no (recent) Linux where `git`, `make` and `docker` are not availible. Example for Ubuntu:
+There is a host of diffferent Linux distributions and almost as many package managers. Still, to our knowledge there is no (recent) Linux edition, where `git`, `make` and `docker` are not availible. For example, in Ubuntu Linux, installation is straightforward using the shipped package manager:
 
 ```{bash, eval=FALSE}
 apt install git make docker 
 ```
 
-Replace `apt` with your package manager. Possiblie you need elevated rights; in this case add `sudo` before that. `docker` also needs elevated rights, we recomend therefore to add your user to the `docker` group, following the [documentation of docker](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
+For other distributions, replace `apt` with the native package manager. One may need elevated rights for the installation; in this case add `sudo` before the installation command. `docker` also needs elevated rights to run; therefore, we recomend to add the local user to the `docker` group, following the [documentation of docker](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
-An alternative to `docker` on Linux is `singularity` [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker-images. A possible advantage is that singularity works well in  HPC environments and on old Linux versions, the downside is that `singularity` is only availibe on Linux.
+An alternative to `docker` on Linux is `singularity` [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker-images. A possible advantage is that singularity works well in high-performance computing environments and on old Linux versions, the downside is that `singularity` is only availibe on Linux.
 
 ## Reproducing an Analysis
 
@@ -354,7 +352,7 @@ make all DOCKER=TRUE
 
 # Summary
 
-The overarching goal of this paper was to provide an easy to use workflow, that allows confidence in reproducibility. This workflow can be almost unfailingly trusted to be replicable with the following commands:
+The overarching goal of this paper was to provide an easy to use workflow, that allows confidence in reproducibility. This workflow can be almost unfailingly trusted to be reproduced with the following commands:
 
 ```{bash, eval=FALSE}
 git clone https://GitHub.com/aaronpeikert/reproducible-research.git
@@ -363,17 +361,17 @@ make build
 make all DOCKER=TRUE
 ```
 
-That is, it replicates a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the version of the files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. On the way, it makes transparent how statistical results depend upon the software that created them and enables, through that transparency, reuse by other researchers. 
+That is, it reproduces a scientific report exactly without regard to the user, the operating system, the software, the timepoint or the recent changes to the involved files. To that end, it relies on tools that have been the foundation of reliable software development for years or in most cases, decades. As a by-product, it makes transparent how statistical results depend on the software that created them and enables, through that transparency, reuse by other researchers. 
 
-Each tool reduces the number of ways things can go wrong. Dynamic reporting with `R Markdown` guarantuees consistency between computational results and their reporting; Version control with `git` guarantuees permanence and consistency across multiple versions of data and code; Dependency management with `make` guarantuees defined entry-points and dependency resolution; containerization with `docker` guarantuees reproducibility of the full computational environment. This tightening of loose ends, we believe, does not restrict researchers but enables them to operate on a solid basis to deliver sound research.
+Each tool reduces the likelihood of non-reproduction. Dynamic reporting with R Markdown guarantuees consistency between computational results and their reporting; Version control with `git` guarantuees permanence and consistency across multiple versions of data and code; Dependency management with `make` guarantuees defined entry-points and dependency resolution; containerization with `docker` guarantuees reproducibility of the full computational environment. We believe that this tightening of loose ends does not restrict researchers but enables them to operate on a solid basis to deliver sound and sustainable research.
 
 ## Related approaches
 
-While this approach here was designed to scale well with the complexity of a computing-intense Project, we realise that this flexibility comes with a steep learning curve. A few packages are easing this burden for different parts of the workflow when this flexibility is not needed. The use of `R Markdown` within a project, tracked with `git` can be simplified with the [workflowr-package](https://GitHub.com/jdblischak/workflowr) [@workflowr]. The [drake-package](https://GitHub.com/ropensci/drake) [@drake] is directly inspired by `make` but does only require knowledge in R, but can only handle dependencies within R. The [liftr-package](https://cran.r-project.org/web/packages/liftr/vignettes/liftr-intro.html) [@liftr] and the [holepunch-package](https://karthik.GitHub.io/holepunch/) [@holepunch] automize the use of docker. The former is perfectly compatible with the described workflow and we recommend it to users uncomftable with docker. The later uses [binder](https://mybinder.org) to move the analysis to the cloud so that no local installation of docker is required. holepunch is well suited for simple analysis with low computational demands, because of memory and computing time limitations of binder. There are several alternatives to docker which fix the dependencies on R-packages. [packrat](https://rstudio.GitHub.io/packrat/) [@packrat] is a way to fix package version via local installations of packages in the project, however it does not garuantees more then a fixed set of packages (Not R-version or system dependencies). Similar approaches are taken by [jetpack](https://GitHub.com/ankane/jetpack) [@jetpack], [miniCRAN](https://cran.r-project.org/web/packages/miniCRAN/vignettes/miniCRAN-introduction.html) [@miniCRAN] and [checkpoint](https://cran.r-project.org/web/packages/checkpoint/vignettes/checkpoint.html) [@checkpoint]. Notable is also the package [`reprex`](https://GitHub.com/tidyverse/reprex) [**repr**oducible **ex**ample, @reprex], but its scope is limited to small examples.
+While our approach was designed to scale well with the complexity of a computing-intense project, we realise that this flexibility may not be straightforward to integrate into a researcher's everyday workflow. There are R packages that implement parts of our workflow and, thus, lower the threshold to adoption when the full flexibility is not needed. The use of R Markdown within a project, tracked with `git` can be simplified with the [workflowR](https://GitHub.com/jdblischak/workflowr) package [@workflowr]. The [drake](https://GitHub.com/ropensci/drake) package [@drake] is directly inspired by `make` but can only handle dependencies within R. The [liftR ](https://cran.r-project.org/web/packages/liftr/vignettes/liftr-intro.html) package [@liftr] and the [holepunch](https://karthik.GitHub.io/holepunch/) package [@holepunch] automatize the use of docker. The former is perfectly compatible with the described workflow and we recommend it to users uncomfortable with command-line use of docker. The later uses [binder](https://mybinder.org) <CITATION NEEDED> to move the analysis to the cloud, so that no local installation of docker is required. `holepunch` is well suited for simple analysis with low computational demands, because of memory and computing time limitations of binder. There are several alternatives to docker that manage dependencies on R packages. [`packrat`](https://rstudio.GitHub.io/packrat/) [@packrat] is a way to freeze package version via local copies of packages in the project, however it does not garuantee a given base R version or system dependencies. Similar approaches are taken by [`jetpack`](https://GitHub.com/ankane/jetpack) [@jetpack], [`miniCRAN`](https://cran.r-project.org/web/packages/miniCRAN/vignettes/miniCRAN-introduction.html) [@miniCRAN] and [`checkpoint`](https://cran.r-project.org/web/packages/checkpoint/vignettes/checkpoint.html) [@checkpoint]. Notable is also the package [`reprex`](https://GitHub.com/tidyverse/reprex) [**repr**oducible **ex**ample, @reprex], but its scope is limited.
 
-Another way to increase the chance of reproducibility is to develop an R-package, which is a self-contained set of files with well-defined meta data, for each analysis. The reasoning is that by abiding the strict rules of package development and specifieng all dependencies a high degree of stability can be archieved (e.g., @marwickPackagingDataAnalytical2018).
+Another way to increase the chance of reproducibility is to develop an R package, which is a self-contained set of files with well-defined meta data, for each analysis. The reasoning is that by abiding the strict rules of package development and specifieng all dependencies a high degree of stability can be archieved (e.g., @marwickPackagingDataAnalytical2018).
 
-However, beside these tools that ease the process of creating a workflow on the researchers side, we see increased interest in changing how research is published and used[@perkelToolkitDataTransparency2018], with *life code* [@perkelPioneeringLivecodeArticle2019] and *continuous integration* [@beaulieu-jonesReproducibilityComputationalWorkflows2017, @yenniDevelopingModernData2018]. These techniques give us a glimpse of a paradigm shift from static to dynamic, interactive and living publications.
+However, beside these tools that ease the process of creating a workflow on the researchers side, we see increased interest in changing how research is published and used [@perkelToolkitDataTransparency2018], with *life code* [@perkelPioneeringLivecodeArticle2019] and *continuous integration* [@beaulieu-jonesReproducibilityComputationalWorkflows2017, @yenniDevelopingModernData2018]. These techniques give us a glimpse of a paradigm shift from static to dynamic, interactive and living publications.
 
 ## Limitations
 
