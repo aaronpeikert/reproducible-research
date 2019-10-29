@@ -125,17 +125,17 @@ git log
 git checkout 77db06f78e
 ```
 
-Git also makes it especially easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Just sharing Git repositories with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.GitHub.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, one can create a new repository where GitHub advises you how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
+Git also makes it especially easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Just sharing Git repositories with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, one can create a new repository where GitHub advises you how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
 
 ```{bash, eval=FALSE}
-git remote add origin git@github.com:aaronpeikert/reproducible-research.git
+git remote add origin https://github.com/aaronpeikert/reproducible-research.git
 git push -u origin master
 ```
 
 `git push` or the green up-arrow in the git pane uploads local updates. To download this git repo to another computer type into the terminal:
 
 ```{bash, eval=FALSE}
-https://github.com/aaronpeikert/reproducible-research.git
+git clone https://github.com/aaronpeikert/reproducible-research.git
 ```
 
 Git and GitHub can do even more to help you to collaborate with your fellow researchers, such as formal means to track issues and their status (open/closed/resolved) and further means to managing and merging multiple, parallel versions of code (such as branches, pull requests, merges) but this is beyond the already broad scope of this tutorial. In particular, GitHub's issue management can be leveraged as post-publication platform to discuss manuscripts and their results [^1].
