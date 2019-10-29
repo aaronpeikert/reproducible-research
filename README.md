@@ -62,6 +62,18 @@ make build
 make all DOCKER=TRUE
 ```
 
+## Rebuild Everything
+
+In case you experience some unexpected behavior with this workflow, you
+should check that you have the most recent version (`git pull`), rebuild
+the docker image (`make build`) and force the rebuild of all targets
+(`make -B
+    DOCKER`).
+
+``` bash
+git pull && make build && make -B DOCKER=TRUE
+```
+
 # Session Info
 
 ``` r
@@ -78,7 +90,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2019-10-28                  
+    ##  date     2019-10-29                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        

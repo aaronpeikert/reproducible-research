@@ -49,6 +49,14 @@ make build
 make all DOCKER=TRUE
 ```
 
+## Rebuild Everything
+
+In case you experience some unexpected behavior with this workflow, you should check that you have the most recent version (`git pull`), rebuild the docker image (`make build`) and force the rebuild of all targets (`make -B DOCKER`).
+
+```{bash, eval=FALSE}
+git pull && make build && make -B DOCKER=TRUE
+```
+
 # Session Info
 
 ```{r}
