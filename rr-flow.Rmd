@@ -65,7 +65,7 @@ To maximize chances of long-term reproducibility, proper documentation of all st
 
 # Disclosures 
 
-This paper is fully reproducible using the workflow described in this paper. All materials, including the manuscript source and all R codes and files used to generate this manuscript, can be found on the accompanying GitHub repository <https://GitHub.com/aaronpeikert/reproducible-research/>. 
+This paper is fully reproducible using the workflow described in this paper. All materials, including the manuscript source and all R codes and files used to generate this manuscript, can be found on the accompanying GitHub repository [<https://github.com/aaronpeikert/reproducible-research/>](https://github.com/aaronpeikert/reproducible-research/). 
 
 # Project organization
 
