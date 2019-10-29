@@ -33,7 +33,7 @@ practical examples that dynamic documents alone are not sufficient to
 ensure long-term computational reproducibility. By ensuring full
 computational reproducibility together with version management,
 dependence management and literate programming, the workflow increases
-scientific productivity by facilitating later reuse of code and dat.
+scientific productivity by facilitating later reuse of code and data.
 
 # Compile
 
