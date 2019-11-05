@@ -34,7 +34,7 @@ Insert:
 https://github.com/aaronpeikert/reproducible-research.git
 ```
 
-Open `rr-flow.Rmd` click on `Knit`.
+Open `manuscript.Rmd` click on `Knit`.
 
 ## Using Workflow
 

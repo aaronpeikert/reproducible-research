@@ -24,7 +24,7 @@ authornote: This paper is fully reproducible using the workflow described in thi
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
 keywords          : "keywords"
-wordcount         : "`r tryCatch(wordcountaddin::word_count(here::here('rr-flow.Rmd')), error=function(err) 'NA')`"
+wordcount         : "`r tryCatch(wordcountaddin::word_count(here::here('manuscript.Rmd')), error=function(err) 'NA')`"
 
 bibliography      : ["reproducible-research.bib"]
 
@@ -296,12 +296,12 @@ ifeq ($(DOCKER),TRUE)
 	current_dir=/home/rstudio
 endif
 
-all: rr-flow.pdf
+all: manuscript.pdf
 
 build: Dockerfile
 	docker build -t $(projekt) .
 
-rr-flow.pdf: rr-flow.Rmd reproducible-research.bib
+manuscript.pdf: manuscript.Rmd reproducible-research.bib
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 ```
 

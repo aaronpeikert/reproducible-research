@@ -8,7 +8,7 @@ ifeq ($(DOCKER),TRUE)
 	current_dir=/home/rstudio
 endif
 
-all: rr-flow.pdf README.md
+all: manuscript.pdf README.md
 
 build: Dockerfile
 	docker build -t $(projekt) .
@@ -16,13 +16,13 @@ build: Dockerfile
 README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
-rr-flow.pdf: rr-flow.Rmd reproducible-research.bib random bootstrap rmarkdown R/wrap_code.R
+manuscript.pdf: manuscript.Rmd reproducible-research.bib random bootstrap rmarkdown R/wrap_code.R
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
-rr-flow-jou.pdf: rr-flow-jou.Rmd rr-flow.pdf
+manuscript-jou.pdf: manuscript-jou.Rmd manuscript.pdf
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<", )'
 
-rr-flow-jou.Rmd: R/jou_version.R
+manuscript-jou.Rmd: R/jou_version.R
 	$(run) Rscript -e 'source("$<")'
 
 rmarkdown: R/rmarkdown.pdf

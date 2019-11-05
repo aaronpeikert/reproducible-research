@@ -47,7 +47,7 @@ Insert:
 
     https://github.com/aaronpeikert/reproducible-research.git
 
-Open `rr-flow.Rmd` click on `Knit`.
+Open `manuscript.Rmd` click on `Knit`.
 
 ## Using Workflow
 
@@ -90,7 +90,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2019-10-29                  
+    ##  date     2019-11-05                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
