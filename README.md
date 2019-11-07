@@ -13,7 +13,7 @@ Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)
 
 # Abstract
 
-In this tutorial, we describe a principled workflow to ensure long-term
+In this tutorial, we describe a workflow to ensure long-term
 reproducibility of R-based data analyses. The workflow leverages
 established tools and practices from software engineering. It combines
 the benefits of various open-source software tools including R Markdown,
@@ -23,17 +23,17 @@ cross-platform and long-term computational reproducibility. The workflow
 ensures meeting the primary goals that 1) the reporting of statistical
 results is consistent with the actual statistical results (dynamic
 report generation), the analysis exactly reproduces at a later time even
-if the computing and software platform is updated or changed
-(computational reproducibility), and 3) changes at any time (during
-development and post-publication) are tracked, tagged, and documented
-while earlier versions of both data and code remain accessible. While
-the research community increasingly recognizes dynamic document
-generation as a tool to ensure reproducibility, we demonstrate with
-practical examples that dynamic documents alone are not sufficient to
-ensure long-term computational reproducibility. By ensuring full
-computational reproducibility together with version management,
-dependence management and literate programming, the workflow increases
-scientific productivity by facilitating later reuse of code and data.
+if the computing platform or software is changed (computational
+reproducibility), and 3) changes at any time (during development and
+post-publication) are tracked, tagged, and documented while earlier
+versions of both data and code remain accessible. While the research
+community increasingly recognizes dynamic document generation and
+version management as tools to ensure reproducibility, we demonstrate
+with practical examples that these alone are not sufficient to ensure
+long-term computational reproducibility. Leveraging containerization,
+dependence management, version management, and literate programming, the
+workflow increases scientific productivity by facilitating later
+reproducibility and reuse of code and data.
 
 # Compile
 
@@ -90,7 +90,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2019-11-05                  
+    ##  date     2019-11-07                  
     ## 
     ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -105,13 +105,13 @@ sessioninfo::session_info()
     ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
     ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.1)
-    ##  rmarkdown     1.15    2019-08-21 [1] CRAN (R 3.6.1)
+    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.1)
     ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.1)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.1)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.1)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.1)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.1)
-    ##  xfun          0.9     2019-08-21 [1] CRAN (R 3.6.1)
+    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
     ## 
     ## [1] /usr/local/lib/R/site-library
