@@ -23,7 +23,7 @@ authornote: This paper is fully reproducible using the workflow described in thi
 
 abstract: "`r readr::read_file('abstract.Rmd')`"
 
-keywords          : "keywords"
+keywords          : "reproducibility, R, version management, literate programming, dependency management, containerization, open science"
 wordcount         : "`r tryCatch(wordcountaddin::word_count(here::here('manuscript.Rmd')), error=function(err) 'NA')`"
 
 bibliography      : ["reproducible-research.bib"]
