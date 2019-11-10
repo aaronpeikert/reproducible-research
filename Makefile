@@ -1,10 +1,17 @@
-projekt := reproducible-research
-current_dir := $(shell git rev-parse --show-toplevel)
-home_dir := $(shell git rev-parse --show-toplevel)
-uid = $(shell id -u)
+projekt := $(notdir $(CURDIR))
+
+ifeq ($(WINDOWS),TRUE)
+	current_dir:=//c/Users/aaron/Documents/reproducible-research
+	home_dir:=$(current_dir)
+	uid:=
+else
+	current_dir := $(CURDIR)
+	home_dir := $(current_dir)
+	uid = --user $(shell id -u)
+endif
 
 ifeq ($(DOCKER),TRUE)
-	run:=docker run --rm --user $(uid) -v $(home_dir):/home/rstudio $(projekt)
+	run:=docker run --rm $(uid) -v $(home_dir):/home/rstudio $(projekt)
 	current_dir=/home/rstudio
 endif
 
