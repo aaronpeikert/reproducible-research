@@ -315,7 +315,7 @@ After having installed chocolately (and restarted the computer), all dependencie
 choco install -y git make docker-desktop
 ```
 
-To use `docker` you need to start Docker Desktop.
+To use `docker` you need to start Docker Desktop. In the settings of docker you have to allow the sharing of your drive. Docker on Windows require the path to be special therfore you need to hand edit the `Makefile` and set `current_path` to the current directory and use `make all DOCKER=TRUE WINDOWS=TRUE`. We hope that future releases of Docker for Windows will not require that workaround.
 
 ## macOS
 
@@ -325,7 +325,7 @@ As make already ships with macOS, you only need `git` and `docker-desktop`. We s
 brew cask docker
 ```
 
-To use `docker` you need to start Docker Desktop.
+To use `docker` you need to start Docker Desktop. In the settings of docker you have to allow the sharing of your drive.
 
 ## Linux
 

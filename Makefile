@@ -11,13 +11,13 @@ else
 	uid = --user $(shell id -u)
 endif
 
-ifeq (,$(wildcard $(CURDIR)))
-	$(error Make has trouble finding the directory. If on windows please double check current_dir path.)
-endif
-
 ifeq ($(DOCKER),TRUE)
 	run:=docker run --rm $(uid) -v $(home_dir):/home/rstudio $(projekt)
 	current_dir=/home/rstudio
+endif
+
+ifeq ("$(wildcard $(current_dir))","")
+$(error Make has trouble finding the directory. If on windows please double check current_dir path)
 endif
 
 all: manuscript.pdf README.md

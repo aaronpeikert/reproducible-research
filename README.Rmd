@@ -49,6 +49,8 @@ make build
 make all DOCKER=TRUE
 ```
 
+**Note: Windows user need to hand edit the `Makefile` and set current_path to the current directory and use `make all DOCKER=TRUE WINDOWS=TRUE`. We hope that future releases of Docker for Windows will not require that workaround.**
+
 ## Rebuild Everything
 
 In case you experience some unexpected behavior with this workflow, you should check that you have the most recent version (`git pull`), rebuild the docker image (`make build`) and force the rebuild of all targets (`make -B DOCKER`).
