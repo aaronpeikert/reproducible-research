@@ -1,7 +1,7 @@
 ---
-title: "A simple RMarkdown Example"
+title: "A simple R markdown example"
 author: "Aaron Peikert & Andreas M. Brandmaier"
-date: '`r format(Sys.time(), "%d %B, %Y")`'
+date: '`r format(Sys.time(), "%B %d, %Y")`'
 output: pdf_document
 papersize: "a6"
 geometry:
@@ -23,11 +23,12 @@ data("sleep")
 result <- t.test(extra ~ group, data = sleep)
 ```
 
-This is an example on students' sleep data taken from `help(t.test)`.
+This is an example of students' sleep data taken from `help(t.test)`.
 
 `r apa_print.htest(result)$full_result`
 
 I can now assert that what I *believe* to be true
 --- that there is a difference in means between the groups ---
-is `r ifelse(result$p.value > .025, "**not**", "")` supported by data.
+is `r ifelse(result$p.value > .025, "**not**", "")` the supported by the data.
+
 
