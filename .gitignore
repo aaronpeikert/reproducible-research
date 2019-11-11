@@ -6,4 +6,5 @@
 *.tex
 *.html
 *.log
+*.tar.gz
 manuscript-jou.Rmd

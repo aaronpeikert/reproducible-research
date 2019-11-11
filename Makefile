@@ -21,6 +21,9 @@ all: manuscript.pdf README.md
 build: Dockerfile
 	docker build -t $(projekt) .
 
+$(projekt).tar.gz:
+	docker save $(projekt):latest | gzip > $@
+
 README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
