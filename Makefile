@@ -1,6 +1,7 @@
 projekt := $(notdir $(CURDIR))
 
 ifeq ($(WINDOWS),TRUE)
+	# please mind the unusual way to specify the path
 	current_dir:=//c/Users/aaron/Documents/reproducible-research
 	home_dir:=$(current_dir)
 	uid:=
@@ -8,6 +9,10 @@ else
 	current_dir := $(CURDIR)
 	home_dir := $(current_dir)
 	uid = --user $(shell id -u)
+endif
+
+ifeq (,$(wildcard $(CURDIR)))
+	$(error Make has trouble finding the directory. If on windows please double check current_dir path.)
 endif
 
 ifeq ($(DOCKER),TRUE)
