@@ -49,7 +49,7 @@ make build
 make all DOCKER=TRUE
 ```
 
-**Note: Windows user need to hand edit the `Makefile` and set current_path to the current directory and use `make all DOCKER=TRUE WINDOWS=TRUE`. We hope that future releases of Docker for Windows will not require that workaround.**
+**Note: Windows user need to manually edit the `Makefile` and set current_path to the current directory and use `make all DOCKER=TRUE WINDOWS=TRUE`. We hope that future releases of Docker for Windows will not require that workaround.**
 
 ## Rebuild Everything
 

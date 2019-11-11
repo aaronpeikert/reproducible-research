@@ -16,10 +16,6 @@ ifeq ($(DOCKER),TRUE)
 	current_dir=/home/rstudio
 endif
 
-ifeq ("$(wildcard $(current_dir))","")
-$(error Make has trouble finding the directory. If on windows please double check current_dir path)
-endif
-
 all: manuscript.pdf README.md
 
 build: Dockerfile
@@ -71,3 +67,5 @@ R/bootstrap36.md: data/bcis-3.5.0.csv data/bcis-3.6.1.csv R/bootstrap.Rmd
 	Rscript -e 'rmarkdown::render("/home/rstudio/R/bootstrap.Rmd", output_file = "/home/rstudio/$@")'
 
 R/bootstrap.Rmd: R/bootstrap.R
+
+print-%: ; @echo $* = $($*)
