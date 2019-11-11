@@ -68,4 +68,3 @@ R/bootstrap36.md: data/bcis-3.5.0.csv data/bcis-3.6.1.csv R/bootstrap.Rmd
 
 R/bootstrap.Rmd: R/bootstrap.R
 
-print-%: ; @echo $* = $($*)
