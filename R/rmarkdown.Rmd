@@ -29,6 +29,6 @@ This is an example of students' sleep data taken from `help(t.test)`.
 
 I can now assert that what I *believe* to be true
 --- that there is a difference in means between the groups ---
-is `r ifelse(result$p.value > .025, "**not**", "")` the supported by the data.
+is `r ifelse(result$p.value > .025, "**not**", "")` supported by the data.
 
 
