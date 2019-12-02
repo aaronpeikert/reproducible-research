@@ -87,8 +87,8 @@ Sometimes external requirements make it impossible for the data to be stored and
 ```{r}
 x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
 checksum <- digest::sha1(x)
-if (checksum != "740e88404c04af1d67ffc87b008231c093539cc1"){
-  error("Wrong data file loaded or data has been changed!")
+if (checksum != "bd4b9197ff7f8e32e56b9d62c3ee7718f367b485"){
+  warning("Wrong data file loaded or data has been changed!")
 }
 ```
 
