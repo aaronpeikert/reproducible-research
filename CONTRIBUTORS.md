@@ -1,4 +1,4 @@
-bnnlib contributors (sorted randomly)
+reproducible-research contributors (sorted randomly)
 ============================================
 
 * **[Andreas Brandmaier](https://github.com/brandmaier)**
