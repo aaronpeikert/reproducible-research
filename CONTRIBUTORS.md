@@ -5,17 +5,17 @@ reproducible-research contributors (sorted randomly)
 
 	*	author
 
-* **[gabrielesh](https://github.com/gabrielesh)
+* **[gabrielesh](https://github.com/gabrielesh)**
 
 	*	helped fixing typos, language, and code
 
 
-* **[Tobias Heycke](https://github.com/TobiasHeycke)
+* **[Tobias Heycke](https://github.com/TobiasHeycke)**
 
 	*	helped fixing typos
 
 
-* **[ogtveit](https://github.com/ogtveit)
+* **[ogtveit](https://github.com/ogtveit)**
 	
 	*	helped fixing typos
 
