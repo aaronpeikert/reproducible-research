@@ -125,7 +125,7 @@ git log
 git checkout 77db06f78e
 ```
 
-Git also makes it particularly easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Just sharing Git repositories with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, one can create a new repository and GitHub provides information on how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
+Git also makes it particularly easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Alternatively, institutions can host an equally feature-rich open-source software called [GitLab](https://gitlab.com) themself, avoiding the reliance on commercial service providers. Just sharing Git repositories on GitHub with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, one can create a new repository and GitHub provides information on how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
 
 ```{bash, eval=FALSE}
 git remote add origin https://github.com/aaronpeikert/reproducible-research.git
