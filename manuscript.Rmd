@@ -64,7 +64,7 @@ Here, we combine four software tools, whose interplay can guarantee full computa
 
 # Project organization
 
-The first step towards reproducibility is to create an R script or R Markdown file as primary entry point for the analysis that runs on a local computer without error and performs the main statistical analyses. Next, one needs to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is recommendable that all files are within one folder (or enclosed subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [RStudio projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package [@here2017].
+The first step towards reproducibility is to create an R script or R Markdown file as primary entry point for the analysis that runs on a local computer without error and performs the main statistical analyses. Next, one needs to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is recommendable that all files are within one folder (or enclosed subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [RStudio projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package [@here2017] to manage file access.
 
 ```{r, eval=FALSE}
 # BAD
