@@ -62,30 +62,11 @@ Here, we combine four software tools, whose interplay can guarantee full computa
 
 <!--To maximize chances of long-term reproducibility, proper documentation of all steps taken and their context is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. This principle is what guided our use of R Markdown, Git, Make, and Docker.-->
 
-# Project organization
+# The Reproducible Workflow in a nutshell
 
-The first step towards reproducibility is to create an R script or R Markdown file as primary entry point for the analysis that runs on a local computer without error and performs the main statistical analyses. Next, one needs to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is recommendable that all files are within one folder (or enclosed subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [RStudio projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package [@here2017] to manage file access.
+![](Images/placeholder.png)
+Figure XXX gives an overview of how the four components of our workflow interface to ensure computational reproducibility. We begin with a minimal description of the roles of the four components. In the remainder of this tutorial, we will further detail each of the four components of our workflow. The first component is version control. Version control manages  changes to files (e.g., data and code) over time so that you can access specific versions later. Version control offers snapshots of your workflow at different time points identified by a unique identifier. The different frames in the z-axis of the image illustrate the different versions of the workflow. How different parts of a analysis and a report of it relate and in what order they need to be executed is monitored using dependency management. The arrows visualize dependencies, such as an analysis depending on the availability of a particular data file. Third, all computer code (such as a statistical analysis in R) is executed in a virtual environment that guarantuees exact reproduction of results independent of the host operating system, R version, and installed package versions. Finally, literate programming interweaves human-readable code and automatically produced results (such as p values, effect sizes, confidence intervals) to eliminate inconsistency errors such as those arising from careless copy and paste actions. 
 
-```{r, eval=FALSE}
-# BAD
-iris <- read.csv("/home/aaron/reproducible-research/data/iris.csv")
-# GOOD
-iris <- read.csv("data/iris.csv")
-# BETTER
-iris <- read.csv(here("data", "iris.csv"))
-```
-
-The folder where all the files reside that you need for analysis (code and data), is referred to as a 'project' (or sometimes as a 'research compendium'). Working with projects is particularly convenient with RStudio, an integrated development environment (IDE) for R. It is useful to organize a data analysis project in a way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 in @marwickPackagingDataAnalytical2018]; there are also tools that automatize the standardized creation of folder structures such as `workflowr` [@workflowr].
-
-Sometimes external requirements make it impossible for the data to be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If dividing data and scripts is unavoidable, we recommend validating all data files using checksums (also called a "hash", e.g., using the functions provided in package `digest` [@digest2019]) before analyzing them. To do this, a checksum must be created and stored at the time of the original analysis. At the time of reproduction, the current checksum must then be compared with the stored checksum to ensure data integrity.
-
-```{r}
-x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
-checksum <- digest::digest(x, "sha1")
-if (checksum != "8e222b9b3616595dc3f5946f9eac101fbf1336dc"){
-  warning("Mismatch between original and current data file!")
-}
-```
 
 # Literate Programming
 
@@ -339,14 +320,44 @@ For other distributions, replace `apt` with the native package manager. You may 
 
 An alternative to Docker on Linux is Singularity [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker images. A possible advantage is that singularity works well in high-performance computing environments and on old Linux versions, the downside is that Singularity is only available on Linux.
 
-## Reproducing an Analysis
+# Project organization
 
-We provide a reproducible analysis as a working example via [GitHub](https://github.com/aaronpeikert/workflow-showcase) as a testbed for users. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a successful implementation of our workflow including downloads of external data, comparison of their integrity using a checksum, and the running of a confirmatory factor analysis on the first few items using `lavaan` [@lavaan2012]. Once all mentioned tools are installed on a computer, the following few steps are necessary to reproduce our analysis:
+Finally, we conclude with some notes on project organization, which we think makes migrating projects to a reproducible workflow easier. The first step towards reproducibility is to create an R script or R Markdown file as primary entry point for the analysis that runs on a local computer without error and performs the main statistical analyses. Next, one needs to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is recommendable that all files are within one folder (or enclosed subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [RStudio projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package [@here2017] to manage file access.
+
+```{r, eval=FALSE}
+# BAD
+iris <- read.csv("/home/aaron/reproducible-research/data/iris.csv")
+# GOOD
+iris <- read.csv("data/iris.csv")
+# BETTER
+iris <- read.csv(here("data", "iris.csv"))
+```
+
+The folder where all the files reside that you need for analysis (code and data), is referred to as a 'project' (or sometimes as a 'research compendium'). Working with projects is particularly convenient with RStudio, an integrated development environment (IDE) for R. It is useful to organize a data analysis project in a way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 in @marwickPackagingDataAnalytical2018]; there are also tools that automatize the standardized creation of folder structures such as `workflowr` [@workflowr].
+
+Sometimes external requirements make it impossible for the data to be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If dividing data and scripts is unavoidable, we recommend validating all data files using checksums (also called a "hash", e.g., using the functions provided in package `digest` [@digest2019]) before analyzing them. To do this, a checksum must be created and stored at the time of the original analysis. At the time of reproduction, the current checksum must then be compared with the stored checksum to ensure data integrity.
+
+```{r}
+x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
+checksum <- digest::digest(x, "sha1")
+if (checksum != "8e222b9b3616595dc3f5946f9eac101fbf1336dc"){
+  warning("Mismatch between original and current data file!")
+}
+```
+
+
+## Use Case: Reproducing an Analysis
+
+We provide a reproducible analysis as a working example via [GitHub](https://github.com/aaronpeikert/workflow-showcase). We encourage interested readers to try to reproduce this example as a practical exercise. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a complete implementation of our workflow including downloads of external data, comparison of their integrity using a checksum, and  a confirmatory factor analysis on the first few items using the R package `lavaan` [@lavaan2012]. Once all required tools are installed on a computer, the following four command-line commands are sufficient to reproduce our demo analysis:
 
 ```{bash, eval=FALSE}
+# (1) download the complete repository containing the workflow to your computer
 git clone https://github.com/aaronpeikert/workflow-showcase.git
+# (2) enter the directory containing the cloned workflow
 cd workflow-showcase
+# (3) building the docker container
 make build
+# (4) running the analysis and producing the final PDF inside the container
 make all DOCKER=TRUE
 ```
 
