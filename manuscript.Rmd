@@ -148,7 +148,7 @@ If you have followed our workflow as presented thus far, a fellow researcher is 
 
 ```{bash, eval=FALSE}
 # obtain a local copy from the remote repository
-git clone https://github.com/sirfisher/iris.git
+git clone https://github.com/aaronpeikert/reproducible-research.git
 # enter the local copy
 cd iris
 # create all files from that project
@@ -178,7 +178,7 @@ This outputs:
 ```{r, child="R/random35.md"}
 ```
 
-Surprisingly in an image with a more recent version of R (3.6.1), this results in another sample despite the identical seed:
+Executing the code in an image with a more recent version of R (3.6.1), this results in another sample despite the identical random seed:
 
 ```{r random, eval=FALSE}
 ```
@@ -206,16 +206,20 @@ Then, we ran the identical script with the identical seed in R 3.6.1:
 
 As we see from these R outputs, the confidence intervals once include zero and once do not. Please note that one could discuss deeper issues about null hypothesis significance testing here but with this example, we would simply like to stress the point that computational reproducibility in the strict sense requires capturing the full computational environment. 
 
-Only rarely does an analysis depend on base R only. Often, a considerable number of packages is required, and the addition of each package will increase the likelihood of breaking reproducibility with every update to any of the packages of base R. The whole endeavor of reproducibility is therefore at stake every time an update is rolled out. To ensure long-term reproducibility, Docker replicates the original computational environment of an analysis exactly. Note that we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; our point is that full computational reproducibility is only achieved if the originally used software versions are documented. Among other things, this makes it possible to trace back recent updates as to what change in what package caused a non-reproduction of the original results. Quite to the contrary, with solutions like Docker, it gets easier than ever to safely update to new versions just by changing the R version number of the Docker image. This convenience is possible because of the efforts of the [Rocker project](https://GitHub.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a], which provides Docker images preconfigured with an R-installation of given R versions. These packages are taken from MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R packages fixed to the last date on which the R version of the image was the most recent. Building upon these Rocker images, researchers can easily build their own Docker images with all required R packages. The rocker project also provides images that include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the R Markdown package with LaTeX (`rocker/verse`). Because our workflow relies on R Markdown, we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [Dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
+Only rarely does an analysis depend on base R only. Typically, a considerable number of packages is required that each may depend on multiple other packages, and the addition of each package will increase the likelihood of breaking reproducibility with every update to any of the packages of base R (the resulting frustration is sometimes refered to as _dependency hell_). The whole endeavor of reproducibility is therefore at stake every time an update is rolled out. To ensure long-term reproducibility, Docker replicates the original computational environment of an analysis exactly. Note that we do not intend to advocate that software should not be updated; updates typically promote bugfixes and provide new functionality; our point is that full computational reproducibility is only achieved if the software versions used originally are precisely documented. Among other things, this makes it possible to trace back update histories to discover which change in which package caused the non-reproducibility. Quite to the contrary, with containerization, it gets easier than ever to safely update to new versions just by changing the R version number of the Docker image (and reverting back if this update breaks code). This convenience is possible because of the efforts of the [Rocker project](https://GitHub.com/rocker-org/rocker) [@boettigerIntroductionRockerDocker2017a], which provides Docker images pre-configured with an installation of selected R versions. These packages are taken from MRAN [@revolutionanalyticsReproducibilityUsingFixed2019], a repository for R packages fixed to the last date on which the R version of the image was the most recent. Building upon these Rocker images, researchers can easily build their own Docker images with all required R packages. The rocker project also provides images that include RStudio (`rocker/rstudio`), the `tidyverse` package (`rocker/tidyverse`) and the R Markdown package with LaTeX (`rocker/verse`). Because our workflow relies on R Markdown, we suggest using the `rocker/verse` image (which also contains `rstudio` & `tidyverse`). These images are stored on [Dockerhub](https://hub.docker.com) [@dockerinc.DockerHub2019].
 
-Building on a basic Rocker image, we can specify further requirements for software in a Dockerfile. For example, the basis for this article's Docker image is the following Dockerfile:
+Building on a basic Rocker image, we can specify further software dependencies in a Dockerfile. For example, the basis for this manuscript's Docker image is the following Dockerfile:
 
 ```{bash, eval=FALSE}
+# Define the R version to be installed from rocker project
 FROM rocker/verse:3.6.1
+# install CRAN R packages: pacman, here, and pander
 RUN install2.r --error --skipinstalled\
   pacman here pander
+# install additional R packages from github: papaja and wordcountaddin
 RUN installGithub.r\
   crsh/papaja benmarwick/wordcountaddin
+# set the working directory inside the container
 WORKDIR /home/rstudio
 ```
 
