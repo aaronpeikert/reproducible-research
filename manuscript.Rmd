@@ -62,14 +62,16 @@ Here, we combine four software tools, whose interplay can guarantee full computa
 
 <!--To maximize chances of long-term reproducibility, proper documentation of all steps taken and their context is crucial since it answers the question "What steps have to be taken to reproduce the results?". The most precise documentation is computer code, and the most productive computer code is code that runs automatically without human interaction. This principle is what guided our use of R Markdown, Git, Make, and Docker.-->
 
-# The Reproducible Workflow in a nutshell
+# The Reproducible Workflow in a Nutshell
 
-![](Images/placeholder.png)
-Figure XXX gives an overview of how the four components of our workflow interface to ensure computational reproducibility. We begin with a minimal description of the roles of the four components. In the remainder of this tutorial, we will further detail each of the four components of our workflow. The first component is version control. Version control manages  changes to files (e.g., data and code) over time so that you can access specific versions later. Version control offers snapshots of your workflow at different time points identified by a unique identifier. The different frames in the z-axis of the image illustrate the different versions of the workflow. How different parts of a analysis and a report of it relate and in what order they need to be executed is monitored using dependency management. The arrows visualize dependencies, such as an analysis depending on the availability of a particular data file. Third, all computer code (such as a statistical analysis in R) is executed in a virtual environment that guarantuees exact reproduction of results independent of the host operating system, R version, and installed package versions. Finally, dynamic document generation (also known as the literate programming paradigm) interweaves human-readable code and automatically produced results (such as point estimates, p values, or confidence intervals) to eliminate inconsistency errors such as those arising from careless copy and paste actions. 
+```{r schematic, fig.cap="Schematic illustration of the interplay of the four components central to a reproducible workflow: version control (git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). "}
+knitr::include_graphics("Images/placeholder.png")
+```
+
+Figure @\ref{fig:schematic} gives an overview of how the four components of our workflow interface to ensure computational reproducibility. We begin with a minimal description of the roles of the four components. In the remainder of this tutorial, we will further detail each of the four components of our workflow. The first component is version control. Version control manages  changes to files (e.g., data and code) over time so that you can access specific versions later. Version control offers snapshots of your workflow at different time points identified by a unique identifier. The different frames in the z-axis of the image illustrate the different versions of the workflow. How different parts of a analysis and a report of it relate and in what order they need to be executed is monitored using dependency management. The arrows visualize dependencies, such as an analysis depending on the availability of a particular data file. Third, all computer code (such as a statistical analysis in R) is executed in a virtual environment that guarantuees exact reproduction of results independent of the host operating system, R version, and installed package versions. Finally, dynamic document generation (also known as the literate programming paradigm) interweaves human-readable code and automatically produced results (such as point estimates, p values, or confidence intervals) to eliminate inconsistency errors such as those arising from careless copy and paste actions. 
 
 
 # Dynamic Document Generation
-
 
 ![Source of an R Markdown](Images/rmarkdown.png)
 
@@ -77,46 +79,48 @@ Figure XXX gives an overview of how the four components of our workflow interfac
 
 # Version Management
 
-Fundamentally, reproducibility means that results remain identical if neither the script nor the data have changed. It is often not trivial to find out whether anything in a project has changed over time and if so, to "go back in time." The Git program enables you to do both. A good mental model for Git is that it takes a sequence of snapshots of all files it is supposed to track. In the language of Git, these snapshots are "commits." A commit represents a complete copy of the state of all tracked files. Each commit has a unique identifier (a hash) and a human-readable description (commit message). Going back to one state is as easy as traversing the history of all commits and switching to a given one; it is possible to visually track changes between different versions. This collection of snapshots is called a "repository," which ideally tracks your entire R project.
+Fundamentally, reproducibility means that computational results remain identical if neither the script nor the data have changed. It is often not trivial to find out whether any element in a project has changed over time and if so, to "go back in time." The Git program enables you to do both. A good mental model for Git is that it takes a sequence of snapshots of all files it is supposed to track. In the language of Git, these snapshots are "commits." A commit represents a complete copy of the state of all tracked files. Each commit has a short, unique identifier (a hash code) and a human-readable description (commit message). Going back to one state is as easy as traversing the history of all commits and switching the repository to a given previous state; it is possible to visually track changes between different versions (similar to the track changes function offered in Microsoft Word). The collection of all snapshots is called a "repository," which ideally tracks your entire R project.
 
 A typical Git workflow in the terminal looks like this:
 
 ```{bash, eval=FALSE}
 git init # to initialize git in the current directory
-git add ./data/iris.csv ./R/analysis.R # track specific files/changes
+git add ./data/iris.csv ./R/analysis.R # track specific files
 git commit -m "add data & analysis" # take snapshot with comment
 # once script or data were changed, take a new snapshot
 git commit -a -m "complete data colections" # add (-a) and commit all changes
 ```
 
-To keep track of all changes on your local computer, you only need to use `git add` and `git commit` or `git commit -a` to add and commit at the same time. These commands need to be executed in the terminal, which you can access from within RStudio (`Shift + Alt + R`).  RStudio also offers a graphical user interface for Git and, quite likely, this interface is sufficient for almost every interaction with Git.
+To keep track of all changes on your local computer, you only need to use `git add` and `git commit` or `git commit -a` to add and commit at the same time. These commands need to be executed in the terminal, which you can access from within RStudio (`Shift + Alt + R`).  RStudio also offers a graphical user interface for Git. For most basic operations, this interface is convenient and sufficient.
 
 ![Git Pane in RStudio](Images/git-pane.png)
 
 In a given Git project, you can inspect all changes (`git log`) and examine any previous state by stating the identifier of the commit to `git checkout`:
 
 ```{bash, eval = FALSE}
-git log
-git checkout 77db06f78e
+git log # inspect all changes
+git checkout 77db06f78e # revert local directory to previous version with hash code '77db06f78e'
 ```
 
-Git also makes it particularly easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Alternatively, institutions can host an equally feature-rich open-source software called [GitLab](https://gitlab.com) themself, avoiding the reliance on commercial service providers. Just sharing Git repositories on GitHub with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount). After creating a user account, one can create a new repository and GitHub provides information on how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
+Git also makes it particularly easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Alternatively, institutions can host an equally feature-rich open-source service called [GitLab](https://gitlab.com), avoiding the reliance on commercial service providers. Just sharing Git repositories on GitHub with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount) or have limited features. After creating a user account, one can create a new repository and GitHub provides information on how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
 
 ```{bash, eval=FALSE}
+# link remote github repository to local directory
 git remote add origin https://github.com/aaronpeikert/reproducible-research.git
+# push all changes from local repository to the remote repository
 git push -u origin master
 ```
 
-`git push` or the green upward arrow in the Git pane (see Figure 3) uploads local updates. To download this Git repository to another computer, type into the terminal:
+`git push` or the green upward arrow in the Git pane (see Figure 3) uploads local updates. To download the remote Git repository on another computer, type into the terminal:
 
 ```{bash, eval=FALSE}
 git clone https://github.com/aaronpeikert/reproducible-research.git
 ```
 
 Git and GitHub can do even more to support you when collaborating with fellow researchers, for example, by providing a web interface to track issues and their status (open/closed/resolved) and further means to manage and merge multiple, parallel versions of code (such as branches, pull requests, or merges), but this is beyond the scope of this tutorial. In particular, GitHub's issue management can be leveraged as a post-publication platform to discuss manuscripts and their results [^1].
-Another benefit of using Git and GitHub is that experimentation is highly encouraged since you can go back to any state quickly and even when you lose access to the file on your computer, everything is backed up on the GitHub servers. Further, one can reduce the liklihood of dead code accumulating (e.g., lines that have been commented out) because it is safe to simply remove unneeded code blocks and track the removal in Git.
+Another benefit of using Git and GitHub is that experimentation is highly encouraged since you can go back to any state quickly. Even when you lose access to the file on your computer, everything can be backed up on a remote git server. Further, one can reduce the liklihood of dead code accumulating (e.g., lines that have been commented out) because it is safe to simply remove unneeded code blocks and track their removal in Git.
 
-GitHub allows you to archive a specific version of your repository in the form of a release. A release tags a commit, e.g., as "submission,"[^sub] "preprint," or "published," and archives also "binary" products of your code, e.g. the resulting pdf of the manuscript or the docker image (see [Containerization]). From such a release a DOI can be created, making it easier to reference it (see this [GitHub Guide](https://guides.github.com/activities/citable-code/)[^doi]).
+GitHub allows you to archive and label a specific version of your repository in the form of a release. A release tags a particular commit with an arbitrary label, e.g., as "submission,"[^sub] "preprint," or "published," and archives also "binary" products of your code, e.g. the resulting pdf of the manuscript or the docker image (see [Containerization]). From such a release a DOI can be created, making it easier to reference it (see this [GitHub Guide](https://guides.github.com/activities/citable-code/)[^doi]).
 
 [^1]: To comment on our paper, please add an issue to the GitHub repository of our paper: <https://github.com/aaronpeikert/reproducible-research/issues>.
 [^doi]: [https://guides.github.com/activities/citable-code/](https://guides.github.com/activities/citable-code/)
@@ -124,16 +128,9 @@ GitHub allows you to archive a specific version of your repository in the form o
 
 # Dependency Tracking and Management
 
-Even when you have obtained a given version of a project with the aim to reproduce reported result and you can confirm that this version is unchanged, you may not know exactly how to reproduce the results because it may be unclear which files should be executed in which order. This is particularly the case when complex preprocessing pipelines are part of the computation and/or external dependencies are many. Handling such dependencies is easy with Make because it allows you to create (computational) recipes to (re-)create files.
+Even when you have obtained a given version of a project with the aim to reproduce reported result and you can confirm that this version is unchanged, you may not know exactly how to reproduce the results because it may be unclear which files should be executed in which order. This is particularly the case when complex preprocessing pipelines are part of the computation and/or external dependencies (for example, a program needs to be called outside the R environment) are present. Handling such dependencies is easy with Make because it allows you to manage dependencies by creating (computational) recipes to create or recreate files.
 
-A `Makefile` obeys the following scheme:
-
-```{bash, eval=FALSE}
-target: dependency1 dependency2
-  command-to-create-target
-```
-
-A typical `Makefile` might look like this:
+A `Makefile` obeys a simple scheme. It contains a list of recipes. Each recipe has a target (the name of the recipe) followed by a list of dependent targets or files. If any of the dependencies have changed since the last time the target was built, the recipe's commands are executed to recreate the target file. A typical `Makefile` might look like this:
 
 ```{bash, eval=FALSE}
 analysis.pdf: data/clean.csv
@@ -143,19 +140,22 @@ data/clean.csv: R/clean.R data/iris.csv
   Rscript -e 'source("R/clean.R")'
 ```
 
-The first line can be interpreted as follows: To create `analysis.pdf`, the file `analysis.Rmd`, which depends on `data/clean.csv`, needs to be rendered. This dependency is itself a target. To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf`, Make first checks whether the dependencies do exist and, if not, creates them. Here, if `data/clean.csv` does not exist, Make creates it. Also, if one of the dependencies of a target is newer then the target itself, then Make updates everything that directly or indirectly depends on the target. Here, if `data\iris.csv` is newer then `data\clean.csv`, Make will attempt to recreate `data\clean.csv` first and then `analysis.pdf`. If there is a dependency which is missing, and there is no recipe to make it, Make stops with an error message. It is a convention to have the first target named `all`, which depends on everything. Then the command `make` without any argument automatically creates everything. The button `Build All` from within RStudio triggers this process (see Figure 4).
+The first line can be interpreted as follows: To create `analysis.pdf` (the first target in the file), the file `analysis.Rmd`, which depends on `data/clean.csv`, needs to be rendered. This dependency is itself a target (the second target in the file). To create `data/clean.csv`, `R/clean.R` and `data/iris.csv` are needed. If you type `make analysis.pdf`, Make first checks whether the dependencies do exist and, if not, creates them. Here, if `data/clean.csv` does not exist, Make creates it by executing the second target. Also, if one of the dependencies of a target is newer then the target itself, then Make updates everything that directly or indirectly depends on the target. Here, if `data\iris.csv` is newer then `data\clean.csv`, Make will attempt to recreate `data\clean.csv` first and then `analysis.pdf`. If there is a dependency which is missing, and there is no target to make it, Make stops with an error message. It is a convention to have the first target named `all`, which depends on everything. Then the command `make` without any argument automatically creates everything possible in the project. The button `Build All` from within RStudio triggers this process (see Figure 4).
 
 ![Build pane in RStudio](Images/build-pane.png)
 
-If you have followed our workflow as presented thus far, a fellow researcher is only three commands away from fully reproducing your analysis:
+If you have followed our workflow as presented thus far, a fellow researcher is only three commands away from fully reproducing your analysis. They would simply have to type the following commands in the terminal:
 
 ```{bash, eval=FALSE}
+# obtain a local copy from the remote repository
 git clone https://github.com/sirfisher/iris.git
+# enter the local copy
 cd iris
+# create all files from that project
 make all
 ```
 
-However, successful reproducibility relies on the crucial assumption that your computational environments are identically or sufficiently compatible, e.g., all software dependencies are installed (R and all additional R Packages) and no updates or other changes to the computational environment break or alter your analysis. As we will shortly see, ensuring full computational reproducibility requires one further level of documentation, that is, documentation of the computational environment.
+If you execute the above on your system, there is a good chance that you cannot reproduce our manuscript and the `make all` command exits with an error. Successful reproducibility relies on the crucial assumption that your computational environments are identically or sufficiently compatible, e.g., all software dependencies are installed (R and all additional R Packages) and no updates or other changes to the computational environment break or alter your analysis. As we will shortly see, ensuring full computational reproducibility requires one further level of documentation, that is, documentation of the computational environment.
 
 # Containerization
 
