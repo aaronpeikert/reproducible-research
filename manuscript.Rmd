@@ -279,13 +279,13 @@ Figure \@ref{fig:rstudio-in-docker} shows a screenshot of Rstudio running inside
 Since Docker commands tend to grow long and become tedious to type manually, we recomend using some automatic way to generate them. Fortunately, one can use Make to automatically generate the `docker` commands, e.g. the (simplified) `Makefile` for this paper allows command after `$(run)` to be conditionally passed through Docker if one types `make DOCKER=TRUE` (otherwise, they are run locally):
 
 ```{bash, eval=FALSE}
-projekt := $(notdir $(CURDIR))
+project := $(notdir $(CURDIR))
 current_dir := $(CURDIR)
 home_dir := $(current_dir)
 uid = --user $(shell id -u)
 
 ifeq ($(DOCKER),TRUE)
-	run:=docker run --rm --user $(uid) -v $(home_dir):/home/rstudio $(projekt)
+	run:=docker run --rm --user $(uid) -v $(home_dir):/home/rstudio $(project)
 	current_dir=/home/rstudio
 endif
 
