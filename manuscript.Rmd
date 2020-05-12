@@ -308,6 +308,7 @@ Windows systems typically require the biggest efforts to install all necessary s
 Having installed Chocolatey (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
+# install docker using choco
 choco install -y git make docker-desktop
 ```
 
@@ -318,6 +319,7 @@ To use `docker` you need to start Docker Desktop. In the settings of Docker Desk
 As Make already ships with macOS, you only need Git and Docker. We suggest using the package manager Homebrew, which you can install from [https://docs.brew.sh/Installation](https://docs.brew.sh/Installation), to install Docker (Git will be installed during the installation of Homebrew):
 
 ```{bash, eval=FALSE}
+# install docker via brew
 brew cask docker
 ```
 
@@ -328,6 +330,7 @@ To use `docker` you need to start Docker Desktop. In the settings of docker you 
 There is a host of different Linux distributions and almost as many package managers. Still, to our knowledge, there is no (recent) Linux edition, that does not include Git, Make and Docker. For example, in Ubuntu Linux, installation is straightforward using the shipped package manager:
 
 ```{bash, eval=FALSE}
+# install docker via advanced package tool
 apt install git make docker 
 ```
 
@@ -350,12 +353,14 @@ iris <- read.csv(here("data", "iris.csv"))
 
 The folder where all the files reside that you need for analysis (code and data), is referred to as a 'project' (or sometimes as a 'research compendium'). Working with projects is particularly convenient with RStudio, an integrated development environment (IDE) for R. It is useful to organize a data analysis project in a way that strictly segregates (raw) data and code by placing them in directories called `data` and `R` [see Section 4 in @marwickPackagingDataAnalytical2018]; there are also tools that automatize the standardized creation of folder structures such as `workflowr` [@workflowr].
 
-Sometimes external requirements make it impossible for the data to be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, of course, unrestricted reproducibility is not guaranteed. If dividing data and scripts is unavoidable, we recommend validating all data files using checksums (also called a "hash", e.g., using the functions provided in package `digest` [@digest2019]) before analyzing them. To do this, a checksum must be created and stored at the time of the original analysis. At the time of reproduction, the current checksum must then be compared with the stored checksum to ensure data integrity.
+Sometimes external requirements make it impossible for the data to be stored and shared together with the scripts. In most of the cases we have seen, these are either space constraints or privacy considerations. In these cases, unrestricted reproducibility is not guaranteed. If dividing data and scripts is unavoidable, we recommend validating all data files using checksums (also called a "hash", e.g., using the functions provided in package `digest` [@digest2019]) before analyzing them. A checksum is a short fixed-length fingerprint (often displayed in hexadecimal system) of a file with the purpose of verifying integrity of a digital object. Fingerprints are computed from digital objects such that they change with high probability if data is changed only little. To use checksum validation, checksums for all data files must be created and stored at the time of the original analysis. At the time of reproduction, the current checksum must then be compared with the stored checksum to ensure data integrity.
 
 ```{r}
+# create a dummy data.frame with two columns
 x <- data.frame(VAR1=c(1,2,3,4),VAR2=c(0,4,6,9) )
-checksum <- digest::digest(x, "sha1")
-if (checksum != "8e222b9b3616595dc3f5946f9eac101fbf1336dc"){
+# compute checksum using md5
+checksum <- digest::digest(x, "md5")
+if (checksum != "5ba412f5a26f43842971dd74954fcdeb"){
   warning("Mismatch between original and current data file!")
 }
 ```
