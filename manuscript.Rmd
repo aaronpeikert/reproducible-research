@@ -93,9 +93,11 @@ git commit -m "add data & analysis" # take snapshot with comment
 git commit -a -m "complete data colections" # add (-a) and commit all changes
 ```
 
-To keep track of all changes on your local computer, you only need to use `git add` and `git commit` or `git commit -a` to add and commit at the same time. These commands need to be executed in the terminal, which you can access from within RStudio (`Shift + Alt + R`).  RStudio also offers a graphical user interface for Git. For most basic operations, this interface is convenient and sufficient.
+To keep track of all changes on your local computer, you only need to use `git add` and `git commit` or `git commit -a` to add and commit at the same time. These commands need to be executed in the terminal, which you can access from within RStudio (`Shift + Alt + R`).  RStudio also offers a graphical user interface for Git. For most basic operations, this interface is convenient and sufficient (see Figure \@ref{fig:gitpane}).
 
-![Git Pane in RStudio](Images/git-pane.png)
+```{r gitpane, fig.cap="Git Pane providing easy access to basic functions in RStudio"}
+knitr::include_graphics("Images/git-pane.png")
+```
 
 In a given Git project, you can inspect all changes (`git log`) and examine any previous state by stating the identifier of the commit to `git checkout`:
 
@@ -345,11 +347,11 @@ An alternative to Docker on Linux is Singularity [@kurtzerSingularityScientificC
 Finally, we conclude with some notes on project organization, which we think makes migrating projects to a reproducible workflow easier. The first step towards reproducibility is to create an R script or R Markdown file as primary entry point for the analysis that runs on a local computer without error and performs the main statistical analyses. Next, one needs to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is recommendable that all files are within one folder (or enclosed subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [RStudio projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package [@here2017] to manage file access.
 
 ```{r, eval=FALSE}
-# BAD
+# BAD because of path that is specific to the computer
 iris <- read.csv("/home/aaron/reproducible-research/data/iris.csv")
-# GOOD
+# GOOD because it is a relative path but slash depends on OS
 iris <- read.csv("data/iris.csv")
-# BETTER
+# BETTER because truly compatible across OS
 iris <- read.csv(here("data", "iris.csv"))
 ```
 
