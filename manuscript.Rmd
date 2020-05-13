@@ -93,6 +93,7 @@ Fundamentally, reproducibility means that computational results remain identical
 A typical Git workflow in the terminal looks like this:
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
 git init # to initialize git in the current directory
 git add ./data/iris.csv ./R/analysis.R # track specific files
 git commit -m "add data & analysis" # take snapshot with comment
@@ -109,6 +110,7 @@ knitr::include_graphics("Images/git-pane.png")
 In a given Git project, you can inspect all changes (`git log`) and examine any previous state by stating the identifier of the commit to `git checkout`:
 
 ```{bash, eval = FALSE}
+# -- type this in a terminal --
 git log # inspect all changes
 git checkout 77db06f78e # revert local directory to previous version with hash code '77db06f78e'
 ```
@@ -116,6 +118,8 @@ git checkout 77db06f78e # revert local directory to previous version with hash c
 Git also makes it particularly easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Alternatively, institutions can host an equally feature-rich open-source service called [GitLab](https://gitlab.com), avoiding the reliance on commercial service providers. Just sharing Git repositories on GitHub with the public is always free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount) or have limited features. After creating a user account, one can create a new repository and GitHub provides information on how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
 # link remote github repository to local directory
 git remote add origin https://github.com/aaronpeikert/reproducible-research.git
 # push all changes from local repository to the remote repository
@@ -125,6 +129,7 @@ git push -u origin master
 `git push` or the green upward arrow in the Git pane (see Figure 3) uploads local updates. To download the remote Git repository on another computer, type into the terminal:
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
 git clone https://github.com/aaronpeikert/reproducible-research.git
 ```
 
@@ -144,6 +149,8 @@ Even when you have obtained a given version of a project with the aim to reprodu
 A `Makefile` obeys a simple scheme. It contains a list of recipes. Each recipe has a target (the name of the recipe) followed by a list of dependent targets or files. If any of the dependencies have changed since the last time the target was built, the recipe's commands are executed to recreate the target file. We illustrate the use of Makefiles with an example. Assume the final product is a report (`report.pdf`). This report is written in Rmarkdown (`report.Rmd`) and includes dynamically generated plots from a raw data file (`data/iris.csv`) that needs to be preprocessed first using a separate script (`R/preprocess.R`) into a processed data file (`ìris-processed.csv`). A `Makefile` for these dependencies may look like this:
 
 ```{bash, eval=FALSE}
+# -- this is a Makefile --
+
 report.pdf: data/iris-processed.csv report.Rmd
   Rscript -e 'rmarkdown::render("report.Rmd")'
 
@@ -161,6 +168,8 @@ knitr::include_graphics("Images/build-pane.png")
 If you have followed our workflow as presented thus far, a fellow researcher is only three commands away from fully reproducing your analysis. They would simply have to type the following commands in the terminal:
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
 # obtain a local copy from the remote repository
 git clone https://github.com/aaronpeikert/reproducible-research.git
 # enter the local copy
@@ -178,6 +187,7 @@ Docker is a tool that allows encapsulation, sharing, and re-creation of a comput
 With the following example, we demonstrate why it is important to store the computational environment. Generally, with containers we would like to safeguard against changes to the computational environment with unexpected consequences, e.g., changes in the functionality or default options in packages or even in the R environment itself. While the R programming language is considered stable and much effort is put into backward compatibility, even basic functions like `sample()` (to randomly sample from a set) sometimes change their behavior from one version to another. To ensure reproducibility in analyses based on a computer's pseudo random number generator (PRNG), it is good practice to rely on fixed PRNG seeds, which are numeric values that set the PRNG into a deterministic state, i.e., the sequence of random numbers reproduces exactly. Consider the following R code to randomly draw five numbers between 1 and 10:
 
 ```{r,eval=FALSE}
+# -- R code --
 set.seed(1234)
 sample(1:10, 5)
 ```
@@ -225,6 +235,8 @@ Only rarely does an analysis depend on base R only. Typically, a considerable nu
 Building on a basic Rocker image, we can specify further software dependencies in a Dockerfile. For example, the basis for this manuscript's Docker image is the following Dockerfile:
 
 ```{bash, eval=FALSE}
+# -- this is a Dockerfile --
+
 # Define the R version to be installed from rocker project
 FROM rocker/verse:3.6.1
 # install CRAN R packages: pacman, here, and pander
@@ -244,6 +256,8 @@ There are two ways to share a Docker image; either by sharing the Dockerfile tha
 There are two options to execute commands in a container. Both options are based on the `docker run` command. The first way is to run a command inside the container. The call takes the form:
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
 # execute a given command in a given container image; do not save
 # the state of the container; accept inputs from and return outputs to terminal
 docker run --rm -it <IMAGENAME> <COMMAND>
@@ -252,6 +266,8 @@ docker run --rm -it <IMAGENAME> <COMMAND>
 The `--rm` flag means that the state of the container after the command will have finished is not going to be saved. The `-it` flag tells Docker to run the command interactively, that is, to accept keyboard inputs and return outputs to the terminal. For example, this is the command to start an interactive R session inside a Docker image called `reproducible-research` (see Figure \@ref{fig:docker-r-terminal} for a screenshot):
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
 # start an interactive R session in the container named 'reproducible-research'
 docker run --rm -it reproducible-research R
 ```
@@ -293,6 +309,8 @@ Figure \@ref{fig:rstudio-in-docker} shows a screenshot of Rstudio running inside
 Since Docker commands tend to grow long and become tedious to type manually, we recomend using some automatic way to generate them. Fortunately, one can use Make to automatically generate the `docker` commands, e.g. the (simplified) `Makefile` for this paper allows command after `$(run)` to be conditionally passed through Docker if one types `make DOCKER=TRUE` (otherwise, they are run locally):
 
 ```{bash, eval=FALSE}
+# -- this is a Makefile --
+
 project := $(notdir $(CURDIR))
 current_dir := $(CURDIR)
 home_dir := $(current_dir)
@@ -318,11 +336,13 @@ Other than on R, RStudio, and R Markdown, our workflow relies on three pieces of
 
 ## Windows
 
-Windows systems typically require the biggest efforts to install all necessary software. Note that you have to have Windows Pro, Enterprise, Education or Server installed, as Microsoft prevents the use of Docker on Windows Home. There is a package manager for Windows called Chocolatey, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install), providing all dependencies.
+Windows systems typically require the biggest efforts to install all necessary pieces of software. Note that you have to have either Windows Pro, Enterprise, Education, or Server installed, as Microsoft prevents the use of Docker on Windows Home. There is a package manager for Windows called Chocolatey, which you can install from: [https://chocolatey.org/install](https://chocolatey.org/install). Chocolatey provides all software packages needed for our workflow in one place..
 Having installed Chocolatey (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
-# install docker using choco
+# -- type this in a terminal --
+
+# install docker, make, and git using choco
 choco install -y git make docker-desktop
 ```
 
@@ -333,6 +353,8 @@ To use `docker` you need to start Docker Desktop. In the settings of Docker Desk
 As Make already ships with macOS, you only need Git and Docker. We suggest using the package manager Homebrew, which you can install from [https://docs.brew.sh/Installation](https://docs.brew.sh/Installation), to install Docker (Git will be installed during the installation of Homebrew):
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
 # install docker via brew
 brew cask docker
 ```
@@ -344,19 +366,23 @@ To use `docker` you need to start Docker Desktop. In the settings of docker you 
 There is a host of different Linux distributions and almost as many package managers. Still, to our knowledge, there is no (recent) Linux edition, that does not include Git, Make and Docker. For example, in Ubuntu Linux, installation is straightforward using the shipped package manager:
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
 # install docker via advanced package tool
 apt install git make docker 
 ```
 
 For other distributions, replace `apt` with the native package manager. You may need elevated rights for the installation; in this case add `sudo` before the installation command. `docker` also needs elevated rights to run; therefore, we recommend adding the local user to the `docker` group, following the [documentation of Docker](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
-An alternative to Docker on Linux is Singularity [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker images. A possible advantage is that singularity works well in high-performance computing environments and on old Linux versions, the downside is that Singularity is only available on Linux.
+An alternative to Docker on Linux is Singularity [@kurtzerSingularityScientificContainers2017]. Just replace any docker calls with `singularity docker`, because singularity fully supports docker images. A possible advantage is that singularity works well in high-performance computing environments and on old Linux versions, the downside is that Singularity is currently only available on Linux.
 
 # Project organization
 
 Finally, we conclude with some notes on project organization, which we think makes migrating projects to a reproducible workflow easier. The first step towards reproducibility is to create an R script or R Markdown file as primary entry point for the analysis that runs on a local computer without error and performs the main statistical analyses. Next, one needs to make sure that all files relevant for the analysis can be moved to another computer. To this end, it is recommendable that all files are within one folder (or enclosed subfolders within it) and all paths are relative to that folder. A robust solution to the problem of making sure that file access does not break across computing platforms are [RStudio projects](https://r4ds.had.co.nz/workflow-projects.html) and the `here` package [@here2017] to manage file access.
 
 ```{r, eval=FALSE}
+# -- R code --
+
 # BAD because of path that is specific to the computer
 iris <- read.csv("/home/aaron/reproducible-research/data/iris.csv")
 # GOOD because it is a relative path but slash depends on OS
@@ -385,13 +411,15 @@ if (checksum != "5ba412f5a26f43842971dd74954fcdeb"){
 We provide a reproducible analysis as a working example via [GitHub](https://github.com/aaronpeikert/workflow-showcase). We encourage interested readers to try to reproduce this example as a practical exercise. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a complete implementation of our workflow including downloads of external data, comparison of their integrity using a checksum, and  a confirmatory factor analysis on the first few items using the R package `lavaan` [@lavaan2012]. Once all required tools are installed on a computer, the following four command-line commands are sufficient to reproduce our demo analysis:
 
 ```{bash, eval=FALSE}
-# (1) download the complete repository containing the workflow to your computer
+# -- type this in a terminal --
+
+# (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/workflow-showcase.git
-# (2) enter the directory containing the cloned workflow
+# (2) enter the directory containing the project
 cd workflow-showcase
-# (3) building the docker container
+# (3) build the docker container
 make build
-# (4) running the analysis and producing the final PDF inside the container
+# (4) run the analysis and produce the final PDF inside the container
 make all DOCKER=TRUE
 ```
 
@@ -400,9 +428,15 @@ make all DOCKER=TRUE
 The overarching goal of this paper was to provide a complete and easy-to-use workflow that allows confidence in reproducibility of R-based data analyses. Analyses following our workflow can be reproduced with four commands (here shown for our paper):
 
 ```{bash, eval=FALSE}
+# -- type this in a terminal --
+
+# (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/reproducible-research.git
+# (2) enter the directory containing the project
 cd reproducible-research
+# (3) build the docker container
 make build
+# (4) run the analysis and produce the final PDF inside the container
 make all DOCKER=TRUE
 ```
 
