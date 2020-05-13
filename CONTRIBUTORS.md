@@ -24,6 +24,11 @@ reproducible-research contributors (sorted randomly)
 
 	*	author and maintainer
 
+* **[wlandau](https://github.com/wlandau)**
 
+  * clarifications regarding drake
 
+* **[RobertMyles](https://github.com/RobertMyles)**
+  
+  * spotted typos
 
