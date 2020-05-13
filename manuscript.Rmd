@@ -314,7 +314,7 @@ manuscript.pdf: manuscript.Rmd reproducible-research.bib
 
 # Installing and Setting Up the Workflow
 
-Other than on R, RStudio, and R Markdown, our workflow relies on three pieces of software from outside the R environment: Git, Make, and Docker. The installation process of these software packages depends on the operating system, e.g., on macOS, Make is always available, while on Linux, Git and Make are often already installed. In the following section, we share what what we consider the easiest way to install those packages. However, installation processes may be subject to change, and we advise that readers also consult the documentations of the packages.
+Other than on R, RStudio, and R Markdown, our workflow relies on three pieces of software from outside the R environment: Git, Make, and Docker. The smoothness of the installation process of these software packages varies across operating systems. For example, on macOS, Make is always available, whereas Linux systems are typically shipped with both Git and Make. In the following section, we share what what we consider the easiest way to install those packages across common operating systems. However, installation processes may be subject to change, and we advise that readers also consult the documentations of the packages or see our collection of links to tutorials and installation instructions on our GitHub repository.
 
 ## Windows
 
