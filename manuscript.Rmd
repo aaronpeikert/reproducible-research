@@ -66,7 +66,7 @@ Here, we combine four software tools, whose interplay can guarantee full computa
 
 # The Reproducible Workflow in a Nutshell
 
-```{r schematic, fig.cap="Schematic illustration of the interplay of the four components central to a reproducible workflow: version control (git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). "}
+```{r schematic, eval = TRUE, echo = FALSE, fig.cap="Schematic illustration of the interplay of the four components central to a reproducible workflow: version control (git), dependency management (Make), containerization (Docker), and dynamic document generation (R Markdown). "}
 knitr::include_graphics("Images/placeholder.png")
 ```
 
@@ -75,9 +75,14 @@ Figure @\ref{fig:schematic} gives an overview of how the four components of our 
 
 # Dynamic Document Generation
 
-![Source of an R Markdown](Images/rmarkdown.png)
+```{r source-rmarkdown, eval = TRUE, echo = FALSE,  fig.cap="Exemplary source of an R Markdown showing a combination of executable R code and English manuscript text."}
+knitr::include_graphics("Images/rmarkdown.png")
+```
 
-![Rendered result](R/rmarkdown.pdf)
+```{r rendered-result, eval = TRUE, echo = FALSE,  fig.cap="Rendered result of the source code shown in Figure \ref{fig:source-rmarkdown}."}
+knitr::include_graphics("R/rmarkdown.pdf")
+```
+
 
 # Version Management
 
@@ -95,7 +100,7 @@ git commit -a -m "complete data colections" # add (-a) and commit all changes
 
 To keep track of all changes on your local computer, you only need to use `git add` and `git commit` or `git commit -a` to add and commit at the same time. These commands need to be executed in the terminal, which you can access from within RStudio (`Shift + Alt + R`).  RStudio also offers a graphical user interface for Git. For most basic operations, this interface is convenient and sufficient (see Figure \@ref{fig:gitpane}).
 
-```{r gitpane, fig.cap="Git Pane providing easy access to basic functions in RStudio"}
+```{r gitpane, eval = TRUE, echo = FALSE, fig.cap="Git Pane providing easy access to basic functions in RStudio"}
 knitr::include_graphics("Images/git-pane.png")
 ```
 
@@ -246,7 +251,7 @@ The `--rm` flag means that the state of the container after the command finishes
 docker run --rm -it reproducible-research R
 ```
 
-```{r docker-r-terminal, fig.cap="R terminal running inside Docker"}
+```{r docker-r-terminal, eval = TRUE, echo = FALSE, fig.cap="R terminal running inside Docker"}
 knitr::include_graphics("Images/docker-r-terminal.png")
 ```
 
@@ -273,7 +278,7 @@ docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
 /path/to/project:/home/rstudio reproducible-research
 ```
 
-```{r rstudio-in-docker, fig.cap="RStudio running inside Docker"}
+```{r rstudio-in-docker, eval = TRUE, echo = FALSE, fig.cap="RStudio running inside Docker"}
 knitr::include_graphics("Images/docker-rstudio.png")
 ```
 
