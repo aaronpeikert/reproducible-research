@@ -27,7 +27,7 @@ $(projekt).tar.gz:
 README.md: README.Rmd abstract.Rmd
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
-manuscript.pdf: manuscript.Rmd reproducible-research.bib random bootstrap rmarkdown R/wrap_code.R
+manuscript.pdf: manuscript.Rmd reproducible-research.bib random bootstrap rmarkdown R/wrap_code.R Images/ Images/nutshell.pdf
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
 manuscript-jou.pdf: manuscript-jou.Rmd manuscript.pdf
@@ -71,3 +71,5 @@ R/bootstrap36.md: data/bcis-3.5.0.csv data/bcis-3.6.1.csv R/bootstrap.Rmd
 
 R/bootstrap.Rmd: R/bootstrap.R
 
+Images/nutshell.pdf: Images/nutshell.svg
+	inkscape --export-filename=$@ $<
