@@ -11,7 +11,7 @@ library(readr)
 library(pander)
 ```
 
-This is the accompanying GitHub repository to a work in progress paper by Aaron Peikert[![ORCID iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0001-7813-818X) and Andreas Brandmaier [![ORCID iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982).
+This is the accompanying GitHub repository to a work in progress paper by Aaron Peikert[![ORCID iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0001-7813-818X) and Andreas M. Brandmaier [![ORCID iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982).
 
 [![licensebuttons by](https://licensebuttons.net/l/by/3.0/88x31.png)](https://creativecommons.org/licenses/by/4.0) [![Ask Me Anything !](https://img.shields.io/badge/Ask%20me-anything-1abc9c.svg)](https://github.com/aaronpeikert/reproducible-research/issues/new) ![Open Source Love](https://badges.frapsoft.com/os/v2/open-source.svg?v=103)
 
@@ -40,7 +40,9 @@ pander(
 
 # Compile
 
-## Usual Way
+The following paragraphs describe how you can obtain a copy of the source files of our manuscript describing reproducible workflows, and create the PDF. Either, you can go the 'standard' way of downloading a local copy of the repository and knit the manuscript file in R, or you can use the reproducible workflow as suggested and use Make to create a container and build the final PDF file in exactly the same virtual computational environment that we used to render the PDF.
+
+## Standard Way
 
 Requires: `Git`, `RStudio`, `pandoc`, `pandoc-citeproc` & `rmarkdown`.
 
@@ -54,7 +56,7 @@ https://github.com/aaronpeikert/reproducible-research.git
 
 Open `manuscript.Rmd` click on `Knit`.
 
-## Using Workflow
+## Using a Reproducible Workflow
 
 Does not require R or RStudio, but `make` & `docker`.
 

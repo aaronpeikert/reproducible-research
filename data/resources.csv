@@ -1,11 +1,11 @@
 Tool,How to install?,How to learn?
 "<!-- the backslash means newline -->
 *Windows only:*\
-Chocolately",Visit [chocolatey.org](https://chocolatey.org/courses/installation/installing?method=installing-chocolatey).,"Chocolately installs software for you, it is installed and used from the terminal/comand prompt.\
-To open the comand prompt press Windows+X and then click on ""Command Prompt"" or ""Command Prompt (Admin)."""
+Chocolately",Visit [chocolatey.org](https://chocolatey.org/courses/installation/installing?method=installing-chocolatey).,"Chocolately installs software for you, it is installed and called from the terminal/command prompt.\
+To open the comand prompt, press Windows+X and then click on ""Command Prompt"" or ""Command Prompt (Admin)."""
 "*OS X only:*\
-Homebrew",Visit [brew.sh](https://brew.sh).,"Homebrew installs software for you, it is installed and used from the terminal/comand prompt.\
-To open the terminal press Command + Space and then type ""Terminal"" and double click on the top search result."
+Homebrew",Visit [brew.sh](https://brew.sh).,"Homebrew installs software for you. It is installed and called from the terminal/command prompt.\
+To open the terminal press Command + Space to open Spotlight and then type ""Terminal"" and double click on the top search result."
 R,"**Windows:**\
 Use Chocolately (from the terminal).\
 `choco install -y r.project`\

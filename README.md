@@ -1,7 +1,7 @@
 This is the accompanying GitHub repository to a work in progress paper
 by Aaron Peikert[![ORCID
 iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](https://orcid.org/0000-0001-7813-818X)
-and Andreas Brandmaier [![ORCID
+and Andreas M. Brandmaier [![ORCID
 iD](https://orcid.org/sites/default/files/images/orcid_16x16.png)](http://orcid.org/0000-0001-8765-6982).
 
 [![licensebuttons
@@ -39,9 +39,9 @@ by facilitating later reproducibility and reuse of code and data.
 
 <table>
 <colgroup>
-<col style="width: 14%" />
+<col style="width: 13%" />
+<col style="width: 42%" />
 <col style="width: 44%" />
-<col style="width: 40%" />
 </colgroup>
 <thead>
 <tr class="header">
@@ -55,15 +55,15 @@ by facilitating later reproducibility and reuse of code and data.
 <td style="text-align: center;"><!-- the backslash means newline --> <em>Windows only:</em><br />
 Chocolately</td>
 <td style="text-align: center;">Visit <a href="https://chocolatey.org/courses/installation/installing?method=installing-chocolatey">chocolatey.org</a>.</td>
-<td style="text-align: center;">Chocolately installs software for you, it is installed and used from the terminal/comand prompt.<br />
-To open the comand prompt press Windows+X and then click on “Command Prompt” or “Command Prompt (Admin).”</td>
+<td style="text-align: center;">Chocolately installs software for you, it is installed and called from the terminal/command prompt.<br />
+To open the comand prompt, press Windows+X and then click on “Command Prompt” or “Command Prompt (Admin).”</td>
 </tr>
 <tr class="even">
 <td style="text-align: center;"><em>OS X only:</em><br />
 Homebrew</td>
 <td style="text-align: center;">Visit <a href="https://brew.sh">brew.sh</a>.</td>
-<td style="text-align: center;">Homebrew installs software for you, it is installed and used from the terminal/comand prompt.<br />
-To open the terminal press Command + Space and then type “Terminal” and double click on the top search result.</td>
+<td style="text-align: center;">Homebrew installs software for you. It is installed and called from the terminal/command prompt.<br />
+To open the terminal press Command + Space to open Spotlight and then type “Terminal” and double click on the top search result.</td>
 </tr>
 <tr class="odd">
 <td style="text-align: center;">R</td>
@@ -91,7 +91,7 @@ Use Homebrew (from the terminal).<br />
 <tr class="odd">
 <td style="text-align: center;">rmarkdown</td>
 <td style="text-align: center;">Within Rstudio, type into the R-console:<br />
-<code>install.packages(&quot;rmarkdown&quot;)</code></td>
+<code>install.packages("rmarkdown")</code></td>
 <td style="text-align: center;">Read the <a href="www.rstudio.org/links/r_markdown_cheat_sheet">cheatsheet</a>. Skim <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a></td>
 </tr>
 <tr class="even">
@@ -130,7 +130,7 @@ Use chocolately.<br />
 <br />
 <strong>OS X:</strong><br />
 Use Homebrew (from the terminal).<br />
-<code>brew cask docker</code><br />
+<code>brew cask install docker</code><br />
 <br />
 <strong>Linux:</strong><br />
 Follow steps described in: <a href="https://docs.docker.com/engine/install/linux-postinstall/">Post-installation steps for Linux</a></td>
@@ -141,7 +141,15 @@ Follow steps described in: <a href="https://docs.docker.com/engine/install/linux
 
 # Compile
 
-## Usual Way
+The following paragraphs describe how you can obtain a copy of the
+source files of our manuscript describing reproducible workflows, and
+create the PDF. Either, you can go the ‘standard’ way of downloading a
+local copy of the repository and knit the manuscript file in R, or you
+can use the reproducible workflow as suggested and use Make to create a
+container and build the final PDF file in exactly the same virtual
+computational environment that we used to render the PDF.
+
+## Standard Way
 
 Requires: `Git`, `RStudio`, `pandoc`, `pandoc-citeproc` & `rmarkdown`.
 
@@ -153,7 +161,7 @@ Insert:
 
 Open `manuscript.Rmd` click on `Knit`.
 
-## Using Workflow
+## Using a Reproducible Workflow
 
 Does not require R or RStudio, but `make` & `docker`.
 
@@ -176,8 +184,7 @@ not require that workaround.**
 In case you experience some unexpected behavior with this workflow, you
 should check that you have the most recent version (`git pull`), rebuild
 the docker image (`make build`) and force the rebuild of all targets
-(`make -B
-    DOCKER`).
+(`make -B DOCKER`).
 
 ``` bash
 git pull && make build && make -B DOCKER=TRUE
@@ -191,49 +198,48 @@ sessioninfo::session_info()
 
     ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 3.6.1 (2019-07-05)
-    ##  os       Debian GNU/Linux 9 (stretch)
-    ##  system   x86_64, linux-gnu           
+    ##  version  R version 4.0.0 (2020-04-24)
+    ##  os       macOS Mojave 10.14.6        
+    ##  system   x86_64, darwin17.0          
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
-    ##  tz       Etc/UTC                     
+    ##  tz       Europe/Berlin               
     ##  date     2020-05-14                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
-    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.1)
-    ##  backports     1.1.5   2019-10-02 [1] CRAN (R 3.6.1)
-    ##  cli           2.0.0   2019-12-09 [1] CRAN (R 3.6.1)
-    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.1)
-    ##  digest        0.6.23  2019-11-23 [1] CRAN (R 3.6.1)
-    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.1)
-    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.6.1)
-    ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.1)
-    ##  here        * 0.1     2017-05-28 [1] CRAN (R 3.6.1)
-    ##  hms           0.5.2   2019-10-30 [1] CRAN (R 3.6.1)
-    ##  htmltools     0.4.0   2019-10-04 [1] CRAN (R 3.6.1)
-    ##  knitr         1.26    2019-11-12 [1] CRAN (R 3.6.1)
-    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
-    ##  pander      * 0.6.3   2018-11-06 [1] CRAN (R 3.6.1)
-    ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.1)
-    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.1)
-    ##  R6            2.4.1   2019-11-12 [1] CRAN (R 3.6.1)
-    ##  Rcpp          1.0.3   2019-11-08 [1] CRAN (R 3.6.1)
-    ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 3.6.1)
-    ##  rlang         0.4.2   2019-11-23 [1] CRAN (R 3.6.1)
-    ##  rmarkdown     1.18    2019-11-27 [1] CRAN (R 3.6.1)
-    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.1)
-    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.1)
-    ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.1)
-    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.1)
-    ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.1)
-    ##  vctrs         0.2.0   2019-07-05 [1] CRAN (R 3.6.1)
-    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.1)
-    ##  xfun          0.11    2019-11-12 [1] CRAN (R 3.6.1)
-    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
-    ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 3.6.1)
+    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)
+    ##  backports     1.1.5   2019-10-02 [1] CRAN (R 4.0.0)
+    ##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)
+    ##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)
+    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.0)
+    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 4.0.0)
+    ##  glue          1.4.0   2020-04-03 [1] CRAN (R 4.0.0)
+    ##  here        * 0.1     2017-05-28 [1] CRAN (R 4.0.0)
+    ##  hms           0.5.2   2019-10-30 [1] CRAN (R 4.0.0)
+    ##  htmltools     0.4.0   2019-10-04 [1] CRAN (R 4.0.0)
+    ##  knitr         1.28    2020-02-06 [1] CRAN (R 4.0.0)
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)
+    ##  pander      * 0.6.3   2018-11-06 [1] CRAN (R 4.0.0)
+    ##  pillar        1.4.3   2019-12-20 [1] CRAN (R 4.0.0)
+    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)
+    ##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)
+    ##  Rcpp          1.0.4.6 2020-04-09 [1] CRAN (R 4.0.0)
+    ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)
+    ##  rlang         0.4.6   2020-05-02 [1] CRAN (R 4.0.0)
+    ##  rmarkdown     2.1     2020-01-20 [1] CRAN (R 4.0.0)
+    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)
+    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)
+    ##  stringi       1.4.6   2020-02-17 [1] CRAN (R 4.0.0)
+    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.0)
+    ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 4.0.0)
+    ##  vctrs         0.2.1   2019-12-17 [1] CRAN (R 4.0.0)
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 4.0.0)
+    ##  xfun          0.13    2020-04-13 [1] CRAN (R 4.0.0)
+    ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)
+    ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)
     ## 
-    ## [1] /usr/local/lib/R/site-library
-    ## [2] /usr/local/lib/R/library
+    ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
