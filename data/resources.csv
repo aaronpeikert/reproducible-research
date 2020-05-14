@@ -1,0 +1,62 @@
+Tool,How to install?,How to learn?
+"<!-- the backslash means newline -->
+*Windows only:*\
+Chocolately",Visit [chocolatey.org](https://chocolatey.org/courses/installation/installing?method=installing-chocolatey).,"Chocolately installs software for you, it is installed and used from the terminal/comand prompt.\
+To open the comand prompt press Windows+X and then click on ""Command Prompt"" or ""Command Prompt (Admin)."""
+"*OS X only:*\
+Homebrew",Visit [brew.sh](https://brew.sh).,"Homebrew installs software for you, it is installed and used from the terminal/comand prompt.\
+To open the terminal press Command + Space and then type ""Terminal"" and double click on the top search result."
+R,"**Windows:**\
+Use Chocolately (from the terminal).\
+`choco install -y r.project`\
+\
+**OS X:**\
+Use Homebrew.\
+`brew install r`\",Read: [R for Data Science](https://r4ds.had.co.nz)
+Rstudio,"**Windows:**\
+Use Chocolately (from the terminal).\
+`choco install -y r.studio`\
+\
+**OS X:**\
+Use Homebrew (from the terminal).\
+`brew cask install rstudio`
+",Skim the [cheatsheet](www.rstudio.org/links/ide_cheat_sheet)
+rmarkdown,"Within Rstudio, type into the R-console:\
+`install.packages(""rmarkdown"")`
+","Read the [cheatsheet](www.rstudio.org/links/r_markdown_cheat_sheet).
+
+Skim [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
+"
+Git,"**Windows:**\
+Use Chocolately (from the terminal).\
+`choco install -y git`\
+\
+**OS X:**\
+Git gets installed with Homebrew.\
+Nothing to do.
+","Read [Part IV Git fundamentals](https://happygitwithr.com/git-basics.html)
+
+And skim the rest of [Happy Git and Gitub for the useR](https://happygitwithr.com)."
+GitHub,"Create an account on: [github.com](https://github.com/join)\
+And apply for [Student/Researcher Benefits](https://education.github.com/benefits)","Read [Part II Connect Git, GitHub, RStudio](https://happygitwithr.com/connect-intro.html)
+
+And [III Early GitHub Wins](https://happygitwithr.com).
+"
+Make,"**Windows:**\
+Use chocolately.\
+`choco install -y make`\
+\
+**OS X:**\
+Make is preinstalled on OS X.\
+Nothing to do.",Read [Minimal Make](https://kbroman.org/minimal_make/)
+Docker,"**Windows:**\
+Use chocolately.\
+`choco install -y docker-desktop`\
+\
+**OS X:**\
+Use Homebrew (from the terminal).\
+`brew cask install docker`\
+\
+**Linux:**\
+Follow steps described in: [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)","Read [An Introduction to Rocker: Docker
+Containers for R](https://doi.org/10.32614/RJ-2017-065)."
