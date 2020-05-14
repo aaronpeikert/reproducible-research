@@ -8,6 +8,9 @@
    xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   inkscape:export-ydpi="96"
+   inkscape:export-xdpi="96"
+   inkscape:export-filename="/home/aaron/Documents/remote/github/reproducible-research/Images/nutshell.png"
    width="297mm"
    height="210mm"
    viewBox="0 0 297 210"
@@ -204,9 +207,9 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.64"
-     inkscape:cx="718.34911"
-     inkscape:cy="393.96596"
+     inkscape:zoom="3.6203867"
+     inkscape:cx="427.96054"
+     inkscape:cy="518.02563"
      inkscape:document-units="mm"
      inkscape:current-layer="layer5"
      showgrid="false"
@@ -297,6 +300,10 @@
         </g>
       </g>
     </g>
+    <path
+       id="path1081"
+       d="m 98.412761,132.02026 h 5.050259"
+       style="fill:none;stroke:#000000;stroke-width:0.948796;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
   </g>
   <g
      inkscape:label="Git"
