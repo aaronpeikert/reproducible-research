@@ -20,6 +20,10 @@ This is the accompanying GitHub repository to a work in progress paper by Aaron 
 ```{r abstract, child = 'abstract.Rmd'}
 ```
 
+```{r, echo=FALSE}
+knitr::include_graphics("Images/nutshell.svg")
+```
+
 # Resources
 
 ```{r, include=FALSE}

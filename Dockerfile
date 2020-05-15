@@ -5,4 +5,5 @@ RUN install2.r --error --skipinstalled\
 RUN installGithub.r\
   crsh/papaja@b6cd70f benmarwick/wordcountaddin@fdf70d9
 RUN Rscript -e 'tinytex::tlmgr_install(c("apa6", "threeparttable", "fancyhdr", "endfloat", "csquotes", "was", "multirow", "threeparttablex", "environ", "trimspaces", "tocloft", "crop", "psnfss", "courier"))'
+RUN apt-get update -y && apt-get install -y inkscape
 WORKDIR /home/rstudio
