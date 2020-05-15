@@ -35,10 +35,6 @@ Leveraging containerization, dependence management, version management,
 and literate programming, the workflow increases scientific productivity
 by facilitating later reproducibility and reuse of code and data.
 
-``` r
-knitr::include_graphics("Images/nutshell.svg")
-```
-
 ![](Images/nutshell.svg)<!-- -->
 
 # Resources
