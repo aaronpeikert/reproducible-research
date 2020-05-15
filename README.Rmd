@@ -21,7 +21,7 @@ This is the accompanying GitHub repository to a work in progress paper by Aaron 
 ```
 
 ```{r}
-knitr::include_graphics(here("Images", "nutshell.svg"))
+knitr::include_graphics("Images/nutshell.svg")
 ```
 
 # Resources
