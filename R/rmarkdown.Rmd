@@ -1,6 +1,6 @@
 ---
-title: "\\vspace{-1em}A simple R markdown example\\vspace{-1em}"
-author: "Aaron Peikert & Andreas M. Brandmaier"
+#title: "\\vspace{-1em}A simple R markdown example\\vspace{-1em}"
+#author: "Aaron Peikert & Andreas M. Brandmaier"
 output: pdf_document
 papersize: "a6"
 fontsize: 9pt
@@ -11,24 +11,21 @@ header-includes:
    - \usepackage[center,dvips,frame]{crop}
 ---
 
-### Silly Heading
+### Dynamic Document Demonstration
 
-```{r setup}
+```{r setup, echo=FALSE}
 library("knitr")
 library("papaja")
 ```
 
+This is a simple analysis of the `sleep` dataset (Student, 1908) taken from `help(t.test)`.
+
 ```{r t-test}
 data("sleep")
-result <- t.test(extra ~ group, data = sleep)
+result <- t.test(extra ~ group, data = sleep, paired = TRUE)
 ```
 
-This is an example of students' sleep data taken from `help(t.test)`.
-
-`r apa_print.htest(result)$full_result`
-
-I can now assert that what I *believe* to be true
---- that there is a difference in means between the groups ---
-is `r ifelse(result$p.value > .025, "**not**", "")` supported by the data.
-
+The difference in means of hours slept between the groups 
+was `r ifelse(result$p.value >= .05, "**not**", "")` 
+significantly different from zero (`r apa_print.htest(result)$full_result`).
 
