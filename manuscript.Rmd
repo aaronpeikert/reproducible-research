@@ -474,7 +474,7 @@ How can one best share a reproducible workflow? We believe that, ideally, a non-
 
 ## Outlook
 
-The proposed workflow leverages various existing tools that are partly integrated into RStudio already. Parts of the proposed workflow have been integrated into stand-alone packages [such as `worcs`, @worcs; `workflowr`, @workflowr; or `holepunch` @holepunch], which we particularly recommend to beginners;  but they are either incomplete in the sense of our proposal or rely on proprietary service providers. We hope that with increasing awareness of the challenges of computational reproducibility, the increased demand for unified and open solutions will lead to better integration of existing tools and services to allow reproducible workflows to become a standard in psychological research.
+The proposed workflow leverages various existing tools that are partly integrated into RStudio already. Parts of the proposed workflow have been integrated into stand-alone packages [such as `worcs`, @worcs; `workflowr`, @workflowr; or `holepunch` @holepunch], which we particularly recommend to beginners; in particular, `worcs` is a step-by-step procedure with best practices for Open Science from preregistration to publication. Still those approaches do either not guarantuee full computational reproducibility or rely on proprietary service providers. We hope that with increasing awareness of the challenges of computational reproducibility, the increased demand for unified and open solutions will lead to better integration of existing tools and services to allow reproducible workflows to become a standard in psychological research.
 
 \newpage
 
