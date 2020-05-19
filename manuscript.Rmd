@@ -47,7 +47,7 @@ output            : papaja::apa6_pdf
 knitr::opts_chunk$set(echo = TRUE)
 knitr::opts_chunk$set(linewidth = Inf) # see wrap_code.R
 
-if(!require("pacman"))install.packages("pacman")
+if(!requireNamespace("pacman"))install.packages("pacman")
 pacman::p_load("here", "tidyverse")
 
 knitr::read_chunk(here("R", "random.R"))
