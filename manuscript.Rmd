@@ -281,10 +281,10 @@ docker run --rm -it reproducible-research R
 knitr::include_graphics("Images/docker-r-terminal.png")
 ```
 
-The second option is to start the container in the background and to interact with the container via the web browser and the RStudio server instance running in it. In order to do so, you need to supply a password to log into the RStudio server (`-e PASSWORD=<YOUR_PASS>`) and open a network service on a specified port (`-p 8787:8787`).
+The second option is to start the container in the background and to interact with the container via the web browser and the RStudio server instance running in it. In order to do so, you need to supply a password to log into the RStudio server (`-e PASSWORD=<YOUR_PASS>`) and open a network service on a specified port (`-p 127.0.0.1:8787:8787`).
 
 ```{bash, eval=FALSE}
-docker run -e PASSWORD=<YOUR_PASS> -p 8787:8787 image-name
+docker run -e PASSWORD=<YOUR_PASS> -p 127.0.0.1:787:8787 image-name
 ```
 
 The address to connect to the RStudio server is your IP address (or `localhost` on Linux) in this scheme: `<IPADRESS>:8787`. This offers a fully functioning RStudio instance that runs in the image but is accessible through a local web browser.
