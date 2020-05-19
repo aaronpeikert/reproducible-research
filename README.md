@@ -31,10 +31,10 @@ accessible. While the research community increasingly recognizes dynamic
 document generation and version management as tools to ensure
 reproducibility, we demonstrate with practical examples that these alone
 are not sufficient to ensure long-term computational reproducibility.
-Leveraging containerization, dependence management, version management,
-and dynamic document generation, the workflow increases scientific
-productivity by facilitating later reproducibility and reuse of code and
-data.
+Combining containerization, dependence management, version management,
+and dynamic document generation, the proposed workflow increases
+scientific productivity by facilitating later reproducibility and reuse
+of code and data.
 
 ![](Images/nutshell.svg)<!-- -->
 
@@ -94,7 +94,7 @@ Use Homebrew (from the terminal).<br />
 <tr class="odd">
 <td style="text-align: center;">rmarkdown</td>
 <td style="text-align: center;">Within Rstudio, type into the R-console:<br />
-<code>install.packages("rmarkdown")</code></td>
+<code>install.packages(&quot;rmarkdown&quot;)</code></td>
 <td style="text-align: center;">Read the <a href="www.rstudio.org/links/r_markdown_cheat_sheet">cheatsheet</a>. Skim <a href="https://bookdown.org/yihui/rmarkdown/">R Markdown: The Definitive Guide</a></td>
 </tr>
 <tr class="even">
@@ -187,7 +187,8 @@ not require that workaround.**
 In case you experience some unexpected behavior with this workflow, you
 should check that you have the most recent version (`git pull`), rebuild
 the docker image (`make build`) and force the rebuild of all targets
-(`make -B DOCKER`).
+(`make -B
+    DOCKER`).
 
 ``` bash
 git pull && make build && make -B DOCKER=TRUE
@@ -199,50 +200,49 @@ git pull && make build && make -B DOCKER=TRUE
 sessioninfo::session_info()
 ```
 
-    ## ─ Session info ───────────────────────────────────────────────────────────────
+    ## ─ Session info ──────────────────────────────────────────────────────────
     ##  setting  value                       
-    ##  version  R version 4.0.0 (2020-04-24)
-    ##  os       macOS Mojave 10.14.6        
-    ##  system   x86_64, darwin17.0          
+    ##  version  R version 3.6.1 (2019-07-05)
+    ##  os       Debian GNU/Linux 9 (stretch)
+    ##  system   x86_64, linux-gnu           
     ##  ui       X11                         
     ##  language (EN)                        
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
-    ##  tz       Europe/Berlin               
+    ##  tz       Etc/UTC                     
     ##  date     2020-05-19                  
     ## 
-    ## ─ Packages ───────────────────────────────────────────────────────────────────
+    ## ─ Packages ──────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
-    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 4.0.0)
-    ##  backports     1.1.5   2019-10-02 [1] CRAN (R 4.0.0)
-    ##  cli           2.0.2   2020-02-28 [1] CRAN (R 4.0.0)
-    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 4.0.0)
-    ##  digest        0.6.25  2020-02-23 [1] CRAN (R 4.0.0)
-    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 4.0.0)
-    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 4.0.0)
-    ##  glue          1.4.0   2020-04-03 [1] CRAN (R 4.0.0)
-    ##  here        * 0.1     2017-05-28 [1] CRAN (R 4.0.0)
-    ##  hms           0.5.2   2019-10-30 [1] CRAN (R 4.0.0)
-    ##  htmltools     0.4.0   2019-10-04 [1] CRAN (R 4.0.0)
-    ##  knitr         1.28    2020-02-06 [1] CRAN (R 4.0.0)
-    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 4.0.0)
-    ##  pander      * 0.6.3   2018-11-06 [1] CRAN (R 4.0.0)
-    ##  pillar        1.4.3   2019-12-20 [1] CRAN (R 4.0.0)
-    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 4.0.0)
-    ##  R6            2.4.1   2019-11-12 [1] CRAN (R 4.0.0)
-    ##  Rcpp          1.0.4.6 2020-04-09 [1] CRAN (R 4.0.0)
-    ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 4.0.0)
-    ##  rlang         0.4.6   2020-05-02 [1] CRAN (R 4.0.0)
-    ##  rmarkdown     2.1     2020-01-20 [1] CRAN (R 4.0.0)
-    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 4.0.0)
-    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 4.0.0)
-    ##  stringi       1.4.6   2020-02-17 [1] CRAN (R 4.0.0)
-    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 4.0.0)
-    ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 4.0.0)
-    ##  vctrs         0.2.1   2019-12-17 [1] CRAN (R 4.0.0)
-    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 4.0.0)
-    ##  xfun          0.13    2020-04-13 [1] CRAN (R 4.0.0)
-    ##  yaml          2.2.1   2020-02-01 [1] CRAN (R 4.0.0)
-    ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 4.0.0)
+    ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.1)
+    ##  backports     1.1.4   2019-04-10 [1] CRAN (R 3.6.1)
+    ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.1)
+    ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.1)
+    ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.1)
+    ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.1)
+    ##  here        * 0.1     2017-05-28 [1] CRAN (R 3.6.1)
+    ##  hms           0.5.0   2019-07-09 [1] CRAN (R 3.6.1)
+    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.1)
+    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
+    ##  pander      * 0.6.3   2018-11-06 [1] CRAN (R 3.6.1)
+    ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.1)
+    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.1)
+    ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.1)
+    ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.1)
+    ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 3.6.1)
+    ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.1)
+    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.1)
+    ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.1)
+    ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.1)
+    ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.1)
+    ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.1)
+    ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.1)
+    ##  vctrs         0.2.0   2019-07-05 [1] CRAN (R 3.6.1)
+    ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.1)
+    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.1)
+    ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
+    ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 3.6.1)
     ## 
-    ## [1] /Library/Frameworks/R.framework/Versions/4.0/Resources/library
+    ## [1] /usr/local/lib/R/site-library
+    ## [2] /usr/local/lib/R/library
