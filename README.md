@@ -200,7 +200,7 @@ git pull && make rebuild && make -B DOCKER=TRUE
 sessioninfo::session_info()
 ```
 
-    ## ─ Session info ──────────────────────────────────────────────────────────
+    ## ─ Session info ───────────────────────────────────────────────────────────────
     ##  setting  value                       
     ##  version  R version 3.6.1 (2019-07-05)
     ##  os       Debian GNU/Linux 9 (stretch)
@@ -212,27 +212,29 @@ sessioninfo::session_info()
     ##  tz       Etc/UTC                     
     ##  date     2020-05-19                  
     ## 
-    ## ─ Packages ──────────────────────────────────────────────────────────────
+    ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
     ##  assertthat    0.2.1   2019-03-21 [1] CRAN (R 3.6.1)
-    ##  backports     1.1.4   2019-04-10 [1] CRAN (R 3.6.1)
-    ##  cli           1.1.0   2019-03-19 [1] CRAN (R 3.6.1)
+    ##  backports     1.1.5   2019-10-02 [1] CRAN (R 3.6.1)
+    ##  cli           2.0.0   2019-12-09 [1] CRAN (R 3.6.1)
     ##  crayon        1.3.4   2017-09-16 [1] CRAN (R 3.6.1)
-    ##  digest        0.6.20  2019-07-04 [1] CRAN (R 3.6.1)
+    ##  digest        0.6.23  2019-11-23 [1] CRAN (R 3.6.1)
     ##  evaluate      0.14    2019-05-28 [1] CRAN (R 3.6.1)
+    ##  fansi         0.4.0   2018-10-05 [1] CRAN (R 3.6.1)
+    ##  glue          1.3.1   2019-03-12 [1] CRAN (R 3.6.1)
     ##  here        * 0.1     2017-05-28 [1] CRAN (R 3.6.1)
-    ##  hms           0.5.0   2019-07-09 [1] CRAN (R 3.6.1)
-    ##  htmltools     0.3.6   2017-04-28 [1] CRAN (R 3.6.1)
-    ##  knitr         1.24    2019-08-08 [1] CRAN (R 3.6.1)
+    ##  hms           0.5.2   2019-10-30 [1] CRAN (R 3.6.1)
+    ##  htmltools     0.4.0   2019-10-04 [1] CRAN (R 3.6.1)
+    ##  knitr         1.26    2019-11-12 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
     ##  pander      * 0.6.3   2018-11-06 [1] CRAN (R 3.6.1)
     ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.1)
-    ##  pkgconfig     2.0.2   2018-08-16 [1] CRAN (R 3.6.1)
-    ##  R6            2.4.0   2019-02-14 [1] CRAN (R 3.6.1)
-    ##  Rcpp          1.0.2   2019-07-25 [1] CRAN (R 3.6.1)
+    ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.1)
+    ##  R6            2.4.1   2019-11-12 [1] CRAN (R 3.6.1)
+    ##  Rcpp          1.0.3   2019-11-08 [1] CRAN (R 3.6.1)
     ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 3.6.1)
-    ##  rlang         0.4.0   2019-06-25 [1] CRAN (R 3.6.1)
-    ##  rmarkdown     1.14    2019-07-12 [1] CRAN (R 3.6.1)
+    ##  rlang         0.4.2   2019-11-23 [1] CRAN (R 3.6.1)
+    ##  rmarkdown     1.18    2019-11-27 [1] CRAN (R 3.6.1)
     ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.1)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.1)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.1)
