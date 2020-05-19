@@ -191,7 +191,7 @@ the docker image (`make build`) and force the rebuild of all targets
     DOCKER`).
 
 ``` bash
-git pull && make build && make -B DOCKER=TRUE
+git pull && make rebuild && make -B DOCKER=TRUE
 ```
 
 # Session Info
@@ -240,7 +240,7 @@ sessioninfo::session_info()
     ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.1)
     ##  vctrs         0.2.0   2019-07-05 [1] CRAN (R 3.6.1)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.1)
-    ##  xfun          0.8     2019-06-25 [1] CRAN (R 3.6.1)
+    ##  xfun          0.11    2019-11-12 [1] CRAN (R 3.6.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
     ##  zeallot       0.1.0   2018-01-28 [1] CRAN (R 3.6.1)
     ## 

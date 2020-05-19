@@ -21,6 +21,9 @@ all: manuscript.pdf README.md
 build: Dockerfile
 	docker build -t $(projekt) .
 
+rebuild:
+	docker build --no-cache -t $(projekt) .
+
 $(projekt).tar.gz:
 	docker save $(projekt):latest | gzip > $@
 
