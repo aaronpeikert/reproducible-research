@@ -153,7 +153,7 @@ A `Makefile` obeys a simple scheme. It contains a list of recipes. Each recipe h
 # -- this is a Makefile --
 all: manuscript.pdf
 
-manuscript.pdf: data/ìris_prepped.csv manuscript.Rmd
+manuscript.pdf: data/iris_prepped.csv manuscript.Rmd
   Rscript -e 'rmarkdown::render("manuscript.Rmd")'
 
 data/ìris_prepped.csv: R/prepare_data.R data/iris.csv
