@@ -1,14 +1,7 @@
 ---
-title: "\\vspace{-1em}A simple R markdown example\\vspace{-1em}"
+title: "A simple R markdown example}"
 author: "Aaron Peikert & Andreas M. Brandmaier"
 output: pdf_document
-papersize: "a6"
-fontsize: 9pt
-geometry:
-  - "landscape"
-  - margin=0.5cm
-header-includes:
-   - \usepackage[center,dvips,frame]{crop}
 ---
 
 ### Silly Heading
@@ -30,5 +23,3 @@ This is an example of students' sleep data taken from `help(t.test)`.
 I can now assert that what I *believe* to be true
 --- that there is a difference in means between the groups ---
 is `r ifelse(result$p.value > .025, "**not**", "")` supported by the data.
-
-
