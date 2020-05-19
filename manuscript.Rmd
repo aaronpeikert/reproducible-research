@@ -1,6 +1,6 @@
 ---
 title             : "A Reproducible Data Analysis Workflow with R Markdown, Git, Make, and Docker"
-shorttitle        : "Reproducible Data Analysis Workflow"
+shorttitle        : "Reproducible Workflow"
 
 author:
   - name          : "Aaron Peikert"
@@ -75,7 +75,7 @@ Figure \@ref(fig:schematic) gives an overview of how the four components of our 
 
 The translation of computational results into a human-readable summary, for example into a technical report, a presentation, or a journal manuscript, is time-consuming and error-prone. Typical errors result from copy\&paste mistakes, erroneous rounding, or missed updates of the manuscript when the associated computer code and computed results have changed. In order to create not only fully reproducible results but also fully reproducible reports, we resort to the literate programming paradigm [@knuth1984literate], in which human-readable language and computer code are mixed to create dynamic documents whose order follows the logic of thought rather then the order of the computer. R Markdown is a simple markup language to create dynamic documents with embedded chunks of R code that can be exported to standard formats such as documents (docx, rtf, epub), presentations (ppt, html) or websites (html) using the `knitr` package [@xie2015; @xie2019]. Several packages extend the functionality of knitr. Of particular note are the `papaja` package [@papaja2018], which offers additional functions to enable American Psychological Association (APA) style document formatting, including a journal-style final typeset format, and the `stargazer` package [@stargazer2018], which provides journal-ready tables and reports of statistical models.  Figure \@ref(fig:source-rmarkdown) illustrates R Markdown syntax using the `papaja` package and Figure \@ref(fig:rendered-result) shows the resulting rendered document.
 
-```{r source-rmarkdown, eval = TRUE, echo = FALSE,  fig.cap="Exemplary source of an R Markdown showing a combination of executable R code and English manuscript text."}
+```{r source-rmarkdown, eval = TRUE, echo = FALSE,  fig.cap="Exemplary source of an R Markdown showing a combination of executable R code and English manuscript text. Code is either given in separate chucks (grey background delimited by triple backticks) or inline (single backticks). "}
 knitr::include_graphics("Images/rmarkdown.png")
 ```
 
@@ -94,9 +94,9 @@ A typical Git workflow in the terminal looks like this:
 # -- type this in a terminal --
 git init # to initialize Git in the current directory
 git add ./data/iris.csv ./R/analysis.R # track specific files
-git commit -m "add data & analysis" # take snapshot with comment
+git commit -m "added data and analysis" # take snapshot with comment
 # once script or data were changed, take a new snapshot
-git commit -a -m "complete data colections" # add and commit all changes
+git commit -a -m "completed data collection" # add and commit all changes
 ```
 
 To keep track of all changes on your local computer, you only need to use `git add` and `git commit` or `git commit -a` to add and commit at the same time. Adding a file means to save its changes on the next commit. These commands need to be executed in the terminal, which you can access from within RStudio (`Shift + Alt + R`).  RStudio also offers a graphical user interface for Git. For most basic operations, this interface is convenient and sufficient (see Figure \@ref(fig:gitpane)).
