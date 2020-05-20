@@ -4,8 +4,8 @@ fontsize: 9pt
 geometry:
   - "landscape"
   - margin=0.5cm
-  - paperwidth=5cm
-  - paperheight=10cm
+  - paperwidth=6cm
+  - paperheight=12cm
 header-includes:
    - \usepackage[center,dvips,frame]{crop}
 ---

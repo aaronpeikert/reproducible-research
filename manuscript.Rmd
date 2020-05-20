@@ -358,7 +358,7 @@ Having installed Chocolatey (and restarted the computer), all dependencies can b
 choco install -y git make docker-desktop
 ```
 
-To use `docker` you need to start Docker Desktop. In the settings of Docker Desktop, you have to allow the sharing of your drive. Docker on Windows requires the path to be special; therefore, you need to hand-edit the `Makefile` and set `current_path` to the current directory and use `make all DOCKER=TRUE WINDOWS=TRUE`. We hope that future releases of Docker for Windows will not require that workaround.
+To use `docker` you need to start Docker Desktop. In the settings of Docker Desktop, you have to allow the sharing of your drive. Docker on Windows requires an unusual path specification (`C:Users\\aaron\\Documents\\reproducible-research` becomes `/c/Users/aaron/Documents/reproducible-research`). Therefore, you need to hand-edit the `Makefile` and set `current_path` to the project directory and use `make all DOCKER=TRUE WINDOWS=TRUE`. We hope that future releases of Docker for Windows will not require that workaround.
 
 ## macOS
 
