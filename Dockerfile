@@ -1,6 +1,10 @@
 FROM rocker/verse:3.6.1
-ARG BUILD_DATE=2019-11-11
-RUN install2.r --error --skipinstalled\
+ENV BUILD_DATE=2020-01-01
+RUN MRAN=https://mran.microsoft.com/snapshot/${BUILD_DATE} \
+  && echo MRAN=$MRAN >> /etc/environment \
+  && export MRAN=$MRAN \
+  && echo "options(repos = c(CRAN='$MRAN'), download.file.method = 'libcurl')" >> /usr/local/lib/R/etc/Rprofile.site \
+  && install2.r --error --skipinstalled\
   pacman here pander boot
 RUN installGithub.r\
   crsh/papaja@b6cd70f benmarwick/wordcountaddin@fdf70d9
