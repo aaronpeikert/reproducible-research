@@ -7,7 +7,7 @@ author:
     affiliation   : "1,2"
   - name          : "Andreas M. Brandmaier"
     affiliation   : "1,3"
-    corresponding : yes    # Define only one corresponding author
+    corresponding : yes
     address       : "Max Planck Institute for Human Development, Lentzeallee 94, 14195 Berlin, Germany"
     email         : "brandmaier@mpib-berlin.mpg.de"
 
