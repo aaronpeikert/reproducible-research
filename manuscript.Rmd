@@ -289,6 +289,12 @@ docker run -e PASSWORD=<YOUR_PASS> -p 127.0.0.1:8787:8787 image-name
 
 The address to connect to the RStudio server is your IP address (or `localhost` on Linux) in this scheme: `<IPADDRESS>:8787`. This offers a fully functioning RStudio instance that runs in the image but is accessible through a local web browser.
 
+```{r rstudio-in-docker, eval = TRUE, echo = FALSE, fig.cap="RStudio running inside Docker"}
+knitr::include_graphics("Images/docker-rstudio.png")
+```
+
+Figure \@ref(fig:rstudio-in-docker) shows a screenshot of Rstudio running inside Docker accessed from a local web browser.
+
 By default, programs inside the container cannot access files on the local computer, thus requiring an explicit link to a local folder to enable access (and on macOS and Windows this also has to be allowed in the settings) :
 
 ```{bash, eval=FALSE}
@@ -304,11 +310,7 @@ docker run --rm -it -e PASSWORD=<YOUR_PASS> -p 8787:8787 -v
 /path/to/project:/home/rstudio reproducible-research
 ```
 
-```{r rstudio-in-docker, eval = TRUE, echo = FALSE, fig.cap="RStudio running inside Docker"}
-knitr::include_graphics("Images/docker-rstudio.png")
-```
-
-Figure \@ref(fig:rstudio-in-docker) shows a screenshot of Rstudio running inside Docker accessed from a local web browser.
+Figure \@ref(fig:rstudio-in-docker) shows a screenshot of the result.
 
 Since Docker commands tend to grow long and become tedious to type manually, we recommend using some automatic way to generate them. Fortunately, one can use Make to automatically generate the `docker` commands, e.g. the (simplified) `Makefile` for this paper allows the command after `$(run)` to be conditionally passed through Docker if one types `make DOCKER=TRUE` (otherwise, they are run locally):
 
