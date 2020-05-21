@@ -141,7 +141,7 @@ GitHub allows you to archive and label a specific version of your repository in 
 
 [^1]: To comment on our paper, please add an issue to the GitHub repository of our paper: [https://github.com/aaronpeikert/reproducible-research/issues](https://github.com/aaronpeikert/reproducible-research/issues).
 [^doi]: [https://guides.github.com/activities/citable-code/](https://guides.github.com/activities/citable-code/)
-[^sub]: We created an release for the submission: [https://github.com/aaronpeikert/reproducible-research/releases/tag/v0.1.1-submission](https://github.com/aaronpeikert/reproducible-research/releases/tag/v0.1.1-submission)
+[^sub]: We created an release for the submission: [https://github.com/aaronpeikert/reproducible-research/releases/tag/v0.2.0-submission](https://github.com/aaronpeikert/reproducible-research/releases/tag/v0.2.0-submission)
 
 # Dependency Tracking and Management
 
