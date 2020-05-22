@@ -210,7 +210,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2020-05-19                  
+    ##  date     2020-05-21                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
@@ -228,19 +228,19 @@ sessioninfo::session_info()
     ##  knitr         1.26    2019-11-12 [1] CRAN (R 3.6.1)
     ##  magrittr      1.5     2014-11-22 [1] CRAN (R 3.6.1)
     ##  pander      * 0.6.3   2018-11-06 [1] CRAN (R 3.6.1)
-    ##  pillar        1.4.2   2019-06-29 [1] CRAN (R 3.6.1)
+    ##  pillar        1.4.3   2019-12-20 [1] CRAN (R 3.6.1)
     ##  pkgconfig     2.0.3   2019-09-22 [1] CRAN (R 3.6.1)
     ##  R6            2.4.1   2019-11-12 [1] CRAN (R 3.6.1)
     ##  Rcpp          1.0.3   2019-11-08 [1] CRAN (R 3.6.1)
     ##  readr       * 1.3.1   2018-12-21 [1] CRAN (R 3.6.1)
     ##  rlang         0.4.2   2019-11-23 [1] CRAN (R 3.6.1)
-    ##  rmarkdown     1.18    2019-11-27 [1] CRAN (R 3.6.1)
+    ##  rmarkdown     2.0     2019-12-12 [1] CRAN (R 3.6.1)
     ##  rprojroot     1.3-2   2018-01-03 [1] CRAN (R 3.6.1)
     ##  sessioninfo   1.1.1   2018-11-05 [1] CRAN (R 3.6.1)
     ##  stringi       1.4.3   2019-03-12 [1] CRAN (R 3.6.1)
     ##  stringr       1.4.0   2019-02-10 [1] CRAN (R 3.6.1)
     ##  tibble        2.1.3   2019-06-06 [1] CRAN (R 3.6.1)
-    ##  vctrs         0.2.0   2019-07-05 [1] CRAN (R 3.6.1)
+    ##  vctrs         0.2.1   2019-12-17 [1] CRAN (R 3.6.1)
     ##  withr         2.1.2   2018-03-15 [1] CRAN (R 3.6.1)
     ##  xfun          0.11    2019-11-12 [1] CRAN (R 3.6.1)
     ##  yaml          2.2.0   2018-07-25 [1] CRAN (R 3.6.1)
