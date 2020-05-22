@@ -368,7 +368,7 @@ As Make already ships with macOS, you only need Git and Docker. We suggest using
 # -- type this in a terminal --
 
 # install Docker via Homebrew
-brew cask docker
+brew cask install docker
 ```
 
 To use `docker`, you need to start Docker Desktop. In the settings of Docker you have to allow the sharing of your drive.
