@@ -386,7 +386,7 @@ There is a host of different Linux distributions and almost as many package mana
 apt install git make docker
 ```
 
-For other distributions, replace `apt` with the native package manager. You may need elevated rights for the installation; in this case, add `sudo` before the installation command. `docker` also needs elevated rights to run; therefore, we recommend adding the local user to the `docker` group, following the [documentation of Docker](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
+For other distributions, replace `apt install` with your package manager's equivalent. You may need elevated rights for the installation; in this case, add `sudo` before the installation command. `docker` also needs elevated rights to run; therefore, we recommend adding the local user to the `docker` group, following the [documentation of Docker](https://docs.docker.com/install/linux/linux-postinstall/#manage-docker-as-a-non-root-user).
 
 An alternative to Docker on Linux is Singularity [@kurtzerSingularityScientificContainers2017]. To use it, just replace any docker calls with `singularity docker` because Singularity fully supports docker images. A possible advantage is that Singularity works well in high-performance computing environments and on old Linux versions, the downside is that Singularity is currently only available on Linux.
 
