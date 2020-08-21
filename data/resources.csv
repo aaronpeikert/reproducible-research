@@ -20,10 +20,10 @@ Use Chocolately (from the terminal).\
 **OS X:**\
 Use Homebrew (from the terminal).\
 `brew cask install rstudio`
-",Skim the [cheatsheet](www.rstudio.org/links/ide_cheat_sheet)
+",Skim the [cheatsheet](https://www.rstudio.org/links/ide_cheat_sheet)
 rmarkdown,"Within Rstudio, type into the R-console:\
 `install.packages(""rmarkdown"")`
-","Read the [cheatsheet](www.rstudio.org/links/r_markdown_cheat_sheet).
+","Read the [cheatsheet](https://www.rstudio.org/links/r_markdown_cheat_sheet).
 
 Skim [R Markdown: The Definitive Guide](https://bookdown.org/yihui/rmarkdown/)
 "

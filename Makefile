@@ -27,7 +27,7 @@ rebuild:
 $(projekt).tar.gz:
 	docker save $(projekt):latest | gzip > $@
 
-README.md: README.Rmd abstract.Rmd
+README.md: README.Rmd abstract.Rmd data/resources.csv
 	$(run) Rscript -e 'rmarkdown::render("$(current_dir)/$<")'
 
 manuscript.pdf: manuscript.Rmd reproducible-research.bib random bootstrap rmarkdown R/wrap_code.R Images/ Images/nutshell.pdf
