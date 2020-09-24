@@ -172,11 +172,11 @@ If you have followed our workflow as presented thus far, a fellow researcher is 
 ```{bash, eval=FALSE}
 # -- type this in a terminal --
 
-# obtain a local copy from the remote repository
+# (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/reproducible-research.git
-# enter the local copy
-cd iris
-# create all files from that project
+# (2) obtain a local copy of the remote repository
+cd reproducible-research
+# (3) run the analysis/data preparation etc. with the local R installation
 make all
 ```
 
