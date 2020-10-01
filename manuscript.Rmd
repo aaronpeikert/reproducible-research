@@ -431,7 +431,7 @@ We provide a reproducible analysis as a working example via [GitHub](https://git
 
 # (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/workflow-showcase.git
-# (2) enter the directory containing the project
+# (2) enter the project directory 
 cd workflow-showcase
 # (3) build the docker container
 make build
