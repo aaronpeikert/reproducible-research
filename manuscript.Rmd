@@ -91,7 +91,8 @@ Fundamentally, reproducibility means that computational results remain identical
 A typical Git workflow in the terminal looks like this:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
+
 git init # to initialize Git in the current directory
 git add ./data/iris.csv ./R/analysis.R # track specific files
 git commit -m "added data and analysis" # take snapshot with comment
@@ -108,7 +109,7 @@ knitr::include_graphics("Images/git-pane.png")
 In a given Git project, you can inspect all changes (`git log`) and examine any previous state by stating the identifier of the commit to `git checkout`:
 
 ```{bash, eval = FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # inspect all changes
 git log
@@ -119,7 +120,7 @@ git checkout 77db06f78e
 Git also makes it particularly easy to share and collaborate on a project with other researchers. A popular service for sharing materials via Git is [GitHub](https://github.com). Alternatively, institutions can host an equally feature-rich open-source service called [GitLab](https://gitlab.com), avoiding the reliance on commercial service providers. At the time of writing, sharing repositories on GitHub with the public is free, private repositories (only visible to persons you invite) are [free for researchers](https://help.github.com/en/articles/applying-for-an-educator-or-researcher-discount) or have limited features. After creating a user account, one can create a new repository and GitHub provides information on how to upload your repository from the terminal, e.g., for our repository (here with user name 'aaronpeikert' and repository name 'reproducible-research'):
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # link remote github repository to local directory
 git remote add origin https://github.com/aaronpeikert/reproducible-research.git
@@ -130,7 +131,8 @@ git push -u origin master
 `git push` or the green upward arrow in the Git pane (see Figure \@ref(fig:gitpane)) uploads local updates. To download the remote Git repository on another computer, type into the terminal:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
+
 git clone https://github.com/aaronpeikert/reproducible-research.git
 ```
 
@@ -170,7 +172,7 @@ knitr::include_graphics("Images/build-pane.png")
 If you have followed our workflow as presented thus far, a fellow researcher is only three commands away from fully reproducing your analysis. They would simply have to type the following commands in the terminal:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/reproducible-research.git
@@ -260,7 +262,7 @@ There are two ways to share a Docker image; either by sharing the Dockerfile tha
 There are two options to execute commands in a container. Both options are based on the `docker run` command. The first way is to run a command inside the container. The call takes the form:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # execute a command in a container image; do not save the state 
 # of the container; accept inputs from and return outputs to terminal
@@ -270,7 +272,7 @@ docker run --rm -it <IMAGENAME> <COMMAND>
 The `--rm` flag means that the state of the container after the command will have finished is not going to be saved. The `-it` flag tells Docker to run the command interactively, that is, to accept keyboard inputs and return outputs to the terminal. For example, this is the command to start an interactive R session inside a Docker image called `reproducible-research` (see Figure \@ref(fig:docker-r-terminal) for a screenshot):
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # start an interactive R session in the 
 # container named 'reproducible-research'
@@ -354,7 +356,7 @@ Windows systems typically require the biggest efforts to install all necessary p
 Having installed Chocolatey (and restarted the computer), all dependencies can be installed in an **admin terminal** (Windows key, then type `cmd`, right-click *Run as administrator*) via:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # install Docker, Make, and Git using Chocolatey
 choco install -y git make docker-desktop
@@ -369,7 +371,7 @@ To use `docker` you need to start Docker Desktop. In the settings of Docker Desk
 As Make already ships with macOS, you only need Git and Docker. We suggest using the package manager Homebrew, which you can install from [https://docs.brew.sh/Installation](https://docs.brew.sh/Installation), to install Docker (Git will be installed during the installation of Homebrew):
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # install Docker via Homebrew
 brew cask install docker
@@ -382,7 +384,7 @@ To use `docker`, you need to start Docker Desktop. In the settings of Docker you
 There is a host of different Linux distributions and almost as many package managers. Still, to our knowledge, there is no (recent) Linux edition, that does not include Git, Make and Docker. For example, in Ubuntu Linux, installation is straightforward using the shipped package manager:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # install Docker via advanced package tool
 apt install git make docker
@@ -427,7 +429,7 @@ if (checksum != "5ba412f5a26f43842971dd74954fcdeb"){
 We provide a reproducible analysis as a working example via [GitHub](https://github.com/aaronpeikert/workflow-showcase). We encourage interested readers to try to reproduce this example as a practical exercise. The example shows a minimalistic analysis of the 'Considerations of Future Consequences (CFC) Scale'. The analysis demonstrates a complete implementation of our workflow including downloads of external data, comparison of their integrity using a checksum, and  a confirmatory factor analysis on the first few items using the R package `lavaan` [@lavaan2012]. Once all required tools are installed on a computer, the following four command-line commands are sufficient to reproduce our demo analysis:
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/workflow-showcase.git
@@ -444,7 +446,7 @@ make all DOCKER=TRUE
 The overarching goal of this paper was to provide a complete and easy-to-use workflow that allows confidence in the reproducibility of R-based data analyses. Analyses following our workflow can be reproduced with four commands (here shown for this manuscript):
 
 ```{bash, eval=FALSE}
-# -- type this in a terminal --
+# -- type this on the command line --
 
 # (1) obtain a local copy of the remote repository
 git clone https://github.com/aaronpeikert/reproducible-research.git
