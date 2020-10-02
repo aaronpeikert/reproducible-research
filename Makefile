@@ -24,6 +24,8 @@ build: Dockerfile
 rebuild:
 	docker build --no-cache -t $(projekt) .
 
+save: $(projekt).tar.gz
+
 $(projekt).tar.gz:
 	docker save $(projekt):latest | gzip > $@
 
