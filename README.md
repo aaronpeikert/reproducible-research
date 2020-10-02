@@ -19,7 +19,7 @@ established tools and practices from software engineering. It combines
 the benefits of various open-source software tools including R Markdown,
 Git, Make, and Docker, whose interplay ensures seamless integration of
 version management, dynamic report generation conforming to various
-journal styles and full cross-platform and long-term computational
+journal styles, and full cross-platform and long-term computational
 reproducibility. The workflow ensures meeting the primary goals that 1)
 the reporting of statistical results is consistent with the actual
 statistical results (dynamic report generation), 2) the analysis exactly
@@ -210,7 +210,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2020-10-01                  
+    ##  date     2020-10-02                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
