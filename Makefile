@@ -78,3 +78,6 @@ R/bootstrap.Rmd: R/bootstrap.R
 
 Images/nutshell.pdf: Images/nutshell.svg
 	inkscape --export-area-page --export-filename=$@ $<
+
+R/rmarkdown.svg: R/rmarkdown.pdf
+	inkscape --export-area-page --pdf-poppler --export-filename=$@ $<
