@@ -248,8 +248,9 @@ FROM rocker/verse:3.6.1
 RUN install2.r --error --skipinstalled\
   pacman here pander
 # install additional R packages from github: papaja and wordcountaddin
+# the package version if fixed by hash (user/package@hash)
 RUN installGithub.r\
-  crsh/papaja benmarwick/wordcountaddin
+  crsh/papaja@b6cd70f benmarwick/wordcountaddin@fdf70d9
 # set the working directory inside the container
 WORKDIR /home/rstudio
 ```
