@@ -88,7 +88,7 @@ Use Chocolately (from the terminal).<br />
 <br />
 <strong>OS X:</strong><br />
 Use Homebrew (from the terminal).<br />
-<code>brew cask install rstudio</code></td>
+<code>brew install --cask rstudio</code></td>
 <td style="text-align: center;">Skim the <a href="https://www.rstudio.org/links/ide_cheat_sheet">cheatsheet</a></td>
 </tr>
 <tr class="odd">
@@ -133,7 +133,7 @@ Use chocolately.<br />
 <br />
 <strong>OS X:</strong><br />
 Use Homebrew (from the terminal).<br />
-<code>brew cask install docker</code><br />
+<code>brew install --cask docker</code><br />
 <br />
 <strong>Linux:</strong><br />
 Follow steps described in: <a href="https://docs.docker.com/engine/install/linux-postinstall/">Post-installation steps for Linux</a></td>
