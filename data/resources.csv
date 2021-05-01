@@ -19,7 +19,7 @@ Use Chocolately (from the terminal).\
 \
 **OS X:**\
 Use Homebrew (from the terminal).\
-`brew cask install rstudio`
+`brew install --cask rstudio`
 ",Skim the [cheatsheet](https://www.rstudio.org/links/ide_cheat_sheet)
 rmarkdown,"Within Rstudio, type into the R-console:\
 `install.packages(""rmarkdown"")`
@@ -55,7 +55,7 @@ Use chocolately.\
 \
 **OS X:**\
 Use Homebrew (from the terminal).\
-`brew cask install docker`\
+`brew install --cask docker`\
 \
 **Linux:**\
 Follow steps described in: [Post-installation steps for Linux](https://docs.docker.com/engine/install/linux-postinstall/)","Read [An Introduction to Rocker: Docker
