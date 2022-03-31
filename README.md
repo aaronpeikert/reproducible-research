@@ -177,6 +177,13 @@ make build
 make all DOCKER=TRUE
 ```
 
+**Note: The build step may fail since services the build relies on are
+no longer available. In this case, you can download a ready build image
+from the [GitHub
+Releases](https://github.com/aaronpeikert/reproducible-research/releases/latest)
+and use `docker load -i reproducible-research.tar.gz` to load it.
+Continue with `make all DOCKER=TRUE`**
+
 **Note: Windows user need to manually edit the `Makefile` and set
 current\_path to the current directory and use `make all DOCKER=TRUE
 WINDOWS=TRUE`. We hope that future releases of Docker for Windows will
@@ -210,7 +217,7 @@ sessioninfo::session_info()
     ##  collate  en_US.UTF-8                 
     ##  ctype    en_US.UTF-8                 
     ##  tz       Etc/UTC                     
-    ##  date     2021-05-01                  
+    ##  date     2022-03-31                  
     ## 
     ## ─ Packages ───────────────────────────────────────────────────────────────────
     ##  package     * version date       lib source        
