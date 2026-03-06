@@ -182,6 +182,17 @@ current\_path to the current directory and use `make all DOCKER=TRUE
 WINDOWS=TRUE`. We hope that future releases of Docker for Windows will
 not require that workaround.**
 
+**Note: `make build` no longer works because MRAN is permanently
+offline. Instead, download the pre-built Docker image from the
+release:**
+
+``` bash
+git clone https://github.com/aaronpeikert/reproducible-research.git
+cd reproducible-research
+curl -L https://github.com/aaronpeikert/reproducible-research/releases/download/v0.2.2-submission/reproducible-research.tar.gz | docker load
+make all DOCKER=TRUE
+```
+
 ## Rebuild Everything
 
 In case you experience some unexpected behavior with this workflow, you
@@ -189,6 +200,9 @@ should check that you have the most recent version (`git pull`), rebuild
 the docker image (`make build`) and force the rebuild of all targets
 (`make -B
     DOCKER`).
+
+**Note: `make rebuild` no longer works because MRAN is permanently
+offline. Use `docker load` as shown above to restore the image.**
 
 ``` bash
 git pull && make rebuild && make -B DOCKER=TRUE
